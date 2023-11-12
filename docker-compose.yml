@@ -1,0 +1,31 @@
+version: '3'
+
+volumes:
+  intellicram-data:
+    external: true
+
+services:
+  backend-fastapi:
+    environment:
+      DATABASE_URL: postgresql://${PG_USER}:${PG_PASSWORD}@db/intellicram
+      WAIT_HOSTS: db:5432
+      PORT: 8000
+      # OPENAI_API_KEY: ${OPENAI_API_KEY}
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    ports:
+      - 8000:8000
+    volumes:
+      - ./backend:/app
+
+  db:
+    image: postgres:14.5-bullseye
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_DB: ${PG_DB_NAME}
+    ports:
+      - "15432:5432"
+    volumes:
+      - intellicram-data:/var/lib/postgresql/data
