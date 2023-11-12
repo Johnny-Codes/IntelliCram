@@ -10,9 +10,9 @@ Unlock a new era of efficient learning with IntelliCram, where personalized stud
 
 > Initial Design 11/12/2023
 
-![Image of initial workflow](flow_1.png)
+![Image of initial workflow](./readme/flow_1.png)
 
-![Image of model outlines](models.png)
+![Image of model outlines](./readme/models.png)
 
 ## Team Members
 
