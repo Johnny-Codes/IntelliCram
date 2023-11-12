@@ -3,3 +3,5 @@ uvicorn[standard]
 psycopg[binary, pool]
 pytest
 openai
+python-multipart
+python-jose[cryptography]
