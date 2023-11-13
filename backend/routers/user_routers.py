@@ -16,11 +16,14 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 ALGORITHM = os.environ["ALGORITHM"]
 ACCESS_TOKEN_EXPIRE_MINUTES = int(os.environ["ACCESS_TOKEN_EXPIRE_MINUTES"])
 
+
 def verify_password(plain_password, hashed_password):
     return password_context.verify(plain_password, hashed_password)
 
+
 def get_password_hash(password):
     return password_context.hash(password)
+
 
 def get_user(username: str):
     try:
@@ -32,106 +35,135 @@ def get_user(username: str):
                         FROM users
                         WHERE username = %s;
                     """,
-                    [username])
+                    [username],
+                )
                 record = result.fetchone()
-                return UserOut(id=record[0], 
-                               username=record[1],
-                               first_name=record[2], 
-                               last_name=record[3], 
-                               email=record[4], 
-                               role=UserRole(record[5]), 
-                               disabled=record[6], 
-                               hashed_password=record[7],)
+                return UserOut(
+                    id=record[0],
+                    username=record[1],
+                    first_name=record[2],
+                    last_name=record[3],
+                    email=record[4],
+                    role=UserRole(record[5]),
+                    disabled=record[6],
+                    hashed_password=record[7],
+                )
 
     except Exception as e:
         print(e)
-        return {"message":"Could not find account"}
-    
-    
+        return {"message": "Could not find account"}
+
+
 def authenticate_user(username: str, password: str):
     user = get_user(username)
-    if not user: 
+    if not user:
         return False
     if not verify_password(password, user.hashed_password):
         return False
     return user
 
+
 def create_access_token(data: dict, expires_delta: timedelta or None = None):
     to_encode = data.copy()
-    if expires_delta: 
+    if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes = 15)
+        expire = datetime.utcnow() + timedelta(minutes=15)
 
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)], repo: UserRepo = Depends()):
-    credential_exception = HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Athenticaiton":"Bearer"})
-    try: 
+
+async def get_current_user(
+    token: Annotated[str, Depends(oauth2_scheme)], repo: UserRepo = Depends()
+):
+    credential_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Athenticaiton": "Bearer"},
+    )
+    try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
             raise credential_exception
-        
+
         token_data = TokenData(username=username)
     except JWTError:
         raise credential_exception
     user = repo.get(username=token_data.username)
     if user is None:
-        raise  credential_exception
+        raise credential_exception
     return user
 
-async def get_current_active_user(current_user: UserIn = Depends(get_current_user)):
+
+async def get_current_active_user(
+    current_user: UserIn = Depends(get_current_user),
+):
     if current_user.disabled:
         raise HTTPException(status_code=400, detail="Inactive User")
     return current_user
 
+
 @router.delete("/users/me")
-async def delete_user(current_user: UserIn = Depends(get_current_active_user), repo: UserRepo = Depends()):
+async def delete_user(
+    current_user: UserIn = Depends(get_current_active_user),
+    repo: UserRepo = Depends(),
+):
     try:
         deleted_user = repo.delete(current_user.username)
         # Assuming delete_user returns the deleted user information
-        print('------------ deleted user', deleted_user)
         # Add something to log the user out
         return {"message": "User deleted successfully"}
     except Exception as e:
         print(e)
         return {"message": "Could not delete user"}
-    
+
+
 @router.post("/token", response_model=Token)
 async def token(form_data: OAuth2PasswordRequestForm = Depends()):
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
-        raise HTTPException(status_code=status.HTTP_401_ANAUTHORIZED,
-                            detail="Incorrect username or password",
-                            headers={"WWW-Athenticaiton":"Bearer"})
-    
+        raise HTTPException(
+            status_code=status.HTTP_401_ANAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Athenticaiton": "Bearer"},
+        )
+
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub":user.username},
-        expires_delta=access_token_expires
+        data={"sub": user.username}, expires_delta=access_token_expires
     )
-    return {"access_token": access_token, "token_type":"bearer" }
+    return {"access_token": access_token, "token_type": "bearer"}
+
 
 @router.get("/users/me", response_model=UserOut)
-async def read_users_me(current_user: Annotated[UserIn, Depends(get_current_user)]):
+async def read_users_me(
+    current_user: Annotated[
+        UserIn,
+        Depends(get_current_user),
+    ]
+):
     return current_user
 
+
 @router.get("/users/me/items")
-async def read_own_items(current_user: UserIn = Depends(get_current_active_user)):
-    print("------ current_user read_own_items", current_user)
+async def read_own_items(
+    current_user: UserIn = Depends(get_current_active_user),
+):
     return {"item_id": 1, "owner": current_user}
+
 
 @router.post("/users/create")
 async def create_user(user_info: UserIn, repo: UserRepo = Depends()):
     try:
-        user = repo.create(user_info, hashed_password=get_password_hash(user_info.password))
+        user = repo.create(
+            user_info, hashed_password=get_password_hash(user_info.password)
+        )
         return {"user": user}
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Cannot create an account with those credentials",
         )
-
