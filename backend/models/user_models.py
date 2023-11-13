@@ -14,8 +14,13 @@ class UserIn(BaseModel):
     email: str
     password: str
 
-class UserOut(UserIn):
+class UserOut(BaseModel):
     id: int
+    username: str
+    first_name: str
+    last_name: str
+    role: UserRole
+    email: str
     disabled: bool
     hashed_password: str
 

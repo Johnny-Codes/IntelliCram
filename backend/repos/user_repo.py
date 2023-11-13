@@ -1,10 +1,9 @@
 from repos.pool import pool
-from models.user_models import UserIn, UserOut
+from models.user_models import UserIn, UserOut, UserRole
 from typing import Optional
 
 class UserRepo:
     def create(self, user: UserIn, hashed_password: str):
-        print("====================================== user", user)
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -31,8 +30,6 @@ class UserRepo:
                         ],
                     )
                     id = result.fetchone()[0]
-                    print("====================================== id", id)
-                    # update get method to return UserOut
                     return UserOut(
                         id=id,
                         username=user.username,
@@ -47,52 +44,52 @@ class UserRepo:
             print(e)
             return None
 
-    def get(self, email: str) -> Optional[UserOut]:
+    def get(self, username: str) -> Optional[UserOut]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
                     result = cur.execute(
                         """
-                        SELECT id
-                        , first_name
-                        , last_name
-                        , badge_number
-                        , role
-                        , hashed_password
-                        FROM accounts
-                        WHERE badge_number = %s
+                        SELECT *
+                        FROM users
+                        WHERE username = %s;
                         """,
-                        [email],
+                        [username],
                     )
                     record = result.fetchone()
-                    return self.record_to_account_out(record)
+                    if record is None:
+                        return None
+                    else:
+                        return self.record_to_account_out(record)
         except Exception as e:
             print(e)
             return {"message": "Could not get that account"}
 
-    def delete(self, badge_number: str) -> bool:
+    def delete(self, username: str) -> bool:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
-                    cur.execute(
+                    result = cur.execute(
                         """
-                        DELETE FROM accounts
-                        WHERE badge_number = %s
+                        UPDATE users
+                        SET disabled = %s
+                        WHERE username = %s
                         """,
-                        [badge_number],
+                        [True, username],
                     )
+                    print("================================ delete", result)
                     return True
         except Exception as e:
             print(e)
             return False
 
-    # def record_to_account_out(self, record):
-    #     return AccountsOutWithPassword(
-    #         id=record[0],
-    #         first_name=record[1],
-    #         last_name=record[2],
-    #         badge_number=record[3],
-    #         role=record[4],
-    #         # email=record[4],
-    #         hashed_password=record[5],
-    #     )
+    def record_to_account_out(self, record):
+        print('record to account out', record)
+        return UserOut(id=record[0], 
+                username=record[1],
+                first_name=record[2], 
+                last_name=record[3], 
+                email=record[4], 
+                role=UserRole(record[5]), 
+                disabled=record[6], 
+                hashed_password=record[7],)
