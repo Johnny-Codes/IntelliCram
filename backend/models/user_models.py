@@ -12,8 +12,17 @@ class UserIn(BaseModel):
     last_name: str
     role: UserRole
     email: str
+    password: str
 
 class UserOut(UserIn):
     id: int
     disabled: bool
     hashed_password: str
+
+class Token(BaseModel):
+    access_token : str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: str or None = None
+

@@ -1,31 +1,115 @@
 from typing import Annotated
-
+import os
 from fastapi import Depends, FastAPI, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-
-from models.user_models import UserIn, UserOut
+from datetime import datetime, timedelta
+from jose import JWTError, jwt
+from passlib.context import CryptContext
+from repos.pool import pool
+from repos.user_repo import UserRepo
+from models.user_models import UserIn, UserOut, Token, TokenData
 
 router = APIRouter()
-
+password_contenxt = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+SECRET_KEY = os.environ["SECRET_KEY"]
+ALGORITHM = os.environ["ALGORITHM"]
+ACCESS_TOKEN_EXPIRE_MINUTES = os.environ["ACCESS_TOKEN_EXPIRE_MINUTES"]
 
-def fake_decode_token(token):
-    return UserIn(
-        username=token + "fakedecoded", 
-        email="john@example.com", 
-        first_name="John", 
-        last_name="Doe", 
-        role="admin",
-    )
+def verify_password(plain_password, hashed_password):
+    return password_contenxt.verify(plain_password, hashed_password)
 
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
-    user = fake_decode_token(token)
+def get_password_hash(password):
+    return password_contenxt.hash(password)
+
+def get_user(username: str):
+    try:
+        with pool.connection() as conn:
+            with conn.cursor as db:
+                result = db.execute("""
+                        SELECT * 
+                        FROM users
+                        WHERE username=  %s
+                    """,
+                    [username])
+                record = result.fetchone()
+                return UserOut(**record)
+
+    except Exception as e:
+        print(e)
+        return {"message":"Could not find account"}
+    
+    
+def authenticate_user(username: str, password: str):
+    user = get_user(username)
+    print("======================================= user", user)
+    if not user: 
+        return False
+    if not verify_password(password, user["hashed_password"]):
+        return False
     return user
 
-@router.get("/users/me")
+def create_access_token(data: dict, expires_delta: timedelta or None = None):
+    to_encode = data.copy()
+    if expires_delta: 
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes = 15)
+
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
+    credential_exception = HTTPException(status_code = status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Athenticaiton":"Bearer"})
+    try: 
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credential_exception
+        
+        token_data = TokenData(username=username)
+    except JWTError:
+        raise credential_exception
+    user = get_user(username=token_data.username)
+    if user is None:
+        raise  credential_exception
+    return user
+
+async def get_current_active_user(current_user: UserIn = Depends(get_current_user)):
+    if current_user.disabled:
+        raise HTTPException(status_code=400, detail="Inactive User")
+
+@router.post("/token", response_model=Token)
+async def token(form_data : OAuth2PasswordRequestForm = Depends()):
+    user = authenticate_user(form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_ANAUTHORIZED,
+                            detail="Incorrect username or password",
+                            headers={"WWW-Athenticaiton":"Bearer"})
+    
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub":user.username},
+        expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type":"bearer" }
+
+@router.get("/users/me", response_model=UserIn)
 async def read_users_me(current_user: Annotated[UserIn, Depends(get_current_user)]):
     return current_user
 
-@router.get("/items/")
-async def read_items(token: Annotated[str, Depends(oauth2_scheme)]):
-    return {"token": token}
+@router.get("/users/me/items")
+async def read_own_items(current_user: UserIn = Depends(get_current_active_user)):
+    return {"item_id": 1, "owner": current_user}
+
+@router.post("/users/create")
+async def create_user(user_info: UserIn, repo: UserRepo = Depends()):
+    try:
+        user = repo.create(user_info, hashed_password=get_password_hash(user_info.password))
+        return {"message":"YAYYYYY", "user": user}
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Cannot create an account with those credentials",
+        )
