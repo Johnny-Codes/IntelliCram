@@ -7,7 +7,7 @@ from models.user_models import UserIn
 router = APIRouter()
 
 
-@router.post("/classrooms/")
+@router.post("/classrooms")
 async def create_classroom(
     classroom: ClassroomIn,
     repo: ClassroomRepo = Depends(),
@@ -17,7 +17,7 @@ async def create_classroom(
     return create_classroom
 
 
-@router.get("/classrooms/")
+@router.get("/classrooms")
 async def get_classrooms(
     repo: ClassroomRepo = Depends(),
     current_user: UserIn = Depends(get_current_active_user),
