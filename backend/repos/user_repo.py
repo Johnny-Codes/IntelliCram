@@ -2,6 +2,7 @@ from repos.pool import pool
 from models.user_models import UserIn, UserOut, UserRole
 from typing import Optional
 
+
 class UserRepo:
     def create(self, user: UserIn, hashed_password: str):
         try:
@@ -77,19 +78,19 @@ class UserRepo:
                         """,
                         [True, username],
                     )
-                    print("================================ delete", result)
                     return True
         except Exception as e:
             print(e)
             return False
 
     def record_to_account_out(self, record):
-        print('record to account out', record)
-        return UserOut(id=record[0], 
-                username=record[1],
-                first_name=record[2], 
-                last_name=record[3], 
-                email=record[4], 
-                role=UserRole(record[5]), 
-                disabled=record[6], 
-                hashed_password=record[7],)
+        return UserOut(
+            id=record[0],
+            username=record[1],
+            first_name=record[2],
+            last_name=record[3],
+            email=record[4],
+            role=UserRole(record[5]),
+            disabled=record[6],
+            hashed_password=record[7],
+        )
