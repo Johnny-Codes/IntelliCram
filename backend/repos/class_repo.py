@@ -79,13 +79,6 @@ class ClassroomRepo:
             print(e)
             return None
 
-    def classroom_out(self, classroom: ClassroomIn):
-        return ClassroomOut(
-            id=classroom[0],
-            name=classroom[1],
-            user_id=classroom[2],
-        )
-
     def delete_classroom(self, classroom_id: int, user_id: int):
         try:
             with pool.connection() as conn:
@@ -141,3 +134,10 @@ class ClassroomRepo:
         except Exception as e:
             print(e)
             return None
+
+    def classroom_out(self, classroom: ClassroomIn):
+        return ClassroomOut(
+            id=classroom[0],
+            name=classroom[1],
+            user_id=classroom[2],
+        )
