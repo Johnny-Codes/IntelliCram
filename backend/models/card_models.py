@@ -1,5 +1,4 @@
 from pydantic import BaseModel
-from models.user_models import UserOut
 
 
 class CardIn(BaseModel):

@@ -11,7 +11,7 @@ models = {
     "4": "gpt-4",
 }
 
-json_response_template = "The JSON response should be a list of objects with a key 'question' and a key 'answers' that is a list of strings."
+json_response_template = "A list of objects with a key 'question', a key 'answers' that is a list of strings, and the 'correct_answer'."
 
 prompts = {
     "quiz_prompt": f"You are my teacher. For each question and answer create a multiple choice quiz with 3 clearly incorrect answers with the correct answer being exactly the answer you receive. Return a JSON {json_response_template}",
