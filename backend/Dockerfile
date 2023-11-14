@@ -5,11 +5,10 @@ WORKDIR /app
 COPY requirements.txt requirements.txt
 COPY main.py main.py
 
-# COPY migrations migrations
-# COPY models models
-# COPY queries queries
-# COPY routers routers
-# COPY test test
+COPY migrations migrations
+COPY models models
+COPY repos repos
+COPY routers routers
 
 RUN python -m pip install -r requirements.txt
 

@@ -1,9 +1,16 @@
-from models.card_models import CardIn, CardOut, CardEdit
+import json
+from models.card_models import (
+    CardIn,
+    CardOut,
+    CardEdit,
+    QuizIn,
+)
 from .pool import pool
+from openai_stuff.create_quiz import create_ai_quiz
 
 
 class CardRepo:
-    def create(self, card: CardIn, user_id: int, deck_id:int):
+    def create(self, card: CardIn, user_id: int, deck_id: int):
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -18,19 +25,14 @@ class CardRepo:
                     VALUES (%s, %s, %s, %s)
                     RETURNING *;
                     """,
-                        [
-                            card.question,
-                            card.answer,
-                            user_id,
-                            deck_id
-                        ],
+                        [card.question, card.answer, user_id, deck_id],
                     )
                     card = result.fetchone()
                     return self.card_out(card, card[0])
         except Exception as e:
             print(e)
             return None
-        
+
     def get_all_deck_cards(self, user_id: int, deck_id: int):
         try:
             with pool.connection() as conn:
@@ -54,7 +56,7 @@ class CardRepo:
         except Exception as e:
             print(e)
             return {"message": "Cannot Get card for deck"}
-        
+
     def get_card_for_deck(self, user_id: int, deck_id: int, card_id: int):
         try:
             with pool.connection() as conn:
@@ -77,7 +79,7 @@ class CardRepo:
         except Exception as e:
             print(e)
             return {"message": "Cannot Get card for deck"}
-        
+
     def delete_card(self, user_id: int, deck_id: int, card_id: int):
         try:
             with pool.connection() as conn:
@@ -101,7 +103,7 @@ class CardRepo:
         except Exception as e:
             print(e)
             return {"message": "could not delete card"}
-        
+
     def update_card(self, deck_id: int, user_id: int, card_id: int, card: CardEdit):
         try:
             with pool.connection() as conn:
@@ -131,7 +133,7 @@ class CardRepo:
                     return self.card_out(card, card[0])
         except Exception as e:
             print(e)
-            return {"message":"Could not create card"}
+            return {"message": "Could not create card"}
 
     def card_out(self, card: CardIn, card_id: int):
         return CardOut(
@@ -141,4 +143,61 @@ class CardRepo:
             wrong_count=card[3],
             user_id=card[4],
             deck_id=card[5],
-            )
+        )
+
+    def create_quiz_for_deck(
+        self,
+        user_id: int,
+        deck_id: int,
+        quiz_in: QuizIn,
+    ):
+        cards = self.get_all_deck_cards(user_id, deck_id)
+        response = create_ai_quiz(cards)
+        response = json.loads(response)
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as cur:
+                    result = cur.execute(
+                        """
+                        INSERT INTO quizzes
+                        (name, user_id, deck_id)
+                        VALUES (%s, %s, %s)
+                        RETURNING id;
+                    """,
+                        [
+                            quiz_in.name,
+                            user_id,
+                            deck_id,
+                        ],
+                    )
+                    quiz_id = result.fetchone()[0]
+                    print("quiz id", quiz_id)
+                    for obj in response:
+                        question = obj["question"]
+                        cur.execute(
+                            """
+                            INSERT INTO questions
+                            (question, quiz_id)
+                            VALUES (%s, %s)
+                            RETURNING id;
+                            """,
+                            [question, quiz_id],
+                        )
+                        question_id = cur.fetchone()[0]
+                        print("question id", question_id)
+                        for choice in obj["answers"]:
+                            ch = cur.execute(
+                                """
+                                INSERT INTO answers
+                                (answer, question_id)
+                                VALUES (%s, %s)
+                                RETURNING id;
+                                """,
+                                [choice, question_id],
+                            )
+                            answer_id = cur.fetchone()[0]
+                            print("answer id", answer_id)
+                    return True
+        except Exception as e:
+            print(e)
+            return {"message": "Could not create card"}
