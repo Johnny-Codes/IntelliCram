@@ -1,4 +1,18 @@
 from pydantic import BaseModel
+from typing import List
+
+
+class Answer(BaseModel):
+    id: int
+    answer: str
+    question_id: int
+
+
+class Question(BaseModel):
+    id: int
+    question: str
+    quiz_id: int
+    answers: List[Answer]
 
 
 class QuizOut(BaseModel):
@@ -6,15 +20,11 @@ class QuizOut(BaseModel):
     name: str
     user_id: int
     deck_id: int
+    questions: List[Question]
 
 
-class Question(BaseModel):
+class QuizOnlyOut(BaseModel):
     id: int
-    question: str
-    quiz_id: int
-
-
-class Answer(BaseModel):
-    id: int
-    answer: str
-    question_id: int
+    name: str
+    user_id: int
+    deck_id: int

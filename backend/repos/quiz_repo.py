@@ -1,5 +1,5 @@
 import json
-from models.quiz_models import Question, Answer, QuizOut
+from models.quiz_models import Question, Answer, QuizOut, QuizOnlyOut
 from .pool import pool
 
 
@@ -20,8 +20,7 @@ class QuizRepo:
                         ],
                     )
                     quizzes = result.fetchall()
-                    print("================== Quizzes", quizzes)
-                    return [self.quiz_out(quiz) for quiz in quizzes]
+                    return [self.quiz_only_out(quiz) for quiz in quizzes]
         except Exception as e:
             print(e)
             return {"message": "Cannot Get Quizzes for that deck"}
@@ -40,8 +39,7 @@ class QuizRepo:
                         ],
                     )
                     quizzes = result.fetchall()
-                    print("================== Quizzes for user", quizzes)
-                    return [self.quiz_out(quiz) for quiz in quizzes]
+                    return [self.quiz_only_out(quiz) for quiz in quizzes]
         except Exception as e:
             print(e)
             return {"message": "Cannot Get Quizzes for that user"}
@@ -64,11 +62,14 @@ class QuizRepo:
                         ],
                     )
                     quiz = result.fetchone()
-                    print("----- classroom -----", quiz)
-                    return self.quiz_out(quiz)
+                    questions = self.get_all_questions_for_quiz(
+                        user_id,
+                        quiz[0],
+                    )
+                    return self.quiz_out(quiz, questions)
         except Exception as e:
             print(e)
-            return {"message": "Cannot Get that quizz"}
+            return {"message": "Cannot get that quizzzzzzzzz"}
 
     def delete_quiz(self, user_id: int, deck_id: int, quiz_id: int):
         try:
@@ -106,8 +107,20 @@ class QuizRepo:
                         ],
                     )
                     questions = result.fetchall()
-                    print("================== Questions", questions)
-                    return [self.question_out(question) for question in questions]
+                    final_list = []
+                    for question in questions:
+                        answers = self.get_answers_for_question(
+                            user_id,
+                            quiz_id,
+                            question[0],
+                        )
+                        final_list.append(
+                            self.question_out(
+                                question,
+                                answers=answers,
+                            )
+                        )
+                    return final_list
         except Exception as e:
             print(e)
             return {"message": "Cannot Get questions for that quiz"}
@@ -125,7 +138,6 @@ class QuizRepo:
                         [quiz_id, user_id, question_id],
                     )
                     question = cur.fetchone()
-                    print("================== Question", question)
                     return self.question_out(question)
         except Exception as e:
             print(e)
@@ -143,7 +155,6 @@ class QuizRepo:
                         """,
                         [question_id],
                     )
-
                     # Delete the question
                     cur.execute(
                         """
@@ -176,25 +187,37 @@ class QuizRepo:
                         [quiz_id, user_id, question_id],
                     )
                     answers = cur.fetchall()
-                    print("================== Answers", answers)
                     return [self.answer_out(answer) for answer in answers]
         except Exception as e:
             print(e)
             return {"message": "Cannot get answers for that question"}
 
-    def quiz_out(self, quiz: QuizOut):
+    def quiz_out(self, quiz: QuizOut, questions: Question):
         return QuizOut(
+            id=quiz[0],
+            name=quiz[1],
+            user_id=quiz[2],
+            deck_id=quiz[3],
+            questions=questions,
+        )
+
+    def quiz_only_out(
+        self,
+        quiz: QuizOnlyOut,
+    ):
+        return QuizOnlyOut(
             id=quiz[0],
             name=quiz[1],
             user_id=quiz[2],
             deck_id=quiz[3],
         )
 
-    def question_out(self, question: Question):
+    def question_out(self, question: Question, answers: Answer):
         return Question(
             id=question[0],
             question=question[1],
             quiz_id=question[2],
+            answers=answers,
         )
 
     def answer_out(self, answer: Answer):
