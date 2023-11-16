@@ -1,3 +1,5 @@
+import json
+import re
 from models.card_models import (
     CardIn,
     CardOut,
@@ -6,8 +8,10 @@ from models.card_models import (
 )
 from fastapi import APIRouter, Depends
 from repos.card_repo import CardRepo
+from repos.upload_file_repo import UploadFileRepo
 from routers.user_routers import get_current_active_user
 from models.user_models import UserIn
+from openai_stuff import create_flashcards
 
 router = APIRouter()
 
@@ -82,3 +86,32 @@ async def update_card(
 ):
     update_card = repo.update_card(deck_id, current_user.id, card_id, card)
     return update_card
+
+
+@router.post("/deck/{deck_id}/cards/new_cards_from_file/{file_id}")
+async def create_new_cards_from_file(
+    file_id: int,
+    deck_id: int,
+    repo: CardRepo = Depends(),
+    upload_file_repo: UploadFileRepo = Depends(),
+    current_user: UserIn = Depends(get_current_active_user),
+):
+    file_path = upload_file_repo.read(file_id)
+    file_path = file_path.file_path
+    flashcards = create_flashcards.read_pdf(file_path)
+    pattern = re.compile(r"```json(.*?)```", re.DOTALL)
+    match = pattern.search(flashcards)
+    if match:
+        json_content = match.group(1)
+        print("----- json_content -----", json_content)
+        card_dict = json.loads(json_content)
+        for card in card_dict["flashcards"]:
+            card_in = CardIn(
+                question=card["question"],
+                answer=card["answer"],
+            )
+            repo.create(card_in, current_user.id, deck_id)
+        return json_content
+    else:
+        return "JSON content not found."
+    
