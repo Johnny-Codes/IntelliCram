@@ -14,6 +14,9 @@ async def upload_pdf_file(file: UploadFile = File(...),
                           model: UploadFileIn = Depends(), 
                           current_user: UserIn = Depends(get_current_active_user),
                           repo: UploadFileRepo = Depends()):
+    allowed_extensions = ['pdf']
+    if file.filename.split('.')[-1] not in allowed_extensions:
+        return "Invalid file type. Please upload a PDF file."
     directory = f"media_uploads/{str(current_user.id)}"
     if not os.path.exists(directory):
         os.makedirs(directory)
