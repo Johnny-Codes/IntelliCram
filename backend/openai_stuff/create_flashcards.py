@@ -18,6 +18,7 @@ def read_pdf(file_path):
     - str: The extracted text from the PDF.
     """
     try:
+        print("reading pdf")
         # Open the PDF file
         with open(file_path, "rb") as file:
             # Create a PDF reader object
@@ -36,8 +37,10 @@ def read_pdf(file_path):
                 i += 1
 
             text = text.replace("\n\n", " ").replace("\n", " ")
+            print("text done")
+            flash_cards = create_flashcards(text)
 
-            return text
+            return flash_cards
     except Exception as e:
         print(f"Error reading PDF: {e}")
         return None
@@ -54,11 +57,11 @@ prompts = {
 }
 
 
-def create_flashcards(text: str):
+def create_flashcards(text: str):  
     print("openai api call")
     try:
         response = client.chat.completions.create(
-            model="3.5-turbo",
+            model=models["3.5-turbo"],
             messages=[
                 {
                     "role": "system",
@@ -68,7 +71,7 @@ def create_flashcards(text: str):
             ],
             temperature=0.5,
         )
-        print("response content", response.choices[0].message.content)
+        # print("response content", response.choices[0].message.content)
         response_content = response.choices[0].message.content
         return response_content
     except Exception as e:
@@ -84,25 +87,27 @@ def create_flashcards(text: str):
         pass
 
 
-pdf_path = "data.pdf"
-pdf_text = read_pdf(pdf_path)
-flashcard_json = create_flashcards(pdf_text)
+# pdf_path = "data.pdf"
+# pdf_text = read_pdf(pdf_path)
+# flashcard_json = create_flashcards(pdf_text)
 
 
-def read_upload_pdf_and_create_flashcards(pdf_file_path):
-    pdf_text = read_pdf(pdf_file_path)
-    flashcard_json = create_flashcards(pdf_text)
-    return flashcard_json
+# def read_upload_pdf_and_create_flashcards(pdf_file_path):
+#     pdf_text = read_pdf(pdf_file_path)
+#     flashcard_json = create_flashcards(pdf_text)
+#     return flashcard_json
 
 
-"""
-create_flashcards response:
-{
-    "flashcards": [
-        {
-            "question": "question text",
-            "answer": "answer text"
-        }, more...
-    ]
-}
-"""
+# """
+# create_flashcards response:
+# {
+#     "flashcards": [
+#         {
+#             "question": "question text",
+#             "answer": "answer text"
+#         }, more...
+#     ]
+# }
+# """
+if __name__ == "__main__":
+    pass
