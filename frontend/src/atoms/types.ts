@@ -5,3 +5,9 @@ export enum SelectedPage {
     Quizzes = "quizzes",
     ContactUs = "contactus"
     }
+
+    export interface DeckType {
+        icon: JSX.Element;
+        title: string;
+        description: string; 
+    }

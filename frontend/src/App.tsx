@@ -1,5 +1,6 @@
 import Navbar from "@/organisms/navbar";
-import Home from "@/organisms/home";
+import Home from "@/pages/home";
+import Decks from "@/pages/decks";
 import { useState, useEffect } from "react";
 import { SelectedPage } from "./atoms/types";
 
@@ -31,6 +32,7 @@ function App() {
         setSelectedPage={setSelectedPage}
       />
       <Home setSelectedPage={setSelectedPage} />
+      <Decks setSelectedPage={setSelectedPage} />
     </div>
   )
 }
