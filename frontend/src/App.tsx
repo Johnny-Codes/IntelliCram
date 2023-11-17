@@ -1,6 +1,8 @@
 import Navbar from "@/organisms/navbar";
 import Home from "@/pages/home";
 import Decks from "@/pages/decks";
+import OurReviews from "./pages/reviews";
+import Footer from "./pages/footer";
 import { useState, useEffect } from "react";
 import { SelectedPage } from "./atoms/types";
 
@@ -33,6 +35,9 @@ function App() {
       />
       <Home setSelectedPage={setSelectedPage} />
       <Decks setSelectedPage={setSelectedPage} />
+      <OurReviews setSelectedPage={setSelectedPage} />
+      <Footer setSelectedPage={setSelectedPage} />
+      
     </div>
   )
 }

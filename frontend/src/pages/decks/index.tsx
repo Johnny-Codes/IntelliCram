@@ -6,7 +6,7 @@ import {
     AcademicCapIcon,
 } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
-import Deck from "./Deck";
+import Deck from "./Decks";
 import ActionButton from "@/atoms/ActionButton";
 import DecksPageGraphic from "@/assets/DecksPageGraphic.png"
 
