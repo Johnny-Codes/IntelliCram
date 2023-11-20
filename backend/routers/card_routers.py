@@ -52,7 +52,7 @@ async def create_quiz(
 
 
 @router.get("/classrooms/{class_id}/decks/{deck_id}/cards/{card_id}")
-async def get_all_deck_cards(
+async def get_a_deck_card(
     class_id: int,
     deck_id: int,
     card_id: int,
@@ -103,7 +103,6 @@ async def create_new_cards_from_file(
     match = pattern.search(flashcards)
     if match:
         json_content = match.group(1)
-        print("----- json_content -----", json_content)
         card_dict = json.loads(json_content)
         for card in card_dict["flashcards"]:
             card_in = CardIn(
@@ -114,4 +113,3 @@ async def create_new_cards_from_file(
         return json_content
     else:
         return "JSON content not found."
-    
