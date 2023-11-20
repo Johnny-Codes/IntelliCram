@@ -8,7 +8,17 @@ from routers import (
     upload_file_routers,
 )
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Add your frontend URL here
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(user_routers.router, tags=["user"])
 app.include_router(class_routers.router, tags=["classroom"])
