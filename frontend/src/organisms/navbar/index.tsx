@@ -5,7 +5,7 @@ import Link from "./Link";
 import { SelectedPage } from "@/atoms/types";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import ActionButton from "@/atoms/ActionButton";
-import { useGetUsersClassesQuery, useGetAccountTokenMutation, useLoginUserMutation, useCreateNewUserMutation, } from "@/queries/account";
+import { useGetUsersClassesQuery, useGetAccountTokenMutation, useLoginUserMutation, useCreateNewUserMutation, useGetTokenQuery } from "@/queries/account";
 
 type Props = {
     isTopOfPage: boolean;
@@ -20,11 +20,15 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
     const navbarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow"
     const [createNewUser] = useCreateNewUserMutation()
     const [loginUser] = useLoginUserMutation()
-    const [userToken] = useGetAccountTokenMutation()
+    // const [userToken] = useGetAccountTokenMutation()
     const { data: userClasses } = useGetUsersClassesQuery()
+    const { data: userToken } = useGetTokenQuery()
+
+    const [token, setToken] = useState('')
 
     useEffect(() => {
-        console.log("user classes:", userClasses)
+        setToken(userToken)
+        console.log("please be the token", token)
     }, [loginUser])
 
     const userData = {
@@ -53,11 +57,15 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
         createNewUser(userData)
     }
 
-    const getAccountTokenHandler = () => {
-        console.log("get account token")
-        const token = userToken()
-        console.log("token", token)
+    const getClassesHandler = () => {
+        setClasses(userClasses)
     }
+
+    // const getUserTokenHandler = () => {
+    //     const token = getUserTokenQuery()
+    //     const userT = setToken(userToken)
+    //     console.log("please fn work mfer token:", userT)
+    // }
 
     return (
         <nav>
@@ -94,7 +102,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                 </div>
                                 <div className={`${flexBetween} gap-8`}>
                                     <p onClick={createUserHandler}>Sign In</p>
-                                    <p onClick={getAccountTokenHandler}>Get Account Token</p>
+                                    {/* <p onClick={getUserTokenHandler}>Fucking token</p> */}
                                     <p onClick={loginUserHandler}>Login</p>
                                     <ActionButton>Sign Up</ActionButton>
                                 </div>

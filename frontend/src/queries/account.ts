@@ -4,16 +4,19 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const accountApi = createApi({
     reducerPath: 'accountApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:8000',
+        baseUrl: "http://localhost:8000",
         prepareHeaders: (headers, { getState }) => {
-          const token = getAuthToken();
-          if (token) {
-            headers.set('Authorization', `Bearer ${token}`);
-          }
-          return headers;
+            const selector = accountApi.endpoints.getToken.select();
+            console.log('selector: ', selector)
+            const { data: tokenData } = selector(getState());
+            console.log("tokenData", tokenData)
+            if (tokenData && tokenData.access_token) {
+                headers.set("Authorization", `Bearer ${tokenData.access_token}`);
+            }
+            console.log("headers: ", headers.access_token)
+            return headers;
         },
-        credentials: 'include',
-      }),
+    }),
     endpoints: (builder) => ({
         getAccountToken: builder.mutation({
             query: () => ({
@@ -53,28 +56,19 @@ export const accountApi = createApi({
                 credentials: "include",
             }),
         }),
+        getToken: builder.query({
+            query: () => ({
+                url: "/token",
+                // credentials: "include",
+            }),
+        }),
     })
 })
-
-const getAuthToken = () => {
-    const token = document.cookie
-      .split('; ')
-      .find((row) => row.startsWith('csrftoken='));
-
-    console.log('token: ', token)
-
-    if (token) {
-        console.log("tokens from getAuthToken:", token)
-        return token.split('=')[1];
-    }
-
-    return null;
-  };
-
 
 export const {
     useGetAccountTokenMutation,
     useCreateNewUserMutation,
     useLoginUserMutation,
     useGetUsersClassesQuery,
+    useGetTokenQuery,
 } = accountApi
