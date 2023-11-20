@@ -9,12 +9,15 @@ import Apos from '@/assets/AoPS_Main_Logo_(1).png'
 import xyz from "@/assets/xyz.png"
 import { motion } from "framer-motion";
 
+
 type Props = {
     setSelectedPage: (value: SelectedPage) => void;
 };
 
 const Home = ({ setSelectedPage }: Props) => {
     const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
+
+
 
     return <section
         id="home"

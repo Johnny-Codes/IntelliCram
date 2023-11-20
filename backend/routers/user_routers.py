@@ -7,7 +7,15 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from repos.pool import pool
 from repos.user_repo import UserRepo
-from models.user_models import UserIn, UserOut, Token, TokenData, UserRole
+from models.user_models import (
+    UserIn,
+    UserOut,
+    Token,
+    TokenData,
+    UserRole,
+    Token,
+    TokenIn,
+)
 
 router = APIRouter()
 password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -31,7 +39,7 @@ def get_user(username: str):
             with conn.cursor() as db:
                 result = db.execute(
                     """
-                        SELECT * 
+                        SELECT *
                         FROM users
                         WHERE username = %s;
                     """,
@@ -106,6 +114,23 @@ async def get_current_active_user(
     return current_user
 
 
+@router.post("/users/login")
+async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = authenticate_user(form_data.username, form_data.password)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_ANAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Athenticaiton": "Bearer"},
+        )
+
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
+    return {"access_token": access_token, "token_type": "bearer"}
+
+
 @router.delete("/users/me")
 async def delete_user(
     current_user: UserIn = Depends(get_current_active_user),
@@ -165,5 +190,36 @@ async def create_user(user_info: UserIn, repo: UserRepo = Depends()):
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot create an account with those credentials",
+            detail=f"Cannot create an account with those credentials {e}",
         )
+
+
+async def get_current_user_token(
+    token: Annotated[str, Depends(oauth2_scheme)], repo: UserRepo = Depends()
+):
+    credential_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Athenticaiton": "Bearer"},
+    )
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        username: str = payload.get("sub")
+        if username is None:
+            raise credential_exception
+
+        token_data = TokenData(username=username)
+    except JWTError:
+        raise credential_exception
+    user = repo.get(username=token_data.username)
+    if user is None:
+        raise credential_exception
+    print("------------ user: ", user)
+    return user
+
+
+@router.get("/users/me/token")
+async def get_users_token(
+    token: Annotated[str, Depends(oauth2_scheme)],
+):
+    return token

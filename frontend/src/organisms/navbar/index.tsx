@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import Logo from "@/assets/Logo.png";
 import Link from "./Link";
 import { SelectedPage } from "@/atoms/types";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import ActionButton from "@/atoms/ActionButton";
+import { useGetUsersClassesQuery, useGetAccountTokenMutation, useLoginUserMutation, useCreateNewUserMutation, } from "@/queries/account";
 
 type Props = {
     isTopOfPage: boolean;
@@ -17,6 +18,46 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
     const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
     const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
     const navbarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow"
+    const [createNewUser] = useCreateNewUserMutation()
+    const [loginUser] = useLoginUserMutation()
+    const [userToken] = useGetAccountTokenMutation()
+    const { data: userClasses } = useGetUsersClassesQuery()
+
+    useEffect(() => {
+        console.log("user classes:", userClasses)
+    }, [loginUser])
+
+    const userData = {
+        "username": "string",
+        "first_name": "test",
+        "last_name": "test",
+        "email": "gandalf2@gmail.com",
+        "role": "string",
+        "password": "test"
+    }
+
+    const loginData = {
+        "username": "string",
+        "password": "string"
+    }
+
+    const loginUserHandler = () => {
+        console.log("login user")
+        console.log("user data", loginData)
+        loginUser(loginData)
+    }
+
+    const createUserHandler = () => {
+        console.log("create user")
+        console.log("user data", userData)
+        createNewUser(userData)
+    }
+
+    const getAccountTokenHandler = () => {
+        console.log("get account token")
+        const token = userToken()
+        console.log("token", token)
+    }
 
     return (
         <nav>
@@ -52,7 +93,9 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                     />
                                 </div>
                                 <div className={`${flexBetween} gap-8`}>
-                                    <p>Sign In</p>
+                                    <p onClick={createUserHandler}>Sign In</p>
+                                    <p onClick={getAccountTokenHandler}>Get Account Token</p>
+                                    <p onClick={loginUserHandler}>Login</p>
                                     <ActionButton>Sign Up</ActionButton>
                                 </div>
                             </div>
@@ -68,39 +111,40 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
             </div>
 
             {/* MOBILE MENU MODAL */}
-            {!isAboveMediumScreens && isMenuToggled && (
-                <div className="fixed right-0 bottom-0 z-40 h-full w-[300px] bg-primary-100 drop-shadow-xl">
-                    <div className="flex justify-end p-12">
-                        <button onClick={() => setIsMenuToggled(!isMenuToggled)}>
-                            <XMarkIcon className="h-6 w-6 text-gray-400" />
-                        </button>
+            {
+                !isAboveMediumScreens && isMenuToggled && (
+                    <div className="fixed right-0 bottom-0 z-40 h-full w-[300px] bg-primary-100 drop-shadow-xl">
+                        <div className="flex justify-end p-12">
+                            <button onClick={() => setIsMenuToggled(!isMenuToggled)}>
+                                <XMarkIcon className="h-6 w-6 text-gray-400" />
+                            </button>
+                        </div>
+                        {/* MENU ITEMS */}
+                        <div className="ml-[33%] flex flex-col gap-10 text-2xl">
+                            <Link
+                                page="Home"
+                                selectedPage={selectedPage}
+                                setSelectedPage={setSelectedPage}
+                            />
+                            <Link
+                                page="Decks"
+                                selectedPage={selectedPage}
+                                setSelectedPage={setSelectedPage}
+                            />
+                            <Link
+                                page="Quizzes"
+                                selectedPage={selectedPage}
+                                setSelectedPage={setSelectedPage}
+                            />
+                            <Link
+                                page="Contact Us"
+                                selectedPage={selectedPage}
+                                setSelectedPage={setSelectedPage}
+                            />
+                        </div>
                     </div>
-                    {/* MENU ITEMS */}
-                    <div className="ml-[33%] flex flex-col gap-10 text-2xl">
-                        <Link
-                            page="Home"
-                            selectedPage={selectedPage}
-                            setSelectedPage={setSelectedPage}
-                        />
-                        <Link
-                            page="Decks"
-                            selectedPage={selectedPage}
-                            setSelectedPage={setSelectedPage}
-                        />
-                        <Link
-                            page="Quizzes"
-                            selectedPage={selectedPage}
-                            setSelectedPage={setSelectedPage}
-                        />
-                        <Link
-                            page="Contact Us"
-                            selectedPage={selectedPage}
-                            setSelectedPage={setSelectedPage}
-                        />
-                    </div>
-                </div>
-    )
-}
+                )
+            }
         </nav >
     );
 };
