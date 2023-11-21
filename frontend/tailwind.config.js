@@ -24,7 +24,7 @@ export default {
           },
           content: {
             intellicrambackground: "url('./assets/intellicrambackground.png')",
-            abstractwaves: "url('./assets/AbsractWaves.png')",
+            // abstractwaves: "url('./assets/AbsractWaves.png')",
             sparkles: "url('./assets/Sparkles.png')",
             circles: "url('./assets/Circles.png')",
           }

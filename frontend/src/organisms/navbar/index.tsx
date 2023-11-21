@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import Logo from "@/assets/Logo.png";
 import Link from "./Link";
 import { SelectedPage } from "@/atoms/types";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import ActionButton from "@/atoms/ActionButton";
-import { useLoginUserMutation } from "@/queries/account";
-import { setAccessToken } from "@/slices/account/AccountSlice";
 
 type Props = {
     isTopOfPage: boolean;
@@ -20,25 +17,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
     const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
     const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
     const navbarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow"
-    const [loginUser] = useLoginUserMutation()
-    const dispatch = useDispatch()
 
-
-    const loginData = {
-        "username": "string",
-        "password": "string"
-    }
-
-    const loginUserHandler = async () => {
-        console.log("login user")
-        console.log("user data", loginData)
-        const response = await loginUser(loginData)
-        console.log("response", response)
-        if (response.data && response.data.access_token) {
-            console.log('Access Token:', response.data.access_token);
-            dispatch(setAccessToken(response.data.access_token));
-          }
-    }
 
     return (
         <nav>
@@ -75,7 +54,6 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                 </div>
                                 <div className={`${flexBetween} gap-8`}>
                                     <p>Sign In</p>
-                                    <p onClick={loginUserHandler}>Login</p>
                                     <ActionButton>Sign Up</ActionButton>
                                 </div>
                             </div>
@@ -129,5 +107,4 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
     );
 };
 
-export default NavBar;
-
+export default NavBar

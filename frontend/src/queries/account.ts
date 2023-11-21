@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {getAccessToken} from "@/slices/account/AccountSlice";
+import type { RootState } from './store'
+import { useSelector } from "react-redux";
 
 
 export const accountApi = createApi({
@@ -8,14 +10,23 @@ export const accountApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:8000",
         prepareHeaders: (headers, { getState }) => {
-            const accessToken = getAccessToken(getState());
-          
-            if (accessToken) {
-              headers.set("Authorization", `Bearer ${accessToken}`);
-            }
-          
-            return headers;
-          },
+          const token = getAccessToken(getState() as RootState);
+        
+          // If we have a token set in state, let's assume that we should be passing it.
+          if (token.payload.account.accessToken) {
+            const newHeaders = new Headers(headers);
+            newHeaders.set('authorization', `Bearer ${token.payload.account.accessToken}`);
+        
+            // Convert Headers object to plain object for logging
+            const headersObject = {};
+            newHeaders.forEach((value, key) => {
+              headersObject[key] = value;
+            });
+        
+            return newHeaders;
+          }
+          return headers;
+        },
     }),
     tagTypes: ["token"],
     endpoints: (builder) => ({
@@ -48,8 +59,10 @@ export const accountApi = createApi({
             query: () => ({
                 url: "/classrooms",
                 method: "GET",
-                credentials: "include",
+                // credentials: "include",
             }),
+            // providesTags: (result) => result ? [...result, 'token'] : ['token'],
+            providesTags: ["token"],
         }),
         getToken: builder.query({
             query: () => ({
@@ -58,6 +71,7 @@ export const accountApi = createApi({
                 credentials: "include",
             }),
             providesTags: ["token"],
+            // invalidatesTags: ["token"],
         }),
     })
 })
@@ -68,4 +82,3 @@ export const {
     useGetUsersClassesQuery,
     useGetTokenQuery,
 } = accountApi
-
