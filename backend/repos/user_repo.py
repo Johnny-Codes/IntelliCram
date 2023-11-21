@@ -1,6 +1,7 @@
 from repos.pool import pool
 from models.user_models import UserIn, UserOut, UserRole
 from typing import Optional
+from fastapi import HTTPException
 
 
 class UserRepo:
@@ -42,8 +43,10 @@ class UserRepo:
                         hashed_password=hashed_password,
                     )
         except Exception as e:
-            print(e)
-            return None
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"There was an error in the create dummy {e}",
+                    )
 
     def get(self, username: str) -> Optional[UserOut]:
         try:

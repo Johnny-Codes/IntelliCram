@@ -64,6 +64,7 @@ def get_user(username: str):
 
 def authenticate_user(username: str, password: str):
     user = get_user(username)
+    print("========================= user", user, type(user))
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
@@ -185,9 +186,14 @@ async def read_own_items(
 
 @router.post("/users/create")
 async def create_user(user_info: UserIn, repo: UserRepo = Depends()):
+    print("888888888888888888 ", user_info, type(user_info))
+    hashed_password = get_password_hash(user_info.password)
+    # new_role = UserRole(user_info.role)
+    # user_info.role = new_role
+    print("hashed password", hashed_password)
     try:
         user = repo.create(
-            user_info, hashed_password=get_password_hash(user_info.password)
+            user_info, hashed_password=hashed_password
         )
         return {"user": user}
     except Exception as e:

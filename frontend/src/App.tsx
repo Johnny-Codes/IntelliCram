@@ -2,16 +2,17 @@ import Landing from './templates/landing';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { SelectedPage } from './atoms/types';
-import LoginForm from './organisms/LoginForm';
+import LoginForm from './pages/login';
+import SignupForm from './pages/signup';
 
 function App() {
 	return (
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Landing />} />
-				{/* <Route path="signup">
+				<Route path="signup">
 					<Route path="new" element={<SignupForm />} />
-				</Route> */}
+				</Route>
 				<Route path="login">
 					<Route path="new" element={<LoginForm />} />
 				</Route>

@@ -8,7 +8,7 @@ type Props = {
     setSelectedPage: (value: SelectedPage) => void;
 }
 
-function Link({
+function ScrollLink({
     page,
     selectedPage,
     setSelectedPage,
@@ -30,4 +30,4 @@ function Link({
     )
 }
 
-export default Link
+export default ScrollLink
