@@ -1,46 +1,28 @@
-import Navbar from "@/organisms/navbar";
-import Home from "@/pages/home";
-import Decks from "@/pages/decks";
-import OurReviews from "./pages/reviews";
-import Footer from "./pages/footer";
-import { useState, useEffect } from "react";
-import { SelectedPage } from "./atoms/types";
-import LoginForm from "./organisms/LoginForm";
-
-
+import Landing from './templates/landing';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { SelectedPage } from './atoms/types';
+import LoginForm from './organisms/LoginForm';
 
 function App() {
-  const [selectedPage, setSelectedPage] = useState<SelectedPage>(SelectedPage.Home);
-  const [isTopOfPage, setIsTopOfPage] = useState<boolean>(true);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY === 0) {
-        setIsTopOfPage(true)
-        setSelectedPage(SelectedPage.Home)
-      }
-      if (window.scrollY !== 0) setIsTopOfPage(false);
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-
-  }, []);
-
-  return (
-    <div className="app bg-gray-20">
-      <Navbar
-        isTopOfPage={isTopOfPage}
-        selectedPage={selectedPage}
-        setSelectedPage={setSelectedPage}
-      />
-      <Home setSelectedPage={setSelectedPage} />
-      <Decks setSelectedPage={setSelectedPage} />
-      <OurReviews setSelectedPage={setSelectedPage} />
-      <Footer setSelectedPage={setSelectedPage} />
-
-    </div>
-  )
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Landing />} />
+				{/* <Route path="signup">
+					<Route path="new" element={<SignupForm />} />
+				</Route> */}
+				<Route path="login">
+					<Route path="new" element={<LoginForm />} />
+				</Route>
+				{/* <Route path="decks" element={<Decks />} />
+				<Route path="flashcards">
+					<Route path="" element={<FlashcardsList />} />
+					<Route path=":id" element={<FlashcardDetail />} />
+				</Route> */}
+			</Routes>
+		</BrowserRouter>
+	);
 }
 
-export default App
+export default App;

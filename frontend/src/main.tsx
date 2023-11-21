@@ -4,7 +4,6 @@ import App from './App.tsx'
 import './index.css'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-
 import { store } from './store/store.ts'
 
 
