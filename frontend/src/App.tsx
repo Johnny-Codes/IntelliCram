@@ -5,6 +5,7 @@ import OurReviews from "./pages/reviews";
 import Footer from "./pages/footer";
 import { useState, useEffect } from "react";
 import { SelectedPage } from "./atoms/types";
+import LoginForm from "./organisms/LoginForm";
 
 
 
@@ -37,7 +38,7 @@ function App() {
       <Decks setSelectedPage={setSelectedPage} />
       <OurReviews setSelectedPage={setSelectedPage} />
       <Footer setSelectedPage={setSelectedPage} />
-      
+
     </div>
   )
 }
