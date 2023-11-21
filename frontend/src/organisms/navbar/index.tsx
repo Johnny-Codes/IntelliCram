@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import Logo from "@/assets/Logo.png";
 import Link from "./Link";
 import { SelectedPage } from "@/atoms/types";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import ActionButton from "@/atoms/ActionButton";
-import { useGetUsersClassesQuery, useGetAccountTokenMutation, useLoginUserMutation, useCreateNewUserMutation, useGetTokenQuery } from "@/queries/account";
+import { useLoginUserMutation } from "@/queries/account";
+import { setAccessToken } from "@/slices/account/AccountSlice";
 
 type Props = {
     isTopOfPage: boolean;
@@ -18,54 +20,25 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
     const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
     const isAboveMediumScreens = useMediaQuery("(min-width: 1060px)");
     const navbarBackground = isTopOfPage ? "" : "bg-primary-100 drop-shadow"
-    const [createNewUser] = useCreateNewUserMutation()
     const [loginUser] = useLoginUserMutation()
-    // const [userToken] = useGetAccountTokenMutation()
-    const { data: userClasses } = useGetUsersClassesQuery()
-    const { data: userToken } = useGetTokenQuery()
+    const dispatch = useDispatch()
 
-    const [token, setToken] = useState('')
-
-    useEffect(() => {
-        setToken(userToken)
-        console.log("please be the token", token)
-    }, [loginUser])
-
-    const userData = {
-        "username": "string",
-        "first_name": "test",
-        "last_name": "test",
-        "email": "gandalf2@gmail.com",
-        "role": "string",
-        "password": "test"
-    }
 
     const loginData = {
         "username": "string",
         "password": "string"
     }
 
-    const loginUserHandler = () => {
+    const loginUserHandler = async () => {
         console.log("login user")
         console.log("user data", loginData)
-        loginUser(loginData)
+        const response = await loginUser(loginData)
+        console.log("response", response)
+        if (response.data && response.data.access_token) {
+            console.log('Access Token:', response.data.access_token);
+            dispatch(setAccessToken(response.data.access_token));
+          }
     }
-
-    const createUserHandler = () => {
-        console.log("create user")
-        console.log("user data", userData)
-        createNewUser(userData)
-    }
-
-    const getClassesHandler = () => {
-        setClasses(userClasses)
-    }
-
-    // const getUserTokenHandler = () => {
-    //     const token = getUserTokenQuery()
-    //     const userT = setToken(userToken)
-    //     console.log("please fn work mfer token:", userT)
-    // }
 
     return (
         <nav>
@@ -101,8 +74,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                     />
                                 </div>
                                 <div className={`${flexBetween} gap-8`}>
-                                    <p onClick={createUserHandler}>Sign In</p>
-                                    {/* <p onClick={getUserTokenHandler}>Fucking token</p> */}
+                                    <p>Sign In</p>
                                     <p onClick={loginUserHandler}>Login</p>
                                     <ActionButton>Sign Up</ActionButton>
                                 </div>
@@ -158,3 +130,4 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 };
 
 export default NavBar;
+

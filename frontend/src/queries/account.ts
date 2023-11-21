@@ -1,30 +1,24 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {getAccessToken} from "@/slices/account/AccountSlice";
 
 
 export const accountApi = createApi({
+    
     reducerPath: 'accountApi',
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:8000",
         prepareHeaders: (headers, { getState }) => {
-            const selector = accountApi.endpoints.getToken.select();
-            console.log('selector: ', selector)
-            const { data: tokenData } = selector(getState());
-            console.log("tokenData", tokenData)
-            if (tokenData && tokenData.access_token) {
-                headers.set("Authorization", `Bearer ${tokenData.access_token}`);
+            const accessToken = getAccessToken(getState());
+          
+            if (accessToken) {
+              headers.set("Authorization", `Bearer ${accessToken}`);
             }
-            console.log("headers: ", headers.access_token)
+          
             return headers;
-        },
+          },
     }),
+    tagTypes: ["token"],
     endpoints: (builder) => ({
-        getAccountToken: builder.mutation({
-            query: () => ({
-                url: "/token",
-                method: "POST",
-                credentials: "include"
-            })
-        }),
         createNewUser: builder.mutation({
             query: (credentials) => ({
                 url: '/users/create',
@@ -34,21 +28,22 @@ export const accountApi = createApi({
         }),
         loginUser: builder.mutation({
             query: (formData) => {
-                let loginData = null;
-                if (formData instanceof HTMLElement) {
-                    loginData = new FormData(formData);
-                } else {
-                    loginData = new FormData();
-                    loginData.append("username", formData.username);
-                    loginData.append("password", formData.password);
-                    console.log("login data", loginData)
-                }
-                return {
-                    url: "/token",
-                    method: "POST",
-                    body: loginData
-                };
-            }}),
+              let loginData = null;
+              if (formData instanceof HTMLElement) {
+                loginData = new FormData(formData);
+              } else {
+                loginData = new FormData();
+                loginData.append("username", formData.username);
+                loginData.append("password", formData.password);
+              }
+              return {
+                url: "/users/login",
+                method: "POST",
+                body: loginData,
+              };
+            },
+            invalidatesTags: ["token"],
+          }),
         getUsersClasses: builder.query({
             query: () => ({
                 url: "/classrooms",
@@ -58,17 +53,19 @@ export const accountApi = createApi({
         }),
         getToken: builder.query({
             query: () => ({
-                url: "/token",
-                // credentials: "include",
+                url: "/users/token",
+                method: "GET",
+                credentials: "include",
             }),
+            providesTags: ["token"],
         }),
     })
 })
 
 export const {
-    useGetAccountTokenMutation,
     useCreateNewUserMutation,
     useLoginUserMutation,
     useGetUsersClassesQuery,
     useGetTokenQuery,
 } = accountApi
+

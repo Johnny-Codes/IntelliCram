@@ -128,6 +128,9 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     access_token = create_access_token(
         data={"sub": user.username}, expires_delta=access_token_expires
     )
+    # Save the access token in the frontend React by setting it in the state or local storage
+    # Example of setting in state:
+    # setAccessToken(access_token)
     return {"access_token": access_token, "token_type": "bearer"}
 
 
@@ -194,32 +197,10 @@ async def create_user(user_info: UserIn, repo: UserRepo = Depends()):
         )
 
 
-async def get_current_user_token(
-    token: Annotated[str, Depends(oauth2_scheme)], repo: UserRepo = Depends()
-):
-    credential_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Athenticaiton": "Bearer"},
+@router.get("/users/token", response_model=Token)
+async def get_user_token(current_user: UserIn = Depends(get_current_active_user)):
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(
+        data={"sub": current_user.username}, expires_delta=access_token_expires
     )
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        username: str = payload.get("sub")
-        if username is None:
-            raise credential_exception
-
-        token_data = TokenData(username=username)
-    except JWTError:
-        raise credential_exception
-    user = repo.get(username=token_data.username)
-    if user is None:
-        raise credential_exception
-    print("------------ user: ", user)
-    return user
-
-
-@router.get("/users/me/token")
-async def get_users_token(
-    token: Annotated[str, Depends(oauth2_scheme)],
-):
-    return token
+    return {"access_token": access_token, "token_type": "bearer"}
