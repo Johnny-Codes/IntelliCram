@@ -45,6 +45,7 @@ export const accountApi = createApi({
                 body: loginData,
               };
             },
+            providesTags: ["user"],
             invalidatesTags: ["token"],
           }),
         signupUser: builder.mutation({
@@ -66,6 +67,16 @@ export const accountApi = createApi({
             // providesTags: (result) => result ? [...result, 'token'] : ['token'],
             providesTags: ["token"],
         }),
+        logoutUser: builder.mutation({
+            query: () => ({
+              // this is actually not the correct endpoint, this deletes a user entirely from the database.
+              // we need to make a delete token endpoint 
+                url: "/users/me", 
+                method: "DELETE",
+                credentials: "include",
+            }),
+            invalidatesTags: ["token", "user"],
+        }),
         getToken: builder.query({
             query: () => ({
                 url: "/users/token",
@@ -83,4 +94,5 @@ export const {
     useLoginUserMutation,
     useGetUsersClassesQuery,
     useGetTokenQuery,
+    useLogoutUserMutation,
 } = accountApi

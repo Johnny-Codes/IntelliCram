@@ -7,6 +7,7 @@ import useMediaQuery from '@/hooks/useMediaQuery';
 import ActionButton from '@/atoms/ActionButton';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useLogoutUserMutation } from '@/queries/account';
 
 type Props = {
 	isTopOfPage: boolean;
@@ -20,6 +21,14 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 	const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
 	const navbarBackground = isTopOfPage ? '' : 'bg-primary-100 drop-shadow';
     const user = useSelector((state) => state.account.user);
+
+    // this logout stuff is actually deleting the user, not logging them out
+    // see the notes on teh logout mutation
+    // const [ logout, logoutResponse ] = useLogoutUserMutation();
+
+    // const userLogoutHandler = () => {
+    //     logout();
+    // }
 
 	return (
 		<nav>
@@ -54,21 +63,32 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 										setSelectedPage={setSelectedPage}
 									/>
 								</div>
-								<div className={`${flexBetween} gap-8`}>
-									<Link
-										to="login/new"
-										className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
-									>
-										Login {user && (<span>{user}</span>)}
-									</Link>
-                                    
-									<Link
-										to="signup/new"
-										className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
-									>
-										Signup
-									</Link>
-								</div>
+                                {!user ? (
+                                    <div className={`${flexBetween} gap-8`}>
+                                        <Link
+                                            to="login/new"
+                                            className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
+                                        >
+                                            Login 
+                                        </Link>
+                                        
+                                        <Link
+                                            to="signup/new"
+                                            className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
+                                        >
+                                            Signup
+                                        </Link>
+                                    </div>
+                                ) : (
+                                    <div className={`${flexBetween} gap-8`}>
+                                        <p>{user && <span>Welcome {user}</span>}</p>
+                                        <p className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2" 
+                                        // onClick={userLogoutHandler}
+                                        >Log Out</p>
+                                        
+                                    </div>
+                                )}
+								
 							</div>
 						) : (
 							<button
