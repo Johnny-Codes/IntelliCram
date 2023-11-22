@@ -12,7 +12,6 @@ export const accountSlice = createSlice({
       state.user = action.payload;
     },
     setAccessToken: (state, action) => {
-      console.log('set access token payload', action.payload)
       state.accessToken = action.payload;
     },
     getAccessToken: (state) => {

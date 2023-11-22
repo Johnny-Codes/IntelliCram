@@ -1,8 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import {getAccessToken} from "@/slices/account/accountSlice";
 import type { RootState } from './store'
-import { useSelector } from "react-redux";
-import { sign } from 'crypto';
 
 
 export const accountApi = createApi({
