@@ -78,7 +78,7 @@ def create_access_token(data: dict, expires_delta: timedelta or None = None):
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
-        expire = datetime.utcnow() + timedelta(minutes=15)
+        expire = datetime.utcnow() + timedelta(minutes=200)
 
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
@@ -118,7 +118,7 @@ async def get_current_active_user(
 
 @router.post("/users/login")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    print('login form data', form_data)
+    print("login form data", form_data)
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -156,10 +156,8 @@ async def delete_user(
 async def create_user(user_info: UserIn, repo: UserRepo = Depends()):
     hashed_password = get_password_hash(user_info.password)
     try:
-        user = repo.create(
-            user_info, hashed_password=hashed_password
-        )
-        print('user', user)
+        user = repo.create(user_info, hashed_password=hashed_password)
+        print("user", user)
         # can't get the login function to work...
         # if user.username:
         #     form_data = OAuth2PasswordRequestForm(
