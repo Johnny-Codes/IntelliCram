@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {getAccessToken} from "@/slices/account/AccountSlice";
+import {getAccessToken} from "@/slices/account/accountSlice";
 import type { RootState } from './store'
 import { useSelector } from "react-redux";
 import { sign } from 'crypto';
@@ -47,7 +47,7 @@ export const accountApi = createApi({
                 body: loginData,
               };
             },
-            // invalidatesTags: ["token"],
+            invalidatesTags: ["token"],
           }),
         signupUser: builder.mutation({
             query: (formData) => {
@@ -57,7 +57,7 @@ export const accountApi = createApi({
                 body: formData,
               };
             },
-            // invalidatesTags: ["token"],
+            invalidatesTags: ["token"],
           }),
         getUsersClasses: builder.query({
             query: () => ({

@@ -6,6 +6,7 @@ import { SelectedPage } from '@/atoms/types';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import ActionButton from '@/atoms/ActionButton';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 type Props = {
 	isTopOfPage: boolean;
@@ -18,6 +19,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 	const [ isMenuToggled, setIsMenuToggled ] = useState<boolean>(false);
 	const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
 	const navbarBackground = isTopOfPage ? '' : 'bg-primary-100 drop-shadow';
+    const user = useSelector((state) => state.account.user);
 
 	return (
 		<nav>
@@ -57,8 +59,9 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 										to="login/new"
 										className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
 									>
-										Login
+										Login {user && (<span>{user}</span>)}
 									</Link>
+                                    
 									<Link
 										to="signup/new"
 										className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"

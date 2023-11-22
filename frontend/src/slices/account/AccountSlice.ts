@@ -5,7 +5,7 @@ export const accountSlice = createSlice({
   name: 'account',
   initialState: {
     user: null,
-    accessToken: "suck my d",
+    accessToken: null,
   },
   reducers: {
     setUser: (state, action) => {

@@ -12,7 +12,7 @@ class UserIn(BaseModel):
     username: str
     first_name: str
     last_name: str
-    role: str
+    role: UserRole
     email: str
     password: str
 

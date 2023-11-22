@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLoginUserMutation } from '@/queries/account';
 import FormInput from '@/atoms/FormInput';
+import { useSelector, useDispatch } from 'react-redux';
+import { setAccessToken, setUser } from '@/slices/account/accountSlice';
 
 type formData = {
 	username: string;
@@ -10,24 +12,27 @@ type formData = {
 
 function LoginForm() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const [ login, loginResponse ] = useLoginUserMutation();
 	const [ formData, setFormData ] = useState<formData>({});
+	const accessToken = useSelector((state) => state.account.accessToken);
+
+	useEffect(() => {
+	if (loginResponse.isSuccess) {
+		dispatch(setAccessToken(loginResponse.data.access_token)); 
+		dispatch(setUser(formData.username));
+		navigate("/")
+	}}, [loginResponse, dispatch, navigate, accessToken, formData.username]);
 
 	const handleFormChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
 	};
-	const [ login, loginResponse ] = useLoginUserMutation();
+	
 
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault();
-		const response = login(formData);
-		console.log();
-		if (loginResponse.isSuccess) {
-			console.log('we did it');
-			navigate('/');
-		} else {
-			console.log('response', response);
-		}
+		await login(formData);
 	}
 
 	return (
