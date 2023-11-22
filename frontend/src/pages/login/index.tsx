@@ -14,11 +14,13 @@ type formData = {
 function LoginForm() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'user']);
+	const [cookies, setCookie, removeCookie] = useCookies(['user']);
 	const [ login, loginResponse ] = useLoginUserMutation();
 	const [ formData, setFormData ] = useState<formData>({});
 	const accessToken = useSelector((state) => state.account.accessToken);
-
+	if (cookies.user && !formData.username) {
+		setFormData({ username: cookies.user, password: '' });
+	}
 	useEffect(() => {
 	if (loginResponse.isSuccess) {
 		dispatch(setAccessToken(loginResponse.data.access_token)); 

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSignupUserMutation } from '@/queries/account';
 import FormInput from '@/atoms/FormInput';
+import {useCookies} from 'react-cookie';
 
 type formData = {
 	username: string;
@@ -16,11 +17,13 @@ function SignupForm() {
 	const navigate = useNavigate();
 	const [ formData, setFormData ] = useState<formData>({ role: 'student' });
 	const [ signup, signupResponse ] = useSignupUserMutation();
+	const [cookies, setCookie, removeCookie] = useCookies(['user']);
 
 	useEffect(() => {
 	if (signupResponse.isSuccess) {
 		console.log('we did it', signupResponse.data);
-		// navigate('/');
+		setCookie('user', formData.username, { path: '/' });
+		navigate('/login/new');
 	}}, [signupResponse])
 
 	const handleFormChange = (e) => {
