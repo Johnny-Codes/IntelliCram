@@ -4,6 +4,7 @@ import { useLoginUserMutation } from '@/queries/account';
 import FormInput from '@/atoms/FormInput';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAccessToken, setUser } from '@/slices/account/accountSlice';
+import { useCookies } from 'react-cookie';
 
 type formData = {
 	username: string;
@@ -13,6 +14,7 @@ type formData = {
 function LoginForm() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'user']);
 	const [ login, loginResponse ] = useLoginUserMutation();
 	const [ formData, setFormData ] = useState<formData>({});
 	const accessToken = useSelector((state) => state.account.accessToken);
@@ -21,6 +23,8 @@ function LoginForm() {
 	if (loginResponse.isSuccess) {
 		dispatch(setAccessToken(loginResponse.data.access_token)); 
 		dispatch(setUser(formData.username));
+		setCookie('access_token', loginResponse.data.access_token, { path: '/' });
+		setCookie('user', formData.username, { path: '/' });
 		navigate("/")
 	}}, [loginResponse, dispatch, navigate, accessToken, formData.username]);
 

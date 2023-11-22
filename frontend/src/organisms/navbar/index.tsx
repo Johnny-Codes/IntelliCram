@@ -4,10 +4,10 @@ import Logo from '@/assets/Logo.png';
 import ScrollLink from './ScrollLink';
 import { SelectedPage } from '@/atoms/types';
 import useMediaQuery from '@/hooks/useMediaQuery';
-import ActionButton from '@/atoms/ActionButton';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { useLogoutUserMutation } from '@/queries/account';
+import {useCookies} from 'react-cookie';
+
 
 type Props = {
 	isTopOfPage: boolean;
@@ -20,7 +20,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 	const [ isMenuToggled, setIsMenuToggled ] = useState<boolean>(false);
 	const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
 	const navbarBackground = isTopOfPage ? '' : 'bg-primary-100 drop-shadow';
-    const user = useSelector((state) => state.account.user);
+    const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'user']);
 
     // this logout stuff is actually deleting the user, not logging them out
     // see the notes on teh logout mutation
@@ -47,6 +47,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 										selectedPage={selectedPage}
 										setSelectedPage={setSelectedPage}
 									/>
+                                    
 									<ScrollLink
 										page="Decks"
 										selectedPage={selectedPage}
@@ -63,7 +64,17 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 										setSelectedPage={setSelectedPage}
 									/>
 								</div>
-                                {!user ? (
+                                {cookies.user ? (
+                                    <div className={`${flexBetween} gap-8`}>
+                                        <p>{cookies.user && <span>Welcome {cookies.user}</span>}</p>
+                                        <button 
+                                            className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2" 
+                                            onClick={() => {removeCookie('user'); removeCookie('access_token')}}
+                                        >
+                                            Log Out
+                                        </button>
+                                    </div>
+                                ) : (
                                     <div className={`${flexBetween} gap-8`}>
                                         <Link
                                             to="login/new"
@@ -79,14 +90,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                             Signup
                                         </Link>
                                     </div>
-                                ) : (
-                                    <div className={`${flexBetween} gap-8`}>
-                                        <p>{user && <span>Welcome {user}</span>}</p>
-                                        <p className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2" 
-                                        // onClick={userLogoutHandler}
-                                        >Log Out</p>
-                                        
-                                    </div>
+                                    
                                 )}
 								
 							</div>

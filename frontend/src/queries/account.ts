@@ -1,26 +1,25 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {getAccessToken} from "@/slices/account/accountSlice";
-import type { RootState } from './store'
-
 
 export const accountApi = createApi({
     
     reducerPath: 'accountApi',
     baseQuery: fetchBaseQuery({
         baseUrl: "http://localhost:8000",
-        prepareHeaders: (headers, { getState }) => {
-          const token = getAccessToken(getState() as RootState);
+        prepareHeaders: (headers) => {
+          const accessToken = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/, "$1");
         
-          // If we have a token set in state, let's assume that we should be passing it.
-          if (token.payload.account.accessToken) {
+          // If we have an access token cookie, let's assume that we should be passing it.
+          if (accessToken) {
             const newHeaders = new Headers(headers);
-            newHeaders.set('authorization', `Bearer ${token.payload.account.accessToken}`);
+            newHeaders.set('authorization', `Bearer ${accessToken}`);
         
             // Convert Headers object to plain object for logging
             const headersObject = {};
             newHeaders.forEach((value, key) => {
               headersObject[key] = value;
             });
+
+            console.log('new headers', headersObject);
         
             return newHeaders;
           }
@@ -62,10 +61,10 @@ export const accountApi = createApi({
             query: () => ({
                 url: "/classrooms",
                 method: "GET",
-                // credentials: "include",
+                credentials: "include",
             }),
-            // providesTags: (result) => result ? [...result, 'token'] : ['token'],
-            providesTags: ["token"],
+            providesTags: ["user"],
+            invalidatesTags: ["token"],
         }),
         logoutUser: builder.mutation({
             query: () => ({
