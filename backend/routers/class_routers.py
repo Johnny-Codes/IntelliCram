@@ -22,6 +22,7 @@ async def get_classrooms(
     repo: ClassroomRepo = Depends(),
     current_user: UserIn = Depends(get_current_active_user),
 ):
+    print("---- userid", current_user.id)
     get_classrooms = repo.get_all_users_classrooms(current_user.id)
     return get_classrooms
 
