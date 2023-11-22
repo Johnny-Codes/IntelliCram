@@ -1,4 +1,4 @@
-import Navbar from "@/organisms/navbar";
+import Navbar from "@/organisms/landing-navbar";
 import Home from "@/pages/home";
 import Decks from "@/pages/decks";
 import OurReviews from "@/pages/reviews";

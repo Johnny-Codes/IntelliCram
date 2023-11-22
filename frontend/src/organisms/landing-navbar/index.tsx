@@ -19,7 +19,6 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 	const flexBetween = 'flex items-center justify-between';
 	const [ isMenuToggled, setIsMenuToggled ] = useState<boolean>(false);
 	const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
-	const navbarBackground = isTopOfPage ? '' : 'bg-primary-100 drop-shadow';
     const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'user']);
 
     // this logout stuff is actually deleting the user, not logging them out
@@ -32,7 +31,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 
 	return (
 		<nav>
-			<div className={`${navbarBackground} ${flexBetween} fixed top-0 z-30 w-full py-6`}>
+			<div className={`bg-primary-100 drop-shadow  ${flexBetween} fixed top-0 z-30 w-full py-6`}>
 				<div className={`${flexBetween} mx-auto w-5/6`}>
 					<div className={`${flexBetween} w-full gap-16`}>
 						{/* LEFT SIDE */}
@@ -47,7 +46,7 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
 										selectedPage={selectedPage}
 										setSelectedPage={setSelectedPage}
 									/>
-                                    
+
 									<ScrollLink
 										page="Decks"
 										selectedPage={selectedPage}
@@ -67,8 +66,8 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                 {cookies.user ? (
                                     <div className={`${flexBetween} gap-8`}>
                                         <p>{cookies.user && <span>Welcome {cookies.user}</span>}</p>
-                                        <button 
-                                            className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2" 
+                                        <button
+                                            className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
                                             onClick={() => {removeCookie('user'); removeCookie('access_token')}}
                                         >
                                             Log Out
@@ -80,9 +79,9 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                             to="login/new"
                                             className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
                                         >
-                                            Login 
+                                            Login
                                         </Link>
-                                        
+
                                         <Link
                                             to="signup/new"
                                             className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
@@ -90,9 +89,9 @@ const NavBar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                             Signup
                                         </Link>
                                     </div>
-                                    
+
                                 )}
-								
+
 							</div>
 						) : (
 							<button
