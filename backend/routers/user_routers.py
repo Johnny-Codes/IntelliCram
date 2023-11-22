@@ -1,5 +1,6 @@
 from typing import Annotated
 import os
+import json
 from fastapi import Depends, FastAPI, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from datetime import datetime, timedelta
@@ -117,6 +118,7 @@ async def get_current_active_user(
 
 @router.post("/users/login")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
+    print('login form data', form_data)
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -186,16 +188,20 @@ async def read_own_items(
 
 @router.post("/users/create")
 async def create_user(user_info: UserIn, repo: UserRepo = Depends()):
-    print("888888888888888888 ", user_info, type(user_info))
     hashed_password = get_password_hash(user_info.password)
-    # new_role = UserRole(user_info.role)
-    # user_info.role = new_role
-    print("hashed password", hashed_password)
     try:
         user = repo.create(
             user_info, hashed_password=hashed_password
         )
-        return {"user": user}
+        print('user', user)
+        # can't get the login function to work...
+        # if user.username:
+        #     form_data = OAuth2PasswordRequestForm(
+        #         username=user.username, password=user_info.password
+        #     )
+        #     x = login(form_data=form_data)
+        #     return x
+        return user
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
