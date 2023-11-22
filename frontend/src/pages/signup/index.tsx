@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSignupUserMutation } from '@/queries/account';
 import FormInput from '@/atoms/FormInput';
@@ -15,24 +15,23 @@ type formData = {
 function SignupForm() {
 	const navigate = useNavigate();
 	const [ formData, setFormData ] = useState<formData>({ role: 'student' });
+	const [ signup, signupResponse ] = useSignupUserMutation();
+
+	useEffect(() => {
+	if (signupResponse.isSuccess) {
+		console.log('we did it', signupResponse.data);
+		// navigate('/');
+	}}, [signupResponse])
 
 	const handleFormChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
 	};
-	const [ signup, signupResponse ] = useSignupUserMutation();
+	
 
-	function handleSubmit(e) {
+	async function handleSubmit(e) {
 		e.preventDefault();
-		console.log(formData);
-		signup(formData);
-		console.log('signup response', signupResponse);
-		if (signupResponse.isSuccess) {
-			console.log('we did it');
-			navigate('/');
-		} else {
-			console.log('response', signupResponse);
-		}
+		await signup(formData);
 	}
 
 	return (
