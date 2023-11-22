@@ -1,11 +1,10 @@
-import Navbar from "@/organisms/landing-navbar";
+import LandingNavbar from "@/organisms/landing-navbar";
 import Home from "@/pages/home";
 import Decks from "@/pages/decks";
 import OurReviews from "@/pages/reviews";
 import Footer from "@/pages/footer";
 import { useState, useEffect } from "react";
 import { SelectedPage } from "@/atoms/types";
-
 
 
 function Landing() {
@@ -28,7 +27,7 @@ function Landing() {
 
   return (
     <div className="app bg-gray-20">
-      <Navbar
+      <LandingNavbar
         isTopOfPage={isTopOfPage}
         selectedPage={selectedPage}
         setSelectedPage={setSelectedPage}
@@ -37,7 +36,6 @@ function Landing() {
       <Decks setSelectedPage={setSelectedPage} />
       <OurReviews setSelectedPage={setSelectedPage} />
       <Footer setSelectedPage={setSelectedPage} />
-
     </div>
   )
 }
