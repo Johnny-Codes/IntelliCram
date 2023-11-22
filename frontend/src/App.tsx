@@ -1,9 +1,10 @@
-import Landing from './templates/landing';
+import Landing from '@/templates/landing';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import { SelectedPage } from './atoms/types';
-import LoginForm from './pages/login';
-import SignupForm from './pages/signup';
+import { SelectedPage } from '@/atoms/types';
+import LoginForm from '@/pages/login';
+import SignupForm from '@/pages/signup';
+import Navbar from '@/pages/navbar';
 
 function App() {
 	return (
@@ -16,6 +17,7 @@ function App() {
 				<Route path="login">
 					<Route path="new" element={<LoginForm />} />
 				</Route>
+				<Route path="testing" element={<Navbar />} />
 				{/* <Route path="decks" element={<Decks />} />
 				<Route path="flashcards">
 					<Route path="" element={<FlashcardsList />} />
