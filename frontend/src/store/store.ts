@@ -14,7 +14,7 @@ export const store = configureStore({
     [decksApi.reducerPath]: decksApi.reducer,
     // state
     account: accountSlice.reducer,
-as  },
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       accountApi.middleware,

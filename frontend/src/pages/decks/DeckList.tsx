@@ -1,12 +1,24 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useGetClassDecksQuery } from '@/queries/decks'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-type Props = {}
 
-const DeckList = ({ }: Props) => {
-  const classId = useSelector((state) => state.classes.class_id)
+const DeckList = () => {
+  const classId = useSelector((state) => state.classes);
+  console.log('class id in decklist', classId)
+
+  useEffect(() => {
+    console.log('use effect?')
+  }, [classId])
+
+
+  if (!classId) {
+    return (
+      <h1>No Class Selected</h1>
+    )
+  }
+
   const { data: decks, isLoading } = useGetClassDecksQuery(classId)
 
   if (isLoading) {

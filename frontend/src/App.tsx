@@ -21,15 +21,15 @@ function App() {
 				<Route path="login">
 					<Route path="new" element={<LoginForm />} />
 				</Route>
-				{/* <Route path="testing" element={< />} /> */}
+				<Route path="testing" element={<UserTemplate />} />
 				{/* <Route path="decks" element={<Decks />} /> */}
-				<Route path="classes">
+				{/* <Route path="classes">
 					<Route path="" element={<UserTemplate />} />
-					<Route path="new" element={<ClassesForm />} />
-					{/* <Route path=":id" element={<FlashcardDetail />} /> */}
-				</Route>
+					<Route path="new" element={<ClassesForm />} /> */}
+				{/* <Route path=":id" element={<FlashcardDetail />} /> */}
+				{/* </Route> */}
 			</Routes>
-		</BrowserRouter>
+		</BrowserRouter >
 	);
 }
 
