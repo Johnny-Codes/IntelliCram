@@ -3,16 +3,23 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { accountApi } from '@/queries/account'
 import { classesApi } from '@/queries/classes'
 import { accountSlice } from '@/slices/account/accountSlice'
+import { decksApi } from '@/queries/decks'
 
 
 export const store = configureStore({
   reducer: {
+    //endpoints
     [accountApi.reducerPath]: accountApi.reducer,
     [classesApi.reducerPath]: classesApi.reducer,
+    [decksApi.reducerPath]: decksApi.reducer,
+    // state
     account: accountSlice.reducer,
-  },
+as  },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(accountApi.middleware, classesApi.middleware),
+    getDefaultMiddleware().concat(
+      accountApi.middleware,
+      classesApi.middleware,
+      decksApi.middleware),
 })
 
 setupListeners(store.dispatch)

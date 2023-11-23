@@ -1,12 +1,13 @@
-import React from 'react'
-import { useGetUsersClassesQuery } from '@/queries/classes'
+import React, { useEffect } from 'react'
+import { useGetClassDecksQuery } from '@/queries/decks'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 type Props = {}
 
 const DeckList = ({ }: Props) => {
-  const { data: classes, isLoading } = useGetUsersClassesQuery()
-  console.log(classes)
+  const classId = useSelector((state) => state.classes.class_id)
+  const { data: decks, isLoading } = useGetClassDecksQuery(classId)
 
   if (isLoading) {
     return (
@@ -18,9 +19,9 @@ const DeckList = ({ }: Props) => {
 
   return (
     <ul>
-      {classes.map((classItem) => (
-        <li key={classItem.id}>
-          <Link to={`/classes/${classItem.id}`}>{classItem.name}</Link>
+      {decks.map((deckItem) => (
+        <li key={deckItem.id}>
+          <Link to={`/classes/${deckItem.id}`}>{deckItem.name}</Link>
         </li>
       ))}
     </ul>

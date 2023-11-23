@@ -8,30 +8,15 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 
-
-type Props = {
-    isTopOfPage: boolean;
-    selectedPage: SelectedPage;
-    setSelectedPage: (value: SelectedPage) => void;
-};
-
-const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
+const Navbar = () => {
     const flexBetween = 'flex items-center justify-between';
     const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
     const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
     const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'user']);
 
-    // this logout stuff is actually deleting the user, not logging them out
-    // see the notes on teh logout mutation
-    // const [ logout, logoutResponse ] = useLogoutUserMutation();
-
-    // const userLogoutHandler = () => {
-    //     logout();
-    // }
-
     return (
         <nav>
-            <div className={`bg-primary-100 drop-shadow  ${flexBetween} fixed top-0 z-30 w-full py-6`}>
+            <div className={`bg-primary-100 drop-shadow  ${flexBetween} w-full py-6`}>
                 <div className={`${flexBetween} mx-auto w-5/6`}>
                     <div className={`${flexBetween} w-full gap-16`}>
                         {/* LEFT SIDE */}
@@ -48,7 +33,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                         Home
                                     </Link>
                                     <Link
-                                        to=""
+                                        to="/classes"
                                         className=''
                                     >
                                         Classes
@@ -63,7 +48,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
                                         to=""
                                         className=''
                                     >
-                                        Quizzes
+                                        Dick BUtt
                                     </Link>
                                 </div>
                                 {cookies.user ? (
@@ -111,7 +96,7 @@ const Navbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) => {
             {/* MOBILE MENU MODAL */}
             {!isAboveMediumScreens &&
                 isMenuToggled && (
-                    <div className="fixed right-0 bottom-0 z-40 h-full w-[300px] bg-primary-100 drop-shadow-xl">
+                    <div className="fixed right-0 bottom-0 h-full w-[300px] bg-primary-100 drop-shadow-xl">
                         <div className="flex justify-end p-12">
                             <button onClick={() => setIsMenuToggled(!isMenuToggled)}>
                                 <XMarkIcon className="h-6 w-6 text-gray-400" />
