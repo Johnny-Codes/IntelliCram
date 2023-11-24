@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom'
 import CreateClassButton from '@/molecules/CreateClassButton'
 import { useDispatch } from 'react-redux'
 import { setClass } from '@/slices/account/ClassesSlice'
+import { showDecksList, showClassesList, showClassesForm } from '@/slices/SpaSlice'
 
-type Props = {}
-
-const ClassesList = ({ }: Props) => {
+const ClassesList = () => {
   const { data: classes, isLoading } = useGetUsersClassesQuery()
   const dispatch = useDispatch()
   console.log(classes)
@@ -15,6 +14,9 @@ const ClassesList = ({ }: Props) => {
   const changeClassStateId = (e, id) => {
     e.preventDefault();
     dispatch(setClass(id))
+    dispatch(showDecksList(true))
+    dispatch(showClassesList(false))
+    dispatch(showClassesForm(false))
     console.log('class id: ', id)
   }
 
@@ -32,7 +34,7 @@ const ClassesList = ({ }: Props) => {
         <h1>Classes</h1>
       </div>
       <div className="flex items-center justify-evenly flex-wrap outline">
-        {classes.map((classItem) => (
+        {classes && classes.map((classItem) => (
           <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4" key={classItem.id}>
             <p
               className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"

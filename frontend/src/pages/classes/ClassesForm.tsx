@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { useCreateClassMutation } from '@/queries/classes';
 import FormInput from '@/atoms/FormInput';
+import { showClassesList, showClassesForm } from '@/slices/SpaSlice';
 
 type formData = {
     username: string;
@@ -9,13 +10,14 @@ type formData = {
 };
 
 const ClassesForm = () => {
-    const navigate = useNavigate();
     const [createClass, createClassResponse] = useCreateClassMutation();
     const [formData, setFormData] = useState<formData>({});
+    const dispatch = useDispatch()
 
     useEffect(() => {
         if (createClassResponse.isSuccess) {
-            navigate("/classes")
+            dispatch(showClassesList(true))
+            dispatch(showClassesForm(false))
         }
     }, [createClassResponse.isSuccess]);
 
