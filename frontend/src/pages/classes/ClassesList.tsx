@@ -5,6 +5,7 @@ import CreateClassButton from '@/molecules/CreateClassButton'
 import { useDispatch } from 'react-redux'
 import { setClass } from '@/slices/account/ClassesSlice'
 import { showDecksList, showClassesList, showClassesForm } from '@/slices/SpaSlice'
+import Class from '@/molecules/Class'
 
 const ClassesList = () => {
   const { data: classes, isLoading } = useGetUsersClassesQuery()
@@ -34,14 +35,13 @@ const ClassesList = () => {
         <h1>Classes</h1>
       </div>
       <div className="flex items-center justify-evenly flex-wrap outline">
-        {classes && classes.map((classItem) => (
-          <div className="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4" key={classItem.id}>
-            <p
-              className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
-              onClick={(e) => changeClassStateId(e, classItem.id)}
-            >{classItem.name}</p>
-          </div>
-        ))}
+      {classes.map((classItem) => (
+        <Class
+          key={classItem.id}
+          name={classItem.name}
+          onClick={(e) => changeClassStateId(e, classItem.id)}
+        />
+      ))}
       </div >
       <CreateClassButton />
     </>
