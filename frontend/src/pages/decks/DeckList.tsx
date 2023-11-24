@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { showDecksForm, showDecksList } from '@/slices/SpaSlice';
+import Deck from '@/molecules/Deck';
 
 const DeckList = () => {
 	const classId = useSelector((state) => state.classes.class_id);
@@ -42,7 +43,7 @@ const DeckList = () => {
 			{decks &&
 				decks.map((deckItem) => (
 					<li key={deckItem.id}>
-						<Link to={`/classes/${deckItem.id}`}>{deckItem.name}</Link>
+						<Deck deckName={deckItem.name}/>
 					</li>
 				))}
 		</ul>
