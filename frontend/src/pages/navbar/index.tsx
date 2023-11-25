@@ -11,9 +11,9 @@ import { showClassesList, showClassesForm, showDecksForm, showDecksList } from '
 
 const Navbar = () => {
 	const flexBetween = 'flex items-center justify-between';
-	const [ isMenuToggled, setIsMenuToggled ] = useState<boolean>(false);
+	const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
 	const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
-	const [ cookies, setCookie, removeCookie ] = useCookies([ 'access_token', 'user' ]);
+	const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'user']);
 	const dispatch = useDispatch();
 
 	const handleClassesChange = () => {
@@ -35,11 +35,9 @@ const Navbar = () => {
 						{isAboveMediumScreens ? (
 							<div className={`${flexBetween} w-full`}>
 								<div className={`${flexBetween} gap-8 text-sm`}>
-									<p className="">Home</p>
-									<p onClick={handleClassesChange} className="">
-										Classes
-									</p>
-									<p className="">Decks</p>
+									<p className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">Home</p>
+									<p onClick={handleClassesChange} className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">Classes</p>
+									<p className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">Decks</p>
 								</div>
 								{cookies.user ? (
 									<div className={`${flexBetween} gap-8`}>
@@ -86,22 +84,22 @@ const Navbar = () => {
 
 			{/* MOBILE MENU MODAL */}
 			{!isAboveMediumScreens &&
-			isMenuToggled && (
-				<div className="fixed right-0 bottom-0 h-full w-[300px] bg-primary-100 drop-shadow-xl">
-					<div className="flex justify-end p-12">
-						<button onClick={() => setIsMenuToggled(!isMenuToggled)}>
-							<XMarkIcon className="h-6 w-6 text-gray-400" />
-						</button>
+				isMenuToggled && (
+					<div className="fixed right-0 bottom-0 h-full w-[300px] bg-primary-100 drop-shadow-xl">
+						<div className="flex justify-end p-12">
+							<button onClick={() => setIsMenuToggled(!isMenuToggled)}>
+								<XMarkIcon className="h-6 w-6 text-gray-400" />
+							</button>
+						</div>
+						{/* MENU ITEMS */}
+						<div className="ml-[33%] flex flex-col gap-10 text-2xl">
+							<Link to="Home" className="" />
+							<Link to="Home" className="" />
+							<Link to="Home" className="" />
+							<Link to="Home" className="" />
+						</div>
 					</div>
-					{/* MENU ITEMS */}
-					<div className="ml-[33%] flex flex-col gap-10 text-2xl">
-						<Link to="Home" className="" />
-						<Link to="Home" className="" />
-						<Link to="Home" className="" />
-						<Link to="Home" className="" />
-					</div>
-				</div>
-			)}
+				)}
 		</nav>
 	);
 };

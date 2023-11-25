@@ -20,7 +20,6 @@ function UserTemplate() {
             <Navbar />
             {showClassesForm && <ClassesForm />}
             {showClassList && <ClassesList />}
-            {/* <ClassesList /> */}
             {showDeckForm && <DeckForm />}
             {showDeckList && <DeckList />}
             {showFlashcardsList && <FlashcardsList /> }

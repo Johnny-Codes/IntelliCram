@@ -8,7 +8,7 @@ export const spaSlice = createSlice({
 		showClassesForm: false,
 		showDecksList: false,
 		showDecksForm: false,
-		showFlashcardsList: true,
+		showFlashcardsList: false,
 		showFlashcardsForm: false
 	},
 	reducers: {
