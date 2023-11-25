@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useGetDeckFlashcardsQuery } from '@/queries/flashcards';
 import { useSelector, useDispatch } from 'react-redux';
-import { showFlashcardsForm, showFlashcardsList } from '@/slices/SpaSlice';
+import { showFlashcardsForm, showFlashcardsList, showQuizForm } from '@/slices/SpaSlice';
 import Flashcard from '@/molecules/Flashcard';
-import { useCreateQuizAIMutation } from '@/queries/flashcards';
+
 
 const FlashcardsList = () => {
 	const classId = useSelector((state) => state.classes.class_id);
@@ -17,9 +17,9 @@ const FlashcardsList = () => {
 	}
 	
 	const handleCreateQuiz = () =>{
-		const {data: quiz, isLoading} = useCreateQuizAIMutation({class_id: classId, deck_id: deckId, formData})
 		dispatch(showFlashcardsList(false))
 		dispatch(showFlashcardsForm(false))
+		dispatch(showQuizForm(true))
 	}
 	const { data: flashcards, isLoading } = useGetDeckFlashcardsQuery({ class_id: classId, deck_id: deckId });
 

@@ -11,7 +11,9 @@ import {
 	showDecksForm,
 	showDecksList,
 	showFlashcardsList,
-	showFlashcardsForm
+	showFlashcardsForm,
+	showQuizzesList,
+	showQuizDetail
 } from '@/slices/SpaSlice';
 
 const Navbar = () => {
@@ -28,6 +30,15 @@ const Navbar = () => {
 		dispatch(showDecksForm(false));
 		dispatch(showFlashcardsList(false));
 		dispatch(showFlashcardsForm(false));
+	};
+
+	const handleQuizzesChange = () => {
+		dispatch(showClassesList(false));
+		dispatch(showClassesForm(false));
+		dispatch(showDecksList(false));
+		dispatch(showDecksForm(false));
+		dispatch(showFlashcardsList(false));
+		dispatch(showQuizzesList(true));
 	};
 
 	return (
@@ -53,6 +64,11 @@ const Navbar = () => {
 									</p>
 									<p className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
 										Decks
+									</p>
+									<p 
+										onClick={handleQuizzesChange}
+										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
+										Quizzes
 									</p>
 								</div>
 								{cookies.user ? (

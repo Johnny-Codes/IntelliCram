@@ -9,6 +9,7 @@ import FlashcardsList from '@/pages/flashcards/FlashcardsList';
 import FlashcardsForm from '@/pages/flashcards/FlashcardsForm';
 import QuizForm from '@/pages/quizzes/QuizForm';
 import QuizDetail from '@/pages/quizzes/QuizDetail';
+import QuizzesList from '@/pages/quizzes/QuizzesList';
 
 function UserTemplate() {
     const showClassList = useSelector((state) => state.spaslice.showClassesList)
@@ -19,6 +20,7 @@ function UserTemplate() {
     const showFlashcardsForm = useSelector((state) => state.spaslice.showFlashcardsForm)
     const showQuizForm = useSelector((state) => state.spaslice.showQuizForm)
     const showQuizDetail = useSelector((state) => state.spaslice.showQuizDetail)
+    const showQuizzesList = useSelector((state) => state.spaslice.showQuizzesList)
     
 
     return (
@@ -32,6 +34,8 @@ function UserTemplate() {
             {showFlashcardsForm && <FlashcardsForm /> }
             {showQuizForm && <QuizForm /> }
             {showQuizDetail && <QuizDetail /> }
+            {showQuizzesList && <QuizzesList /> }
+
         </>
     )
 }

@@ -11,7 +11,8 @@ export const spaSlice = createSlice({
 		showFlashcardsList: false,
 		showFlashcardsForm: false,
 		showQuizForm: false,
-		showQuizDetail: false
+		showQuizDetail: false,
+		showQuizzesList: false
 	},
 	reducers: {
 		showClassesList: (state, action) => {
@@ -37,6 +38,9 @@ export const spaSlice = createSlice({
 		},
 		showQuizDetail: (state, action) => {
 			state.showQuizDetail = action.payload;
+		},
+		showQuizzesList: (state, action) => {
+			state.showQuizzesList = action.payload;
 		}
 	}
 });
@@ -49,7 +53,8 @@ export const {
 	showFlashcardsList,
 	showFlashcardsForm,
 	showQuizForm,
-	showQuizDetail
+	showQuizDetail,
+	showQuizzesList
 } = spaSlice.actions;
 
 export default spaSlice.reducer;

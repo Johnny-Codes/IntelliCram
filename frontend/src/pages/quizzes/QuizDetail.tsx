@@ -1,26 +1,36 @@
+import React, { useState } from 'react';
 import { useGetAllQuizQuestionsQuery } from '@/queries/quizzes';
-import { useSelector, useDispatch } from 'react-redux';
 
-const QuizDetail = () => {
-	const quizId = useSelector((state) => state.quizzes.quiz_id);
-	
-	const { data: quiz, isLoading } = useGetAllQuizQuestionsQuery(quizId);
-    console.log(quiz)
+const QuizDetail = (props) => {
+    const { quizId } = props;
+    console.log("quiz id that is passed in", quizId);
+    
+    const { data: quiz, isLoading } = useGetAllQuizQuestionsQuery(quizId);
+    console.log("quiz inside quiz detail", quiz);
 
+    const [selectedAnswer, setSelectedAnswer] = useState(null);
 
-	if (isLoading) {
-		return (
-			<div>
-				<p>Your Quiz is Loading</p>
-			</div>
-		);
-	};
+    const handleAnswerClick = (answer) => {
+        setSelectedAnswer(answer);
+    };
 
-	return (
-		<>
-        <p>Your quiz should be in the console</p>
-		</>
-	);
+    if (isLoading) {
+        return <p>Your Quiz is Loading</p>;
+    }
+
+    if (!quiz) {
+        return <p>No quiz found</p>;
+    }
+
+    return (
+        <div>
+            <h1>Quizzes</h1>
+            <p>Question: {quiz.question}</p>
+            {quiz.answers && quiz.answers.map((answer, index) => (
+                <p key={index}>Answer: {answer}</p>
+            ))}
+        </div>
+    );
 };
 
 export default QuizDetail;

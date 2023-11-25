@@ -28,7 +28,7 @@ export const quizzesApi = createApi({
 	tagTypes: [ 'quizzes', "questions", "answers"],
 	endpoints: (builder) => ({
         getAllDeckQuizzes: builder.query({
-            query: (args: {class_id: number; deck_id: number) => ({
+            query: (args: {class_id: number; deck_id: number}) => ({
                 url: `/classrooms/${args.class_id}/decks/${args.deck_id}/quizzes`,
                 method: "GET",
                 credentials: "include",

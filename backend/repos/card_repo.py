@@ -194,7 +194,9 @@ class CardRepo:
                                 [choice, question_id],
                             )
                             answer_id = cur.fetchone()[0]
-                    return True
+                    
+                    print("this is the db result", result)
+                    return result
         except Exception as e:
             print(e)
             return {"message": "Could not create card"}

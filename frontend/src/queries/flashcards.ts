@@ -80,7 +80,7 @@ export const flashcardsApi = createApi({
 			query: (args: {class_id: number; deck_id: number; formData: {}}) => {
 				return {
 					url: `/classrooms/${args.class_id}/decks/${args.deck_id}/cards/quiz`,
-					method: 'PUT',
+					method: 'POST',
 					body: args.formData
 				};
 			},

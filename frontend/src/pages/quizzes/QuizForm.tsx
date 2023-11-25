@@ -3,20 +3,13 @@ import { useDispatch } from 'react-redux';
 import FormInput from '@/atoms/FormInput';
 import { useCreateQuizAIMutation } from '@/queries/flashcards';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-import {
-	showFlashcardsList,
-	showClassesList,
-	showClassesForm,
-	showDecksForm,
-	showFlashcardsForm,
-    showQuizForm
-} from '@/slices/SpaSlice';
+import { showFlashcardsList, showClassesList, showQuizForm, showQuizDetail } from '@/slices/SpaSlice';
 
 type formData = {
 	name: string;
 };
 
-const  QuizForm = () => {
+const QuizForm = () => {
 	const [ createQuiz, createQuizResponse ] = useCreateQuizAIMutation();
 	const [ formData, setFormData ] = useState<formData>({});
 	const dispatch = useDispatch();
@@ -26,7 +19,7 @@ const  QuizForm = () => {
 	useEffect(
 		() => {
 			if (createQuizResponse.isSuccess) {
-				dispatch(showClassesList(false));
+				dispatch(showQuizDetail(true));
 			}
 		},
 		[ createQuizResponse.isSuccess ]
@@ -39,9 +32,11 @@ const  QuizForm = () => {
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		await createQuiz({ class_id: classId, deck_id: deckId, formData: formData });
-		dispatch(showFlashcardsList(true));
+		dispatch(showQuizDetail(true));
 		dispatch(showQuizForm(false));
+		console.log('class id, deck id, formData', classId, deckId, formData);
+		const quiz = await createQuiz({ class_id: classId, deck_id: deckId, formData: formData });
+		console.log('this is quiz inside our handle submit in quizform file', quiz);
 	}
 
 	return (
