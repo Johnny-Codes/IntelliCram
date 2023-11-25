@@ -17,7 +17,7 @@ const FlashcardsList = () => {
 	}
 	
 	const handleCreateQuiz = () =>{
-		const {data: quiz, isLoading} = useCreateQuizAIMutation({classId, deckId, formData})
+		const {data: quiz, isLoading} = useCreateQuizAIMutation({class_id: classId, deck_id: deckId, formData})
 		dispatch(showFlashcardsList(false))
 		dispatch(showFlashcardsForm(false))
 	}

@@ -7,7 +7,8 @@ import { useSelector } from 'react-redux';
 import ClassesForm from '@/pages/classes/ClassesForm';
 import FlashcardsList from '@/pages/flashcards/FlashcardsList';
 import FlashcardsForm from '@/pages/flashcards/FlashcardsForm';
-import QuizForm from '@/pages/flashcards/QuizForm';
+import QuizForm from '@/pages/quizzes/QuizForm';
+import QuizDetail from '@/pages/quizzes/QuizDetail';
 
 function UserTemplate() {
     const showClassList = useSelector((state) => state.spaslice.showClassesList)
@@ -17,6 +18,7 @@ function UserTemplate() {
     const showFlashcardsList = useSelector((state) => state.spaslice.showFlashcardsList)
     const showFlashcardsForm = useSelector((state) => state.spaslice.showFlashcardsForm)
     const showQuizForm = useSelector((state) => state.spaslice.showQuizForm)
+    const showQuizDetail = useSelector((state) => state.spaslice.showQuizDetail)
     
 
     return (
@@ -29,6 +31,7 @@ function UserTemplate() {
             {showFlashcardsList && <FlashcardsList /> }
             {showFlashcardsForm && <FlashcardsForm /> }
             {showQuizForm && <QuizForm /> }
+            {showQuizDetail && <QuizDetail /> }
         </>
     )
 }
