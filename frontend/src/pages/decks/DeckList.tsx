@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setDeck } from '@/slices/DeckSlice';
-import { showDecksForm, showDecksList } from '@/slices/SpaSlice';
+import { showDecksForm, showDecksList, showFlashcardsList } from '@/slices/SpaSlice';
 import Deck from '@/molecules/Deck';
 
 const DeckList = () => {
@@ -19,9 +19,11 @@ const DeckList = () => {
 
 	const changeDeckStateId = (e, id) => {
 		e.preventDefault();
+		console.log('deck id: ', id)
 		dispatch(setDeck(id))
-		dispatch(showDecksList(true))
-		console.log('class id: ', id)
+		console.log('deck id: ', id)
+		dispatch(showDecksList(false))
+		dispatch(showFlashcardsList(true))
 	  }
 
 	// useEffect(

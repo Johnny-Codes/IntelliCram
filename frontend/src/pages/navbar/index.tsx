@@ -1,19 +1,24 @@
 import { useState } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/solid';
 import Logo from '@/assets/Logo.png';
-import ScrollLink from './ScrollLink';
-import { SelectedPage } from '@/atoms/types';
 import useMediaQuery from '@/hooks/useMediaQuery';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
-import { showClassesList, showClassesForm, showDecksForm, showDecksList } from '@/slices/SpaSlice';
+import {
+	showClassesList,
+	showClassesForm,
+	showDecksForm,
+	showDecksList,
+	showFlashcardsList,
+	showFlashcardsForm
+} from '@/slices/SpaSlice';
 
 const Navbar = () => {
 	const flexBetween = 'flex items-center justify-between';
-	const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
+	const [ isMenuToggled, setIsMenuToggled ] = useState<boolean>(false);
 	const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
-	const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'user']);
+	const [ cookies, setCookie, removeCookie ] = useCookies([ 'access_token', 'user' ]);
 	const dispatch = useDispatch();
 
 	const handleClassesChange = () => {
@@ -21,6 +26,8 @@ const Navbar = () => {
 		dispatch(showClassesForm(false));
 		dispatch(showDecksList(false));
 		dispatch(showDecksForm(false));
+		dispatch(showFlashcardsList(false));
+		dispatch(showFlashcardsForm(false));
 	};
 
 	return (
@@ -35,9 +42,18 @@ const Navbar = () => {
 						{isAboveMediumScreens ? (
 							<div className={`${flexBetween} w-full`}>
 								<div className={`${flexBetween} gap-8 text-sm`}>
-									<p className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">Home</p>
-									<p onClick={handleClassesChange} className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">Classes</p>
-									<p className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">Decks</p>
+									<p className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
+										Home
+									</p>
+									<p
+										onClick={handleClassesChange}
+										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
+									>
+										Classes
+									</p>
+									<p className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
+										Decks
+									</p>
 								</div>
 								{cookies.user ? (
 									<div className={`${flexBetween} gap-8`}>
@@ -84,22 +100,22 @@ const Navbar = () => {
 
 			{/* MOBILE MENU MODAL */}
 			{!isAboveMediumScreens &&
-				isMenuToggled && (
-					<div className="fixed right-0 bottom-0 h-full w-[300px] bg-primary-100 drop-shadow-xl">
-						<div className="flex justify-end p-12">
-							<button onClick={() => setIsMenuToggled(!isMenuToggled)}>
-								<XMarkIcon className="h-6 w-6 text-gray-400" />
-							</button>
-						</div>
-						{/* MENU ITEMS */}
-						<div className="ml-[33%] flex flex-col gap-10 text-2xl">
-							<Link to="Home" className="" />
-							<Link to="Home" className="" />
-							<Link to="Home" className="" />
-							<Link to="Home" className="" />
-						</div>
+			isMenuToggled && (
+				<div className="fixed right-0 bottom-0 h-full w-[300px] bg-primary-100 drop-shadow-xl">
+					<div className="flex justify-end p-12">
+						<button onClick={() => setIsMenuToggled(!isMenuToggled)}>
+							<XMarkIcon className="h-6 w-6 text-gray-400" />
+						</button>
 					</div>
-				)}
+					{/* MENU ITEMS */}
+					<div className="ml-[33%] flex flex-col gap-10 text-2xl">
+						<Link to="Home" className="" />
+						<Link to="Home" className="" />
+						<Link to="Home" className="" />
+						<Link to="Home" className="" />
+					</div>
+				</div>
+			)}
 		</nav>
 	);
 };

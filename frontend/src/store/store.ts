@@ -9,6 +9,8 @@ import { flashcardsApi } from '@/queries/flashcards';
 import { classesSlice } from '@/slices/account/ClassesSlice';
 import { decksSlice } from '@/slices/DeckSlice';
 import { flashcardsSlice } from '@/slices/FlashCardsSlice';
+import { quizzesSlice } from '@/slices/QuizzesSlice';
+import { quizzesApi } from '@/queries/quizzes';
 
 export const store = configureStore({
 	reducer: {
@@ -17,19 +19,22 @@ export const store = configureStore({
 		[classesApi.reducerPath]: classesApi.reducer,
 		[decksApi.reducerPath]: decksApi.reducer,
 		[flashcardsApi.reducerPath]: flashcardsApi.reducer,
+		[quizzesApi.reducerPath]: quizzesApi.reducer,
 		// state
 		account: accountSlice.reducer,
 		spaslice: spaSlice.reducer,
 		classes: classesSlice.reducer,
 		decks: decksSlice.reducer,
-		flashcards: flashcardsSlice.reducer
+		flashcards: flashcardsSlice.reducer,
+		quizzes: quizzesSlice.reducer
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware().concat(
 			accountApi.middleware,
 			classesApi.middleware,
 			decksApi.middleware,
-			flashcardsApi.middleware
+			flashcardsApi.middleware,
+			quizzesApi.middleware
 		)
 });
 

@@ -1,32 +1,40 @@
 import { useEffect } from 'react';
 import { useGetDeckFlashcardsQuery } from '@/queries/flashcards';
 import { useSelector, useDispatch } from 'react-redux';
-import { showDecksForm, showDecksList } from '@/slices/SpaSlice';
+import { showFlashcardsForm, showFlashcardsList } from '@/slices/SpaSlice';
 import Flashcard from '@/molecules/Flashcard';
+import { useCreateQuizAIMutation } from '@/queries/flashcards';
 
 const FlashcardsList = () => {
 	const classId = useSelector((state) => state.classes.class_id);
 	const deckId = useSelector((state) => state.decks.deck_id);
 	const dispatch = useDispatch()
-	console.log('class id in decklist', classId);
-
+	
+	
 	const handleCreateFlashcard = () =>{
-		dispatch(showDecksForm(true))
-		dispatch(showDecksList(false))
+		dispatch(showFlashcardsForm(true))
+		dispatch(showFlashcardsList(false))
 	}
+	
+	const handleCreateQuiz = () =>{
+		const {data: quiz, isLoading} = useCreateQuizAIMutation({classId, deckId, formData})
+		dispatch(showFlashcardsList(false))
+		dispatch(showFlashcardsForm(false))
+	}
+	const { data: flashcards, isLoading } = useGetDeckFlashcardsQuery({ class_id: classId, deck_id: deckId });
 
-	// useEffect(
-	// 	() => {
-	// 		console.log('use effect?');
-	// 	},
-	// 	[ classId ]
-	// );
+	
+	useEffect(() => {
+		if (classId && deckId) {
+			// Call the query here
+		}
+	}, [classId, deckId]);
+	
 
-	if (!classId) {
+	if (!classId  || !deckId) {
 		return <h1>No Deck Selected</h1>;
 	}
 
-	const { data: flashcards, isLoading } = useGetDeckFlashcardsQuery(classId, deckId);
 
 	if (isLoading) {
 		return (
@@ -36,7 +44,7 @@ const FlashcardsList = () => {
 		);
 	};
 
-    console.log(" these are the flashcarsd", flashcards);
+    console.log(" these are the flashcards", flashcards);
     console.log(" these is the deckid", deckId);
     console.log(" these is the classid", classId);
 
@@ -46,12 +54,15 @@ const FlashcardsList = () => {
 			{flashcards &&
 				flashcards.map((flashcard) => (
 					<li key={flashcard.id}>
-						<Flashcard front={flashcard.front} back={flashcard.back} />
+						<Flashcard question={flashcard.question} answer={flashcard.answer} />
 					</li>
 				))}
 		</ul>
 		<button onClick={handleCreateFlashcard}>
 			Add Flashcard
+		</button>
+		<button onClick={handleCreateQuiz}>
+			Create Quiz
 		</button>
 		</>
 	);
