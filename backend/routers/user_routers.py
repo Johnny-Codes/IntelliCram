@@ -134,7 +134,10 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     # Save the access token in the frontend React by setting it in the state or local storage
     # Example of setting in state:
     # setAccessToken(access_token)
-    return {"access_token": access_token, "token_type": "bearer"}
+    return {
+        "access_token": access_token,
+        "token_type": "bearer",
+    }
 
 
 @router.delete("/users/me")

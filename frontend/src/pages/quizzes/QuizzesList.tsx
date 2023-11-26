@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useGetAllUserQuizzesQuery } from "@/queries/quizzes"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
+import QuizTopDown from './QuizTopDown';
 import QuizDetail from './QuizDetail';
 
 const QuizzesList = () => {
-	const dispatch = useDispatch()
-
+    const dispatch = useDispatch()
     const { data: quizzes, isLoading } = useGetAllUserQuizzesQuery();
-
-    useEffect(() => {
-        // You can add any additional logic here if needed
-    }, [quizzes]);
+    const quizId = useSelector((state) => state.quizzes.quiz_id)
 
     if (isLoading) {
         return (
@@ -20,16 +17,23 @@ const QuizzesList = () => {
         );
     }
 
-    return (
-        <>
-            {quizzes && quizzes.map((quiz) => (
-                <div key={quiz.id}>
-                    {/* Uncomment the line below to render QuizDetail */}
-                    <QuizDetail quizId={quiz.id}/>
+    if (quizzes) {
+
+        return (
+            <div className="grid grid-cols-3 gap-4">
+                <div className="grid col-span-1">
+                    {quizzes &&
+                        quizzes.map((quiz) => (
+                            <QuizTopDown
+                                key={quiz.id}
+                            />
+                        ))}
                 </div>
-            ))}
-        </>
-    )
+                <div className="grid col-span-2">
+                    {quizId && <QuizDetail />}
+                </div>
+            </div>)
+    }
 }
 
-export default QuizzesList;
+export default QuizTopDown;

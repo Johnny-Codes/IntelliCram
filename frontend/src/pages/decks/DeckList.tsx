@@ -6,11 +6,11 @@ import { useDispatch } from 'react-redux';
 import { setDeck } from '@/slices/DeckSlice';
 import { showDecksForm, showDecksList, showFlashcardsList } from '@/slices/SpaSlice';
 import Deck from '@/molecules/Deck';
+import QuizforDeck from '../quizzes/QuizforDeck';
 
 const DeckList = () => {
 	const classId = useSelector((state) => state.classes.class_id);
 	const dispatch = useDispatch()
-	console.log('class id in decklist', classId);
 
 	const handleCreateDeck = () =>{
 		dispatch(showDecksForm(true))
@@ -53,9 +53,10 @@ const DeckList = () => {
 			{decks &&
 				decks.map((deckItem) => (
 					<li key={deckItem.id}>
-						<Deck deckName={deckItem.name} 
+						<Deck deckName={deckItem.name}
 						    onClick={(e) => changeDeckStateId(e, deckItem.id)}
 							/>
+						 <QuizforDeck deck_id={deckItem.id} />
 					</li>
 				))}
 		</ul>
