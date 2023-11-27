@@ -20,6 +20,7 @@ class QuizRepo:
                         ],
                     )
                     quizzes = result.fetchall()
+                    print("quizzes? ", quizzes)
                     return [self.quiz_only_out(quiz) for quiz in quizzes]
         except Exception as e:
             print(e)
@@ -39,6 +40,7 @@ class QuizRepo:
                         ],
                     )
                     quizzes = result.fetchall()
+                    print("get all quizzes? ", quizzes)
                     return [self.quiz_only_out(quiz) for quiz in quizzes]
         except Exception as e:
             print(e)
@@ -116,7 +118,7 @@ class QuizRepo:
                         )
                         final_list.append(
                             self.question_out(
-                                question,
+                                question=question,
                                 answers=answers,
                             )
                         )
@@ -217,6 +219,7 @@ class QuizRepo:
             id=question[0],
             question=question[1],
             quiz_id=question[2],
+            correct_answer=question[3],
             answers=answers,
         )
 

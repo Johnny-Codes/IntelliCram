@@ -176,14 +176,15 @@ class CardRepo:
                     quiz_id = result.fetchone()[0]
                     for obj in response:
                         question = obj["question"]
+                        print("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqquestion", question)
                         cur.execute(
                             """
                             INSERT INTO questions
-                            (question, quiz_id)
-                            VALUES (%s, %s)
+                            (question, quiz_id, correct_answer)
+                            VALUES (%s, %s, %s)
                             RETURNING id;
                             """,
-                            [question, quiz_id],
+                            [question, quiz_id, obj["correct_answer"]],
                         )
                         question_id = cur.fetchone()[0]
                         for choice in obj["answers"]:
