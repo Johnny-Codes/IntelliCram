@@ -22,10 +22,7 @@ const QuizzesList = () => {
             <div className="w-1/3 p-4">
                 <table className="min-w-full divide-y divide-gray-200">
                     <tbody className="bg-white divide-y divide-gray-200">
-                        {quizzes &&
-                            quizzes.map((quiz) => (
-                                <QuizTopDown />
-                            ))}
+                        {quizzes && <QuizTopDown />}
                     </tbody>
                 </table>
             </div>

@@ -10,7 +10,8 @@ steps = [
         CREATE TABLE questions (
             id SERIAL PRIMARY KEY NOT NULL,
             question TEXT,
-            quiz_id INT REFERENCES quizzes(id) ON DELETE CASCADE
+            quiz_id INT REFERENCES quizzes(id) ON DELETE CASCADE,
+            correct_answer TEXT
         );
         CREATE TABLE answers (
             id SERIAL PRIMARY KEY NOT NULL,

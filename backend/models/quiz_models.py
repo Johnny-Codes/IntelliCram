@@ -13,6 +13,7 @@ class Question(BaseModel):
     question: str
     quiz_id: int
     answers: List[Answer]
+    correct_answer: str
 
 
 class QuizOut(BaseModel):

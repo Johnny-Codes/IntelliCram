@@ -30,8 +30,11 @@ const ClassesList = () => {
   return (
     <div className="bg-gray- min-h-screen">
       <div className="bg-primary-500 text-white py-4">
-        <div className="container mx-auto">
+        <div className="flex container mx-auto">
           <h1 className="text-3xl font-bold">Classes</h1>
+          <span className='mx-2'>
+            <CreateClassButton />
+          </span>
         </div>
       </div>
 
@@ -53,12 +56,6 @@ const ClassesList = () => {
               </div>
             </div>
           ))}
-          <div className="max-w-md rounded overflow-hidden shadow-lg bg-gray-20 mx-auto">
-            <div className="px-6 py-4">
-              <h2 className="font-bold text-xl mb-2">Create Classes</h2>
-              <CreateClassButton />
-            </div>
-          </div>
         </div>
       </div>
     </div>

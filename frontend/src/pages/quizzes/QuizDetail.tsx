@@ -1,5 +1,6 @@
 import { useGetAllQuizQuestionsQuery } from '@/queries/quizzes';
 import { useSelector } from 'react-redux';
+import QuizSubmitButton from '@/molecules/QuizSubmitButton';
 
 const QuizDetail = () => {
     const quizId = useSelector((state) => state.quizzes.quiz_id)
@@ -53,6 +54,7 @@ const QuizDetail = () => {
                             </div>
                         </div>
                     ))}
+                    <QuizSubmitButton></QuizSubmitButton>
             </div>
         );
     }
