@@ -12,6 +12,7 @@ from repos.upload_file_repo import UploadFileRepo
 from routers.user_routers import get_current_active_user
 from models.user_models import UserIn
 from openai_stuff import create_flashcards
+import asyncio
 
 router = APIRouter()
 
@@ -47,8 +48,13 @@ async def create_quiz(
     repo: CardRepo = Depends(),
     current_user: UserIn = Depends(get_current_active_user),
 ):
-    create_quiz = repo.create_quiz_for_deck(current_user.id, deck_id, quiz_in)
-    return create_quiz
+    tasks = []
+    for _ in range(1):  # Adjust the number based on concurrency needs
+        tasks.append(repo.create_quiz_for_deck(current_user.id, deck_id, quiz_in))
+    # create_quiz = repo.create_quiz_for_deck(current_user.id, deck_id, quiz_in)
+    results = await asyncio.gather(*tasks)
+    # return create_quiz
+    return results
 
 
 @router.get("/classrooms/{class_id}/decks/{deck_id}/cards/{card_id}")

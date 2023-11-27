@@ -18,7 +18,7 @@ prompts = {
 }
 
 
-def create_ai_quiz(cards: list):
+async def create_ai_quiz(cards: list):
     quiz_question_list = []
     for card in cards:
         quiz_question_list.append(
@@ -36,7 +36,6 @@ def create_ai_quiz(cards: list):
             },
             {"role": "user", "content": json.dumps(quiz_question_list)},
         ],
-        max_tokens=1024,
         temperature=1.0,
     )
     print("response content", response.choices[0].message.content)
