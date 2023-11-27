@@ -171,7 +171,6 @@ class CardRepo:
                         ],
                     )
                     quiz_id = result.fetchone()[0]
-                    print("quiz id", quiz_id)
                     for obj in response:
                         question = obj["question"]
                         cur.execute(
@@ -184,7 +183,6 @@ class CardRepo:
                             [question, quiz_id],
                         )
                         question_id = cur.fetchone()[0]
-                        print("question id", question_id)
                         for choice in obj["answers"]:
                             ch = cur.execute(
                                 """
@@ -196,8 +194,9 @@ class CardRepo:
                                 [choice, question_id],
                             )
                             answer_id = cur.fetchone()[0]
-                            print("answer id", answer_id)
-                    return True
+                    
+                    print("this is the db result", result)
+                    return result
         except Exception as e:
             print(e)
             return {"message": "Could not create card"}
