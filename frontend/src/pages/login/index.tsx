@@ -23,7 +23,7 @@ function LoginForm() {
 	}
 	useEffect(() => {
 	if (loginResponse.isSuccess) {
-		dispatch(setAccessToken(loginResponse.data.access_token)); 
+		dispatch(setAccessToken(loginResponse.data.access_token));
 		dispatch(setUser(formData.username));
 		setCookie('access_token', loginResponse.data.access_token, { path: '/' });
 		setCookie('user', formData.username, { path: '/' });
@@ -34,7 +34,7 @@ function LoginForm() {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
 	};
-	
+
 
 	async function handleSubmit(e) {
 		e.preventDefault();

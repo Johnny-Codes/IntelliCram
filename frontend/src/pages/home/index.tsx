@@ -46,7 +46,7 @@ const Home = ({ setSelectedPage }: Props) => {
                             <img src={HomepageText} alt="home-page-text" />
                     </div>
                     <p className='mt-8 text-sm'>
-                        Unrivaled flash cards. Improve your learning using the latest in ai tools and architecture tommmy is a ho dick butt
+                        Unrivaled flash cards. Improve your learning using the latest in ai tools and architecture
                     </p>
                 </motion.div>
 
