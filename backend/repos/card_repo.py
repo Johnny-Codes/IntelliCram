@@ -145,15 +145,18 @@ class CardRepo:
             deck_id=card[5],
         )
 
-    def create_quiz_for_deck(
+    async def create_quiz_for_deck(
         self,
         user_id: int,
         deck_id: int,
         quiz_in: QuizIn,
     ):
         cards = self.get_all_deck_cards(user_id, deck_id)
-        response = create_ai_quiz(cards)
+        response = await create_ai_quiz(cards)
         response = json.loads(response)
+        print("response", response)
+        print("response type", type(response))
+
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
@@ -194,7 +197,7 @@ class CardRepo:
                                 [choice, question_id],
                             )
                             answer_id = cur.fetchone()[0]
-                    
+
                     print("this is the db result", result)
                     return result
         except Exception as e:
