@@ -17,23 +17,23 @@ const QuizzesList = () => {
         );
     }
 
-    if (quizzes) {
-
-        return (
-            <div className="grid grid-cols-3 gap-4">
-                <div className="grid col-span-1">
-                    {quizzes &&
-                        quizzes.map((quiz) => (
-                            <QuizTopDown
-                                key={quiz.id}
-                            />
-                        ))}
-                </div>
-                <div className="grid col-span-2">
-                    {quizId && <QuizDetail />}
-                </div>
-            </div>)
-    }
+    return (
+        <div className="flex">
+            <div className="w-1/3 p-4">
+                <table className="min-w-full divide-y divide-gray-200">
+                    <tbody className="bg-white divide-y divide-gray-200">
+                        {quizzes &&
+                            quizzes.map((quiz) => (
+                                <QuizTopDown />
+                            ))}
+                    </tbody>
+                </table>
+            </div>
+            <div className="flex-1 p-4">
+                {quizId && <QuizDetail />}
+            </div>
+        </div>
+    );
 }
 
-export default QuizTopDown;
+export default QuizzesList;
