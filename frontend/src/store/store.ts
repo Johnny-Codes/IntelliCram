@@ -11,6 +11,7 @@ import { decksSlice } from '@/slices/DeckSlice';
 import { flashcardsSlice } from '@/slices/FlashCardsSlice';
 import { quizzesSlice } from '@/slices/QuizzesSlice';
 import { quizzesApi } from '@/queries/quizzes';
+import { pdfsApi } from '@/queries/pdfs';
 
 export const store = configureStore({
 	reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
 		[decksApi.reducerPath]: decksApi.reducer,
 		[flashcardsApi.reducerPath]: flashcardsApi.reducer,
 		[quizzesApi.reducerPath]: quizzesApi.reducer,
+		[pdfsApi.reducerPath]: pdfsApi.reducer,
 		// state
 		account: accountSlice.reducer,
 		spaslice: spaSlice.reducer,
@@ -34,8 +36,9 @@ export const store = configureStore({
 			classesApi.middleware,
 			decksApi.middleware,
 			flashcardsApi.middleware,
-			quizzesApi.middleware
-		)
+			quizzesApi.middleware,
+			pdfsApi.middleware
+			)
 });
 
 setupListeners(store.dispatch);

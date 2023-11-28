@@ -42,10 +42,8 @@ const Home = ({ setSelectedPage }: Props) => {
                         visible: { opacity: 1, x: 0 }
                     }}
                 >
-                    <div className='relative'>
-                        <div className='before:absolute before:-top-20 before:-left-20 before:z-[-1] md:before:content-intellicrambackground'>
+                    <div className='relative flex basis-3/5 justify-center'>
                             <img src={HomepageText} alt="home-page-text" />
-                        </div>
                     </div>
                     <p className='mt-8 text-sm'>
                         Unrivaled flash cards. Improve your learning using the latest in ai tools and architecture

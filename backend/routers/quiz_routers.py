@@ -24,6 +24,7 @@ async def get_all_user_quizzes(
     repo: QuizRepo = Depends(),
     current_user: UserIn = Depends(get_current_active_user),
 ):
+    print("current user id", current_user.id)
     get_quizzes = repo.get_all_quizzes_for_user(current_user.id)
     return get_quizzes
 
@@ -83,11 +84,17 @@ async def delete_quiz_question(
     deleted = repo.delete_question(current_user.id, quiz_id, question_id)
 
     if deleted is None:
-        return JSONResponse(content={"message": "Error deleting the question"}, status_code=500)
+        return JSONResponse(
+            content={"message": "Error deleting the question"}, status_code=500
+        )
     elif deleted:
-        return JSONResponse(content={"message": "Question deleted successfully"}, status_code=200)
+        return JSONResponse(
+            content={"message": "Question deleted successfully"}, status_code=200
+        )
     else:
-        return JSONResponse(content={"message": "Question not found or unauthorized"}, status_code=404)
+        return JSONResponse(
+            content={"message": "Question not found or unauthorized"}, status_code=404
+        )
 
 
 @router.get("/quizzes/{quiz_id}/questions/{question_id}/answers")

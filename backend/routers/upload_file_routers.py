@@ -1,4 +1,10 @@
-from fastapi import (UploadFile, File, APIRouter, Depends,)
+from fastapi import (
+    UploadFile,
+    File,
+    APIRouter,
+    Depends,
+    Form,
+)
 from uuid import uuid4
 import os
 from models.upload_file_models import UploadFileOut, UploadFileIn
@@ -9,13 +15,18 @@ from repos.upload_file_repo import UploadFileRepo
 router = APIRouter()
 
 
-@router.post("/upload/")
-async def upload_pdf_file(file: UploadFile = File(...), 
-                          model: UploadFileIn = Depends(), 
-                          current_user: UserIn = Depends(get_current_active_user),
-                          repo: UploadFileRepo = Depends()):
-    allowed_extensions = ['pdf']
-    if file.filename.split('.')[-1] not in allowed_extensions:
+@router.post("/upload")
+async def upload_pdf_file(
+    # model: UploadFileIn = Depends(),
+    file: UploadFile,
+    # name: str = Form(...),
+    current_user: UserIn = Depends(get_current_active_user),
+    repo: UploadFileRepo = Depends(),
+):
+    # new_file = await file.read()
+    print("we in /upload")
+    allowed_extensions = ["pdf"]
+    if file.filename.split(".")[-1] not in allowed_extensions:
         return "Invalid file type. Please upload a PDF file."
     directory = f"media_uploads/{str(current_user.id)}"
     if not os.path.exists(directory):
@@ -23,7 +34,11 @@ async def upload_pdf_file(file: UploadFile = File(...),
     file_location = f"{directory}/{str(uuid4())}.pdf"
     with open(file_location, "wb+") as file_object:
         file_object.write(await file.read())
-    save_to_database = repo.create(file_location, current_user.id, model.name)
+    # save_to_database = repo.create(file_location, current_user.id, model.name)
+    save_to_database = repo.create(
+        file_location,
+        current_user.id,
+        name=file.filename,)
     return save_to_database
 
 

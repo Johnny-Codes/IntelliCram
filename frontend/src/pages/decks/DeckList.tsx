@@ -1,6 +1,5 @@
-import { useEffect } from 'react';
+import React from 'react';
 import { useGetClassDecksQuery } from '@/queries/decks';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setDeck } from '@/slices/DeckSlice';
@@ -10,28 +9,19 @@ import QuizforDeck from '../quizzes/QuizforDeck';
 
 const DeckList = () => {
 	const classId = useSelector((state) => state.classes.class_id);
-	const dispatch = useDispatch()
+	const dispatch = useDispatch();
 
-	const handleCreateDeck = () =>{
-		dispatch(showDecksForm(true))
-		dispatch(showDecksList(false))
-	}
+	const handleCreateDeck = () => {
+		dispatch(showDecksForm(true));
+		dispatch(showDecksList(false));
+	};
 
 	const changeDeckStateId = (e, id) => {
 		e.preventDefault();
-		console.log('deck id: ', id)
-		dispatch(setDeck(id))
-		console.log('deck id: ', id)
-		dispatch(showDecksList(false))
-		dispatch(showFlashcardsList(true))
-	  }
-
-	// useEffect(
-	// 	() => {
-	// 		console.log('use effect?');
-	// 	},
-	// 	[ classId ]
-	// );
+		dispatch(setDeck(id));
+		dispatch(showDecksList(false));
+		dispatch(showFlashcardsList(true));
+	};
 
 	if (!classId) {
 		return <h1>No Class Selected</h1>;
@@ -49,20 +39,25 @@ const DeckList = () => {
 
 	return (
 		<>
-		<ul>
-			{decks &&
-				decks.map((deckItem) => (
-					<li key={deckItem.id}>
-						<Deck deckName={deckItem.name}
-						    onClick={(e) => changeDeckStateId(e, deckItem.id)}
-							/>
-						 <QuizforDeck deck_id={deckItem.id} />
-					</li>
-				))}
-		</ul>
-		<button onClick={handleCreateDeck}>
-			Add Deck
-		</button>
+			<div className="flex flex-wrap justify-center">
+				{decks &&
+					decks.map((deckItem) => (
+						<div key={deckItem.id} className="m-4">
+							<Deck deckName={deckItem.name} onClick={(e) => changeDeckStateId(e, deckItem.id)} />
+							<div className="mt-4">
+								<QuizforDeck deck_id={deckItem.id} />
+							</div>
+						</div>
+					))}
+			</div>
+			<div className='flex flex-wrap justify-center'>
+				<button
+					className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+					onClick={handleCreateDeck}
+				>
+					Add Deck
+				</button>
+			</div>
 		</>
 	);
 };
