@@ -5,13 +5,11 @@ import QuizSubmitButton from '@/molecules/QuizSubmitButton';
 
 const QuizDetail = () => {
     const quizId = useSelector((state) => state.quizzes.quiz_id);
-    console.log('quizId prop', quizId);
 
     const [selectedAnswers, setSelectedAnswers] = useState({});
     const [showCorrectAnswers, setShowCorrectAnswers] = useState(false);
 
     const { data: quiz, isLoading } = useGetAllQuizQuestionsQuery(quizId);
-    console.log("quiz response", quiz)
 
     const handleAnswerChange = (questionId, answerId) => {
         setSelectedAnswers((prevSelectedAnswers) => ({
@@ -26,7 +24,6 @@ const QuizDetail = () => {
     };
 
     useEffect(() => {
-        // Reset the state when the quiz changes
         setSelectedAnswers({});
         setShowCorrectAnswers(false);
     }, [quizId]);
