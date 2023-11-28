@@ -8,6 +8,7 @@ import Navbar from '@/pages/navbar';
 import ClassesList from './pages/classes/ClassesList';
 import ClassesForm from './pages/classes/ClassesForm';
 import UserTemplate from '@/templatee/UserTemplate';
+import UserFileList from '@/molecules/UserFileList';
 
 
 function App() {
@@ -21,13 +22,14 @@ function App() {
 				<Route path="login">
 					<Route path="new" element={<LoginForm />} />
 				</Route>
-				<Route path="testing" element={<UserTemplate />} />
+				<Route path="me" element={<UserTemplate />} />
 				{/* <Route path="decks" element={<Decks />} /> */}
 				{/* <Route path="classes">
 					<Route path="" element={<UserTemplate />} />
 					<Route path="new" element={<ClassesForm />} /> */}
 				{/* <Route path=":id" element={<FlashcardDetail />} /> */}
 				{/* </Route> */}
+				<Route path="testing" element={<UserFileList />} />
 			</Routes>
 		</BrowserRouter >
 	);

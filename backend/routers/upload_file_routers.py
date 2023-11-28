@@ -15,6 +15,13 @@ from repos.upload_file_repo import UploadFileRepo
 router = APIRouter()
 
 
+@router.get("/uploads")
+async def get_all_uploads(
+    repo: UploadFileRepo = Depends(), 
+    current_user: UserIn = Depends(get_current_active_user),
+):
+    return repo.get_all(current_user.id)
+
 @router.post("/upload")
 async def upload_pdf_file(
     # model: UploadFileIn = Depends(),
@@ -42,6 +49,8 @@ async def upload_pdf_file(
     return save_to_database
 
 
+
+
 @router.get("/upload/{file_id}")
 async def read_upload_file(file_id: int, repo: UploadFileRepo = Depends()):
     return repo.read(file_id)
@@ -53,3 +62,5 @@ async def delete_upload_file(file_id: int, repo: UploadFileRepo = Depends()):
     if file_to_delete is not None:
         os.remove(file_to_delete.file_path)
     return repo.delete(file_id)
+
+

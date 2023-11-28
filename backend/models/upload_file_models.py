@@ -9,5 +9,4 @@ class UploadFileIn(BaseModel):
 class UploadFileOut(BaseModel):
     id: int
     name: str
-    user_id: int
     file_path: str

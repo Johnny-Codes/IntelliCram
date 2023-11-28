@@ -3,8 +3,6 @@ import { useGetAllUserQuizzesQuery } from '@/queries/quizzes';
 
 const QuizforDeck = (props) => {
   const { data: quizzes, isLoading } = useGetAllUserQuizzesQuery();
-  console.log("quiiiiiiiiiiiiiiiiiiizes", quizzes);
-  console.log("prooooooooooooooooooooooops", props);
 
   if (isLoading) {
     return <p>Your Quizzes are Loading</p>;

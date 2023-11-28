@@ -42,7 +42,7 @@ const DeckList = () => {
 			<div className="flex flex-wrap justify-center">
 				{decks &&
 					decks.map((deckItem) => (
-						<div key={deckItem.id} className="m-4">
+						<div key={deckItem.id} className="m-4 w-64 h-64">
 							<Deck deckName={deckItem.name} onClick={(e) => changeDeckStateId(e, deckItem.id)} />
 							<div className="mt-4">
 								<QuizforDeck deck_id={deckItem.id} />

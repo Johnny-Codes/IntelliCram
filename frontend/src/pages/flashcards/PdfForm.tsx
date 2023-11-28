@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useCreateFlashcardMutation } from '@/queries/flashcards';
 import FormInput from '@/atoms/FormInput';
-import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { useCreatePdfMutation } from '@/queries/pdfs';
 
 type formData = {

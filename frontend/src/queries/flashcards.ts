@@ -86,6 +86,17 @@ export const flashcardsApi = createApi({
 			},
 			invalidatesTags: [ 'flashcards' ]
 		}),
+		createFlashcardsFromFile: builder.mutation({
+			query: (formData) => {
+				return {
+					url: `/deck/${formData.deck_id}/cards/new_cards_from_file/${formData.file_id}`,
+					method: 'POST',
+					body: formData,
+					credentials: 'include'
+				};
+			},
+			invalidatesTags: [ 'flashcards' ]
+		})
 	})
 });
 
@@ -95,5 +106,6 @@ export const {
 	useDeleteOneFlashcardMutation,
 	useGetOneFlashcardQuery,
 	useUpdateFlashcardMutation,
-  useCreateQuizAIMutation
+	useCreateQuizAIMutation,
+	useCreateFlashcardsFromFileMutation,
 } = flashcardsApi;
