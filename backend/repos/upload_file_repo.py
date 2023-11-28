@@ -25,7 +25,12 @@ class UploadFileRepo:
                     )
                     upload_file = result.fetchone()
                     print("----- upload_file -----", upload_file)
-                    return UploadFileOut(id=upload_file[0], name=upload_file[1], user_id=upload_file[2], file_path=upload_file[3])
+                    return UploadFileOut(
+                        id=upload_file[0],
+                        name=upload_file[1],
+                        user_id=upload_file[2],
+                        file_path=upload_file[3],
+                    )
         except Exception as e:
             print(e)
             return {"error": f"{e}"}

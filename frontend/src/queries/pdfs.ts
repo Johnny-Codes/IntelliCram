@@ -47,27 +47,31 @@ export const pdfsApi = createApi({
 		}),
         createPdf: builder.mutation({
 			query: (formData) => {
-			  console.log('new form data: ', formData);
-			  console.log('form data name:', formData.name);
-			  console.log('form data file:', formData.file);
-
-			//   const body = new FormData();
-			//   body.append('name', formData.name);
-			//   body.append('file', formData.file);
-			//   console.log('body', body);
-			//   console.log('body type', body);
-			  return {
-				url: "/upload",
-				method: "POST",
-				credentials: 'include',
-				body: formData,
-				headers: {
-					"Content-Type": "multipart/form-data"
+				console.log('query')
+				for (let x of formData.entries()) {
+					console.log('for loop key: ', x[0] + ', value :' + x[1], typeof x[1]);
 				}
-			  };
-			},
-			// invalidatesTags: ["pdf_files"],
-		  }),
+				// console.log('new form data: ', formData);
+				// console.log('form data type', typeof formData);
+				// console.log('form data name:', formData.name);
+				// console.log('form data name:', typeof formData.name);
+				// console.log('form data file:', formData.file);
+				// console.log('form data file:', typeof formData.file);
+
+
+				return {
+					url: "/upload",
+					method: "POST",
+					credentials: 'include',
+					body: formData,
+					// headers: {
+					// 	"Content-Type": "multipart/form-data"
+					// }
+					};
+					},
+					
+					// invalidatesTags: ["pdf_files"],
+		}),
 	})
 });
 

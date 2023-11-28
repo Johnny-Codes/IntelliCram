@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useCreateFlashcardMutation } from '@/queries/flashcards';
 import FormInput from '@/atoms/FormInput';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-import { useGetUploadFileQuery, useCreatePdfMutation } from '@/queries/pdfs';
+import { useCreatePdfMutation } from '@/queries/pdfs';
 
 type formData = {
     name: string;
@@ -14,6 +14,7 @@ const PdfForm = () => {
     const [createPdf, createPdfResponse] = useCreatePdfMutation();
     const [formData, setFormData] = useState<formData>({});
     const dispatch = useDispatch();
+    const [file, setFile] = useState<File>(null);
 
     useEffect(
         () => {
@@ -24,29 +25,50 @@ const PdfForm = () => {
         [createPdfResponse.isSuccess]
     );
 
+    // const handleFormChange = (e) => {
+    //     const { name, value, files } = e.target;
+
+    //     // If the input is a file input, set the 'file' property in formData
+    //     const newValue = name === 'file' ? files[0] : value;
+
+    //     console.log("newValue", newValue)
+
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         [name]: value,
+    //     }));
+    // };
     const handleFormChange = (e) => {
-        const { name, value, files } = e.target;
-
-        // If the input is a file input, set the 'file' property in formData
-        const newValue = name === 'file' ? files[0] : value;
-
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
+        setFile(e.target.files[0]);
+        console.log('file', file);
+    }
 
     async function handleSubmit(e) {
         e.preventDefault();
-		const body = new FormData();
-		body.append('name', formData.name)
-		body.append('file', formData.file)
-        await createPdf(formData);
+		// const body = new FormData();
+        // console.log("body", body)
+		// body.append('name', formData.name)
+        // console.log("body", body)
+		// body.append('file', formData.file)
+        // console.log("body", body)
+        // for (let x of body.entries()) {
+        //     console.log('for loop', x[0] + ', ' + x[1]);
+        // }
+        const body = new FormData();
+        body.append('file', file);
+        // for (let x of body.entries()) {
+        //     console.log('for loop', x[0] + ', ' + x[1] + ', type: ' + typeof x[1]);
+        // }
+        // const jsonData = {
+        //     name: formData.name,
+        // };
+        // body.append('json', JSON.stringify(jsonData));
+        await createPdf(body);
     }
 
     return (
         <form className="max-w-md mx-auto" onSubmit={handleSubmit}>
-            <div className="mb-5">
+            {/* <div className="mb-5">
                 <FormInput
                     value={formData.name}
                     placeholder="File Name"
@@ -59,7 +81,7 @@ const PdfForm = () => {
                 <label htmlFor="name" className="block text-gray-700 text-sm font-bold mb-2">
                     File name
                 </label>
-            </div>
+            </div> */}
             <div className="mb-5">
                 <FormInput
                     onChange={handleFormChange}

@@ -18,13 +18,12 @@ router = APIRouter()
 @router.post("/upload")
 async def upload_pdf_file(
     # model: UploadFileIn = Depends(),
-    name: str = Form(...),
-    file: UploadFile = File(...),
+    file: UploadFile,
+    # name: str = Form(...),
     current_user: UserIn = Depends(get_current_active_user),
     repo: UploadFileRepo = Depends(),
 ):
-    # print("model", model)
-
+    # new_file = await file.read()
     print("we in /upload")
     allowed_extensions = ["pdf"]
     if file.filename.split(".")[-1] not in allowed_extensions:
@@ -36,7 +35,10 @@ async def upload_pdf_file(
     with open(file_location, "wb+") as file_object:
         file_object.write(await file.read())
     # save_to_database = repo.create(file_location, current_user.id, model.name)
-    save_to_database = repo.create(file_location, current_user.id, name)
+    save_to_database = repo.create(
+        file_location,
+        current_user.id,
+        name=file.filename,)
     return save_to_database
 
 
