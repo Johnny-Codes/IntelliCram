@@ -14,7 +14,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://localhost:8000"],  # Add your frontend URL here
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:8000",
+    ],  # Add your frontend URL here
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -25,6 +28,4 @@ app.include_router(class_routers.router, tags=["classroom"])
 app.include_router(deck_routers.router, tags=["deck"])
 app.include_router(card_routers.router, tags=["card"])
 app.include_router(quiz_routers.router, tags=["quiz"])
-app.include_router(
-    upload_file_routers.router, tags=["upload_files"], prefix="/upload_files"
-)
+app.include_router(upload_file_routers.router, tags=["upload_files"])

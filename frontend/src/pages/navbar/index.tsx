@@ -14,6 +14,7 @@ import {
 	showFlashcardsForm,
 	showQuizzesList,
 	showQuizDetail,
+	showPdfForm
 } from '@/slices/SpaSlice';
 
 const Navbar = () => {
@@ -55,6 +56,16 @@ const Navbar = () => {
 		dispatch(showQuizDetail(false));
 	};
 
+	const handlePdfChange = () => {
+		dispatch(showClassesList(false));
+		dispatch(showClassesForm(false));
+		dispatch(showDecksList(false));
+		dispatch(showDecksForm(false));
+		dispatch(showFlashcardsList(false));
+		dispatch(showPdfForm(true));
+		dispatch(showQuizDetail(false));
+	};
+
 	return (
 		<nav>
 			<div className={`bg-primary-100 drop-shadow  ${flexBetween} w-full py-6`}>
@@ -85,6 +96,11 @@ const Navbar = () => {
 										onClick={handleQuizzesChange}
 										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
 										Quizzes
+									</p>
+									<p
+										onClick={handlePdfChange}
+										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
+											PDF Upload
 									</p>
 								</div>
 								{cookies.user ? (

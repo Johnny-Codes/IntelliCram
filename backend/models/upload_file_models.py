@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class UploadFileIn(BaseModel):
     name: str
+    file: str
 
 
 class UploadFileOut(UploadFileIn):
