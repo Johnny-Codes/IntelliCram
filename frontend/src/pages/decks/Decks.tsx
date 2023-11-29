@@ -16,6 +16,8 @@ type Props = {
 
 const Deck = ({ icon, title, description, setSelectedPage }: Props) => {
     return (
+        <>
+        
         <motion.div
             variants={childVariant}
             className='mt-5 rounded-md border-2 border-gray-100 px-5 py-16 text-center'>
@@ -24,17 +26,10 @@ const Deck = ({ icon, title, description, setSelectedPage }: Props) => {
                     {icon}
                 </div>
             </div>
-
             <h4 className='font-bold'>{title}</h4>
             <p className='my-3'>{description}</p>
-            <AnchorLink
-                className="text-sm font-bold text-primary-500 underline hover:text-secondary-500"
-                onClick={() => setSelectedPage(SelectedPage.ContactUs)}
-                href={`#${SelectedPage.ContactUs}`}
-            >
-                <p>Learn More</p>
-            </AnchorLink>
         </motion.div>
+        </>
     )
 }
 
