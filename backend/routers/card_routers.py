@@ -6,13 +6,15 @@ from models.card_models import (
     CardEdit,
     QuizIn,
 )
-from fastapi import APIRouter, Depends
+from models.text_quiz_models import TextInputIn
+from fastapi import APIRouter, Depends, HTTPException
 from repos.card_repo import CardRepo
 from repos.upload_file_repo import UploadFileRepo
 from routers.user_routers import get_current_active_user
 from models.user_models import UserIn
 from openai_stuff import create_flashcards
 import asyncio
+from openai_stuff.create_text_chat_quiz import create_text_chat_quiz
 
 router = APIRouter()
 
@@ -119,3 +121,17 @@ async def create_new_cards_from_file(
         return json_content
     else:
         return "JSON content not found."
+
+
+@router.post("/flashcards/text_quiz")
+async def text_quiz_for_question(
+    text_input: TextInputIn
+    # current_user: UserIn = Depends(get_current_active_user)
+    ):
+    try:
+        # if current_user:
+        input_json = text_input.json()
+        chat_response = await create_text_chat_quiz(input_json)
+        return chat_response
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
