@@ -51,8 +51,8 @@ export const decksApi = createApi({
           providesTags: ["decks"],
       }),
         deleteOneDeck: builder.mutation({
-          query: (class_id: number, deck_id: number) => ({
-              url: `/classrooms/${class_id}/decks/${deck_id}`,
+          query: (args: {class_id: number, deck_id: number}) => ({
+              url: `/classrooms/${args.class_id}/decks/${args.deck_id}`,
               method: "DELETE",
               credentials: "include",
           }),
