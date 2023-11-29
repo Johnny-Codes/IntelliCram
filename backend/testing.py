@@ -54,7 +54,6 @@ prompts = {
 
 
 def create_flashcards(text: str):
-    print("openai api call")
     try:
         response = client.chat.completions.create(
             model="gpt-3.5-turbo-1106",
@@ -67,7 +66,6 @@ def create_flashcards(text: str):
             ],
             temperature=0.5,
         )
-        print("response content", response.choices[0].message.content)
         response_content = response.choices[0].message.content
         return response_content
     except Exception as e:

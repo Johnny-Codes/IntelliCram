@@ -26,8 +26,6 @@ const UserFileList = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('deck id', selectedDeck);
-        console.log('user file id', selectedUserFile);
 
         const formData = {
             deck_id: selectedDeck,

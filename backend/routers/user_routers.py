@@ -65,7 +65,6 @@ def get_user(username: str):
 
 def authenticate_user(username: str, password: str):
     user = get_user(username)
-    print("========================= user", user, type(user))
     if not user:
         return False
     if not verify_password(password, user.hashed_password):
@@ -118,7 +117,6 @@ async def get_current_active_user(
 
 @router.post("/users/login")
 async def login(form_data: OAuth2PasswordRequestForm = Depends()):
-    print("login form data", form_data)
     user = authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -160,7 +158,6 @@ async def create_user(user_info: UserIn, repo: UserRepo = Depends()):
     hashed_password = get_password_hash(user_info.password)
     try:
         user = repo.create(user_info, hashed_password=hashed_password)
-        print("user", user)
         # can't get the login function to work...
         # if user.username:
         #     form_data = OAuth2PasswordRequestForm(

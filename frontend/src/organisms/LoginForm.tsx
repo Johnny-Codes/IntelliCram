@@ -23,7 +23,6 @@ export default function LoginForm() {
         //   url: "http://localhost:8090/api/customers/",
         // });
         // setFormData({});
-        console.log('submit?', formData)
     };
 
     return (

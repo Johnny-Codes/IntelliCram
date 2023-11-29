@@ -18,7 +18,6 @@ def read_pdf(file_path):
     - str: The extracted text from the PDF.
     """
     try:
-        print("reading pdf")
         # Open the PDF file
         with open(file_path, "rb") as file:
             # Create a PDF reader object
@@ -37,7 +36,6 @@ def read_pdf(file_path):
                 i += 1
 
             text = text.replace("\n\n", " ").replace("\n", " ")
-            print("text done")
             flash_cards = create_flashcards(text)
 
             return flash_cards
@@ -57,8 +55,7 @@ prompts = {
 }
 
 
-def create_flashcards(text: str):  
-    print("openai api call")
+def create_flashcards(text: str):
     try:
         response = client.chat.completions.create(
             model=models["3.5-turbo"],
@@ -71,7 +68,6 @@ def create_flashcards(text: str):
             ],
             temperature=0.5,
         )
-        # print("response content", response.choices[0].message.content)
         response_content = response.choices[0].message.content
         return response_content
     except Exception as e:

@@ -71,7 +71,6 @@ class DeckRepo:
                         ],
                     )
                     deck = result.fetchone()
-                    print("----- classroom -----", deck)
                     return self.deck_out(deck)
 
         except Exception as e:
@@ -128,7 +127,6 @@ class DeckRepo:
                         ],
                     )
                     deck = result.fetchone()
-                    print("----- deck -----", deck)
                     return self.deck_out(deck)
         except Exception as e:
             print(e)

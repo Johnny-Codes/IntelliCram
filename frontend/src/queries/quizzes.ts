@@ -17,9 +17,6 @@ export const quizzesApi = createApi({
 				newHeaders.forEach((value, key) => {
 					headersObject[key] = value;
 				});
-
-				console.log('new headers', headersObject);
-
 				return newHeaders;
 			}
 			return headers;

@@ -23,19 +23,7 @@ const PdfForm = () => {
         [createPdfResponse.isSuccess]
     );
 
-    // const handleFormChange = (e) => {
-    //     const { name, value, files } = e.target;
 
-    //     // If the input is a file input, set the 'file' property in formData
-    //     const newValue = name === 'file' ? files[0] : value;
-
-    //     console.log("newValue", newValue)
-
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         [name]: value,
-    //     }));
-    // };
     const handleFormChange = (e) => {
         setFile(e.target.files[0]);
         console.log('file', file);
@@ -43,24 +31,8 @@ const PdfForm = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-		// const body = new FormData();
-        // console.log("body", body)
-		// body.append('name', formData.name)
-        // console.log("body", body)
-		// body.append('file', formData.file)
-        // console.log("body", body)
-        // for (let x of body.entries()) {
-        //     console.log('for loop', x[0] + ', ' + x[1]);
-        // }
         const body = new FormData();
         body.append('file', file);
-        // for (let x of body.entries()) {
-        //     console.log('for loop', x[0] + ', ' + x[1] + ', type: ' + typeof x[1]);
-        // }
-        // const jsonData = {
-        //     name: formData.name,
-        // };
-        // body.append('json', JSON.stringify(jsonData));
         await createPdf(body);
     }
 

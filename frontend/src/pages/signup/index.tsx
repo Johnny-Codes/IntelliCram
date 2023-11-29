@@ -21,7 +21,6 @@ function SignupForm() {
 
 	useEffect(() => {
 	if (signupResponse.isSuccess) {
-		console.log('we did it', signupResponse.data);
 		setCookie('user', formData.username, { path: '/' });
 		navigate('/login/new');
 	}}, [signupResponse])

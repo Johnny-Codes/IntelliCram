@@ -18,8 +18,6 @@ export const flashcardsApi = createApi({
 					headersObject[key] = value;
 				});
 
-				console.log('new headers', headersObject);
-
 				return newHeaders;
 			}
 			return headers;
@@ -29,8 +27,6 @@ export const flashcardsApi = createApi({
 	endpoints: (builder) => ({
 		getDeckFlashcards: builder.query({
 			query: (args: { class_id: number; deck_id: number }) => {
-				console.log('inside the query class', args.class_id);
-				console.log('inside the query deck', args.deck_id);
 				return {
 					url: `/classrooms/${args.class_id}/decks/${args.deck_id}/cards`,
 					method: 'GET',

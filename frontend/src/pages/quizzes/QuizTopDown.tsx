@@ -7,15 +7,11 @@ import { setQuiz } from '@/slices/QuizzesSlice';
 
 const QuizTopDown = () => {
     const { data: quizzes, isLoading } = useGetAllUserQuizzesQuery();
-    console.log(quizzes)
     const dispatch = useDispatch()
 
     const handleQuizState = (e, id) => {
         e.preventDefault();
         dispatch(setQuiz(id))
-        // dispatch(showQuizDetail(true))
-        // dispatch(showQuizzesList(false));
-
     }
 
 

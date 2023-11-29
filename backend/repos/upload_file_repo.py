@@ -7,9 +7,6 @@ class UploadFileRepo:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as cur:
-                    print('file path', file_path, type(file_path))
-                    print('user id', user_id, type(user_id))
-                    print('name', name, type(name))
                     result = cur.execute(
                         """
                         INSERT INTO upload_files (
@@ -27,7 +24,6 @@ class UploadFileRepo:
                         ],
                     )
                     upload_file = result.fetchone()
-                    print("----- upload_file -----", upload_file)
                     return UploadFileOut(
                         id=upload_file[0],
                         name=upload_file[1],
@@ -88,7 +84,6 @@ class UploadFileRepo:
                         [user_id]
                     )
                     upload_files = cur.fetchall()
-                    print('upload files get fetchall', upload_files)
                     users_files = [self.create_uploaded_file_out(data) for data in upload_files]
                     return users_files
         except Exception as e:
@@ -96,7 +91,6 @@ class UploadFileRepo:
             return {"error": f"{e}"}
     
     def create_uploaded_file_out(self, data):
-        print("data for create uploaded file out", data)
         return UploadFileOut(
             id=data[0],
             name=data[1],

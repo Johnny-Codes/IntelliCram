@@ -30,8 +30,6 @@ async def upload_pdf_file(
     current_user: UserIn = Depends(get_current_active_user),
     repo: UploadFileRepo = Depends(),
 ):
-    # new_file = await file.read()
-    print("we in /upload")
     allowed_extensions = ["pdf"]
     if file.filename.split(".")[-1] not in allowed_extensions:
         return "Invalid file type. Please upload a PDF file."
@@ -41,7 +39,6 @@ async def upload_pdf_file(
     file_location = f"{directory}/{str(uuid4())}.pdf"
     with open(file_location, "wb+") as file_object:
         file_object.write(await file.read())
-    # save_to_database = repo.create(file_location, current_user.id, model.name)
     save_to_database = repo.create(
         file_location,
         current_user.id,

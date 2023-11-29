@@ -24,7 +24,6 @@ async def get_all_user_quizzes(
     repo: QuizRepo = Depends(),
     current_user: UserIn = Depends(get_current_active_user),
 ):
-    print("current user id", current_user.id)
     get_quizzes = repo.get_all_quizzes_for_user(current_user.id)
     return get_quizzes
 

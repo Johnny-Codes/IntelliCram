@@ -154,8 +154,6 @@ class CardRepo:
         cards = self.get_all_deck_cards(user_id, deck_id)
         response = await create_ai_quiz(cards)
         response = json.loads(response)
-        print("response", response)
-        print("response type", type(response))
 
         try:
             with pool.connection() as conn:
@@ -176,7 +174,6 @@ class CardRepo:
                     quiz_id = result.fetchone()[0]
                     for obj in response:
                         question = obj["question"]
-                        print("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqquestion", question)
                         cur.execute(
                             """
                             INSERT INTO questions
@@ -198,8 +195,6 @@ class CardRepo:
                                 [choice, question_id],
                             )
                             answer_id = cur.fetchone()[0]
-
-                    print("this is the db result", result)
                     return result
         except Exception as e:
             print(e)

@@ -69,7 +69,6 @@ class ClassroomRepo:
                         ],
                     )
                     classroom = result.fetchone()
-                    print("----- classroom -----", classroom)
                     return ClassroomOut(
                         id=classroom[0],
                         name=classroom[1],
@@ -125,7 +124,6 @@ class ClassroomRepo:
                         ],
                     )
                     classroom = result.fetchone()
-                    print("----- classroom -----", classroom)
                     return ClassroomOut(
                         id=classroom[0],
                         name=classroom[1],

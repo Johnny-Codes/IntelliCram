@@ -19,8 +19,6 @@ export const classesApi = createApi({
               headersObject[key] = value;
             });
 
-            console.log('new headers', headersObject);
-
             return newHeaders;
           }
           return headers;

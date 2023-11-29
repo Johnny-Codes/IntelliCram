@@ -38,6 +38,5 @@ async def create_ai_quiz(cards: list):
         ],
         temperature=1.0,
     )
-    print("response content", response.choices[0].message.content)
     response_content = response.choices[0].message.content
     return response_content
