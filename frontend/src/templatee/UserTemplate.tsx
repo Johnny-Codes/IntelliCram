@@ -11,6 +11,7 @@ import QuizForm from '@/pages/quizzes/QuizForm';
 import QuizDetail from '@/pages/quizzes/QuizDetail';
 import QuizzesList from '@/pages/quizzes/QuizzesList';
 import PdfForm from '@/pages/flashcards/PdfForm';
+import TextQuizChat from '@/pages/quizzes/TextQuizChat';
 
 function UserTemplate() {
     const showClassList = useSelector((state) => state.spaslice.showClassesList)
@@ -23,6 +24,7 @@ function UserTemplate() {
     const showQuizDetail = useSelector((state) => state.spaslice.showQuizDetail)
     const showQuizzesList = useSelector((state) => state.spaslice.showQuizzesList)
     const showPdfForm = useSelector((state) => state.spaslice.showPdfForm)
+    const showTextQuizChat = useSelector((state) => state.spaslice.showTextQuizChat)
 
 
     return (
@@ -38,6 +40,7 @@ function UserTemplate() {
             {showQuizDetail && <QuizDetail /> }
             {showQuizzesList && <QuizzesList /> }
             {showPdfForm && <PdfForm /> }
+            {showTextQuizChat && <TextQuizChat /> }
 
         </>
     )

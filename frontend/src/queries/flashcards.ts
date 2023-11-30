@@ -92,6 +92,17 @@ export const flashcardsApi = createApi({
 				};
 			},
 			invalidatesTags: [ 'flashcards' ]
+		}),
+		createTextQuizForQuestion: builder.mutation({
+			query: (formData) => {
+				return {
+					url: "/flashcards/text_quiz",
+					method: 'POST',
+					body: formData,
+					credentials: 'include'
+				};
+			},
+			// invalidatesTags: [ 'flashcards' ]
 		})
 	})
 });
@@ -104,4 +115,5 @@ export const {
 	useUpdateFlashcardMutation,
 	useCreateQuizAIMutation,
 	useCreateFlashcardsFromFileMutation,
+	useCreateTextQuizForQuestionMutation
 } = flashcardsApi;

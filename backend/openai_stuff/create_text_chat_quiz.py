@@ -11,7 +11,7 @@ models = {
     "4": "gpt-4",
 }
 
-json_response_template = "response with a key 'is_correct' and a key 'improvement' where you state if the answer the user provided is correct or false, and how they can improve their answer if they got it wrong"
+json_response_template = "response with a key 'is_correct' and a key 'improvement' where you state if the answer the user provided is correct or false, and how they can improve their answer if they got it wrong, as well as a bit more information about the topic"
 
 prompts = {
     "quiz_prompt": f"You are my teacher. For each question, correct answer, and user answer Return a JSON {json_response_template}",

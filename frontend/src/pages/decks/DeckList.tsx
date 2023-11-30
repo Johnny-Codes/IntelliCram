@@ -69,6 +69,7 @@ import { useGetClassDecksQuery } from '@/queries/decks';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setDeck } from '@/slices/DeckSlice';
+import { setClass } from '@/slices/account/ClassesSlice';
 import { showDecksForm, showDecksList, showFlashcardsList, showClassesList } from '@/slices/SpaSlice';
 import Deck from '@/molecules/Deck';
 import QuizforDeck from '../quizzes/QuizforDeck';
@@ -87,6 +88,7 @@ const DeckList = () => {
 
   const changeDeckStateId = (e, id) => {
     e.preventDefault();
+    dispatch(setClass(classId));
     dispatch(setDeck(id));
     dispatch(showDecksList(false));
     dispatch(showClassesList(false));
