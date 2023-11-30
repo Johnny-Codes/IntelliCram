@@ -56,7 +56,7 @@ const Home = ({ setSelectedPage }: Props) => {
                     <Link
                         to="signup/new"
 
-                    ><Button text="Sign UP" classes="bg-secondary-500 hover:bg-primary-500 hover:text-white" /></Link>
+                    ><Button text="Sign Up" classes="bg-secondary-500 hover:bg-primary-500 hover:text-white" /></Link>
 
                     {/* Sign Up
                     </Submit> */}
