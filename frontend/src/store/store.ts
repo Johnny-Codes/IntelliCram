@@ -12,6 +12,7 @@ import { flashcardsSlice } from '@/slices/FlashCardsSlice';
 import { quizzesSlice } from '@/slices/QuizzesSlice';
 import { quizzesApi } from '@/queries/quizzes';
 import { pdfsApi } from '@/queries/pdfs';
+import { learningPlanApi } from '@/queries/learning_plan';
 
 export const store = configureStore({
 	reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
 		[flashcardsApi.reducerPath]: flashcardsApi.reducer,
 		[quizzesApi.reducerPath]: quizzesApi.reducer,
 		[pdfsApi.reducerPath]: pdfsApi.reducer,
+		[learningPlanApi.reducerPath]: learningPlanApi.reducer,
 		// state
 		account: accountSlice.reducer,
 		spaslice: spaSlice.reducer,
@@ -37,7 +39,8 @@ export const store = configureStore({
 			decksApi.middleware,
 			flashcardsApi.middleware,
 			quizzesApi.middleware,
-			pdfsApi.middleware
+			pdfsApi.middleware,
+			learningPlanApi.middleware,
 			)
 });
 

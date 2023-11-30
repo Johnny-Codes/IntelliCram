@@ -1,0 +1,49 @@
+{
+  "topic": "High School Geometry Learning Plan",
+  "schedule": [
+      {
+          "week 1": {
+              "day 1": {
+                  "tasks": ["Introduction to Geometry", "Points, Lines, and Planes"]
+              }
+          },
+          "day 2": {
+              "tasks": ["Segments and Their Measures", "Angles and Their Measures"]
+          },
+          "day 3": {
+              "tasks": ["Segment and Angle Bisectors", "Basic Constructions"]
+          },
+          "day 4": {
+              "tasks": ["Introduction to Triangles", "Congruence and Triangles"]
+          },
+          "day 5": {
+              "tasks": ["Quadrilaterals", "Similarity"]
+          },
+          "day 6-7": {
+              "tasks": ["Review week 1 concepts, Practice problems"]
+          }
+      },
+      {
+          "week 2": {
+              "day 1": {
+                  "tasks": ["Right Triangles and Trigonometry", "Polygons and Area"]
+              }
+          },
+          "day 2": {
+              "tasks": ["Circles", "Surface Area and Volume"]
+          },
+          "day 3": {
+              "tasks": ["Transformations", "Coordinate Geometry"]
+          },
+          "day 4": {
+              "tasks": ["Introduction to Proof", "Quadrilateral Proofs"]
+          },
+          "day 5": {
+              "tasks": ["Triangle Proofs", "Circles and Regular Polygons"]
+          },
+          "day 6-7": {
+              "tasks": ["Review week 2 concepts, Practice problems"]
+          }
+      }
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "topic": "High School Geometry Learning Plan",
+  "schedule": [
+    {
+      "week 1": {
+        "day 1": {
+          "tasks": ["Introduction to Points, Lines, and Planes"]
+        },
+        "day 2": {
+          "tasks": ["Angles and Angle Relationships"]
+        },
+        "day 3": {
+          "tasks": ["Triangles and Congruence"]
+        },
+        "day 4": {
+          "tasks": ["Quadrilaterals and Polygons"]
+        },
+        "day 5": {
+          "tasks": ["Transformations and Symmetry"]
+        },
+        "day 6-7": {
+          "tasks": ["Review and Practice"]
+        }
+      }
+    },
+    {
+      "week 2": {
+        "day 1": {
+          "tasks": ["Similarity and Proportions"]
+        },
+        "day 2": {
+          "tasks": ["Right Triangles and Trigonometry"]
+        },
+        "day 3": {
+          "tasks": ["Circles and Circular Figures"]
+        },
+        "day 4": {
+          "tasks": ["Area and Perimeter"]
+        },
+        "day 5": {
+          "tasks": ["Volume and Surface Area"]
+        },
+        "day 6-7": {
+          "tasks": ["Review and Practice for Exam"]
+        }
+      }
+    }
+  ]
+}

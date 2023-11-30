@@ -1,0 +1,85 @@
+
+{
+  "topic": "High School Geometry Learning Plan",
+  "schedule": [
+    {
+      "week 1": {
+        "day 1": {
+          "tasks": ["Introduction to Geometry", "Basic Geometric Definitions and Notations"]
+        },
+        "day 2": {
+          "tasks": ["Points, Lines, and Planes", "Types of Angles"]
+        },
+        "day 3": {
+          "tasks": ["Triangle Properties", "Quadrilateral Properties"]
+        },
+        "day 4": {
+          "tasks": ["Congruent Triangles", "Similar Triangles"]
+        },
+        "day 5": {
+          "tasks": ["Special Quadrilaterals", "Proving Geometric Relationships"]
+        },
+        "day 6-7": {
+          "tasks": ["Review Week 1 Topics", "Practice Problems"]
+        }
+      },
+      "week 2": {
+        "day 1": {
+          "tasks": ["Introduction to Polygons", "Circles and Their Properties"]
+        },
+        "day 2": {
+          "tasks": ["Three-Dimensional Geometry", "Surface Area and Volume of Solids"]
+        },
+        "day 3": {
+          "tasks": ["Transformations in Geometry", "Symmetry and Tessellations"]
+        },
+        "day 4": {
+          "tasks": ["Geometric Proofs", "Coordinate Geometry"]
+        },
+        "day 5": {
+          "tasks": ["Introduction to Trigonometry", "Solving Triangles"]
+        },
+        "day 6-7": {
+          "tasks": ["Review Week 2 Topics", "Practice Problems"]
+        }
+      },
+      "week 3": {
+        "day 1": {
+          "tasks": ["Introduction to Circles", "Arcs and Chords"]
+        },
+        "day 2": {
+          "tasks": ["Angles in Circles", "Circle Theorems and Proofs"]
+        },
+        "day 3": {
+          "tasks": ["Area and Circumference of Circles", "Sector and Segment Areas"]
+        },
+        "day 4": {
+          "tasks": ["Introduction to Geometric Constructions", "Compass and Straightedge Constructions"]
+        },
+        "day 5": {
+          "tasks": ["Heron's Formula", "Area of Irregular Figures"]
+        },
+        "day 6-7": {
+          "tasks": ["Review Week 3 Topics", "Practice Problems"]
+        }
+      },
+      "week 4": {
+        "day 1": {
+          "tasks": ["Review of All Topics", "Examination of Weak Areas"]
+        },
+        "day 2": {
+          "tasks": ["Solve Past Exam Questions", "Final Preparation"]
+        },
+        "day 3": {
+          "tasks": ["Revision of Key Concepts", "Practice with Sample Test Papers"]
+        },
+        "day 4": {
+          "tasks": ["Final Review and Practice", "Clarification of Doubts"]
+        },
+        "day 5": {
+          "tasks": ["Mock Exam", "Self-Assessment"]
+        }
+      }
+    }
+  ]
+}

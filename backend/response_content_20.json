@@ -1,0 +1,44 @@
+{
+  "topic": "High School Algebra",
+  "schedule": [
+    {
+      "week 1": {
+        "day 1": {
+          "tasks": ["Review of basic arithmetic operations", "Real numbers and their properties"]
+        },
+        "day 2": {
+          "tasks": ["Linear equations and inequalities", "Solving for a variable"]
+        },
+        "day 3": {
+          "tasks": ["Graphing in the coordinate plane", "Slope and y-intercept"]
+        },
+        "day 4": {
+          "tasks": ["Systems of linear equations", "Solving systems by graphing and substitution"]
+        },
+        "day 5": {
+          "tasks": ["Polynomials and factoring", "Multiplying and dividing monomials"]
+        },
+        "day 6-7": {
+          "tasks": ["Quadratic equations and functions", "Factoring quadratics"]
+        }
+      },
+      "week 2": {
+        "day 1": {
+          "tasks": ["Rational expressions and equations", "Operations with rational expressions"]
+        },
+        "day 2": {
+          "tasks": ["Radical expressions and equations", "Simplifying radicals"]
+        },
+        "day 3": {
+          "tasks": ["Exponential and logarithmic functions", "Graphing exponential functions"]
+        },
+        "day 4": {
+          "tasks": ["Matrices and determinants", "Matrix operations"]
+        },
+        "day 5": {
+          "tasks": ["Inequalities and absolute value", "Solving absolute value equations"]
+        }
+      }
+    }
+  ]
+}

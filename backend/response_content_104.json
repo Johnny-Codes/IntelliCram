@@ -1,4 +1,4 @@
-response = {
+{
   "topic": "Music Theory Learning Plan",
   "schedule": [
     {
@@ -69,31 +69,3 @@ response = {
     }
   ]
 }
-
-# for month in response:
-#     print(month)
-#     for week in response[month]:
-#         print("\t" + week)
-#         for day in response[month][week]:
-#             print("\t\t" + day)
-#             for task in response[month][week][day]["tasks"]:
-#                 print("\t\t\t" + task)
-
-# print(response["Month 1"]["Week 1"]["Day 1"]["tasks"])
-
-# class_name will create the class repo
-class_name = response["topic"]
-
-# for each task in tasks_list, make a deck
-tasks_list = []
-for month in response["schedule"]:
-    for week in month:
-        for day in month[week]:
-            tasks_list.extend(month[week][day]["tasks"])
-
-
-"""
-Need to create a class with the class_name
-Return the class_id
-Loop over tasks_list to create decks with class_id
-"""

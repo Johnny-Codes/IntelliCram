@@ -1,0 +1,72 @@
+
+{
+  "topic": "High School Geometry Learning Plan",
+  "schedule": [
+    {
+      "week 1": {
+        "day 1": {
+          "tasks": ["Introduction to points, lines, and planes"]
+        },
+        "day 2": {
+          "tasks": ["Understanding angles and their properties"]
+        },
+        "day 3": {
+          "tasks": ["Exploring triangles and their properties"]
+        },
+        "day 4": {
+          "tasks": ["Introduction to quadrilaterals and polygons"]
+        },
+        "day 5": {
+          "tasks": ["Review and practice of week 1 topics"]
+        },
+        "day 6-7": {
+          "tasks": ["Week 1 assessment and revision"]
+        }
+      }
+    },
+    {
+      "week 2": {
+        "day 1": {
+          "tasks": ["Understanding circles and their properties"]
+        },
+        "day 2": {
+          "tasks": ["Introduction to transformations including reflections, rotations, and translations"]
+        },
+        "day 3": {
+          "tasks": ["Understanding three-dimensional figures: prisms, pyramids, and cylinders"]
+        },
+        "day 4": {
+          "tasks": ["Practice problems on 3D figures and transformations"]
+        },
+        "day 5": {
+          "tasks": ["Review and practice of week 2 topics"]
+        },
+        "day 6-7": {
+          "tasks": ["Week 2 assessment and revision"]
+        }
+      }
+    },
+    {
+      "week 3": {
+        "day 1": {
+          "tasks": ["Introduction to coordinate geometry and graphs of linear equations"]
+        },
+        "day 2": {
+          "tasks": ["Understanding the concept of similarity and congruence in geometric figures"]
+        },
+        "day 3": {
+          "tasks": ["Introduction to trigonometry and right-angled triangles"]
+        },
+        "day 4": {
+          "tasks": ["Practice problems on coordinate geometry, similarity, and trigonometry"]
+        },
+        "day 5": {
+          "tasks": ["Review and practice of week 3 topics"]
+        },
+        "day 6-7": {
+          "tasks": ["Final assessment and revision"]
+        }
+      }
+    }
+  ]
+}
