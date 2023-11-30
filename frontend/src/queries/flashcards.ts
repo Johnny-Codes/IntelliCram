@@ -63,11 +63,11 @@ export const flashcardsApi = createApi({
 			invalidatesTags: [ 'flashcards' ]
 		}),
 		updateFlashcard: builder.mutation({
-			query: (class_id, formData, card_id) => {
+			query: (args: {class_id: number, formData: {}, card_id: number, deck_id: number}) => {
 				return {
-					url: `/classrooms/${class_id}/decks/${formData.deck_id}/cards/${card_id}`,
+					url: `/classrooms/${args.class_id}/decks/${args.deck_id}/cards/${args.card_id}`,
 					method: 'PUT',
-					body: formData
+					body: args.formData
 				};
 			},
 			invalidatesTags: [ 'flashcards' ]
