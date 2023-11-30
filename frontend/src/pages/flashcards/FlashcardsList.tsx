@@ -6,7 +6,13 @@ import {
 	showFlashcardsList,
 	showQuizForm,
 	showDecksList,
-	showClassesList
+	showClassesList,
+	showClassesForm,
+	showDecksForm,
+	showPdfForm,
+	showQuizDetail,
+	showQuizzesList,
+	showTextQuizChat
 } from '@/slices/SpaSlice';
 
 const FlashcardsList = () => {
@@ -24,6 +30,20 @@ const FlashcardsList = () => {
 		dispatch(showFlashcardsForm(false));
 		dispatch(showQuizForm(true));
 	};
+
+	const handleTextQuizChange = () => {
+		dispatch(showClassesList(false));
+		dispatch(showClassesForm(false));
+		dispatch(showDecksList(false));
+		dispatch(showDecksForm(false));
+		dispatch(showFlashcardsList(false));
+		dispatch(showPdfForm(false));
+		dispatch(showQuizDetail(false));
+		dispatch(showQuizzesList(false));
+		dispatch(showTextQuizChat(true));
+		dispatch(showQuizForm(false));
+	};
+
 	const { data: flashcards, isLoading } = useGetDeckFlashcardsQuery({ class_id: classId, deck_id: deckId });
 	console.log('These are the flashcards', flashcards);
 
@@ -53,7 +73,7 @@ const FlashcardsList = () => {
 	};
 
 	if (!classId || !deckId) {
-		return <h1>No Deck Selected</h1>;
+		return (<h1>No Deck Selected</h1>);
 	}
 
 	if (isLoading) {
@@ -138,7 +158,8 @@ const FlashcardsList = () => {
 			</div>
 			<div>
 			  <button onClick={handleCreateFlashcard} className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2">Add Flashcard</button>
-			  <button onClick={handleCreateQuiz} className="bg-blue-500 text-white px-2 py-1 rounded-md">Create Quiz</button>
+			  <button onClick={handleCreateQuiz} className="bg-blue-500 text-white px-2 py-1 rounded-md mr-2">Create Quiz</button>
+			  <button onClick={handleTextQuizChange} className="bg-blue-500 text-white px-2 py-1 rounded-md">Create Text Quiz</button>
 			</div>
 		  </div>
 		</>

@@ -72,18 +72,6 @@ const Navbar = () => {
 		dispatch(showTextQuizChat(false));
 	};
 
-	const handleTextQuizChange = () => {
-		dispatch(showClassesList(false));
-		dispatch(showClassesForm(false));
-		dispatch(showDecksList(false));
-		dispatch(showDecksForm(false));
-		dispatch(showFlashcardsList(false));
-		dispatch(showPdfForm(false));
-		dispatch(showQuizDetail(false));
-		dispatch(showQuizzesList(false));
-		dispatch(showTextQuizChat(true));
-	};
-
 	return (
 		<nav>
 			<div className={`bg-primary-100 drop-shadow  ${flexBetween} w-full py-6`}>
@@ -122,12 +110,6 @@ const Navbar = () => {
 										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
 									>
 										PDF Upload
-									</p>
-									<p
-										onClick={handleTextQuizChange}
-										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
-									>
-										Text Quiz
 									</p>
 								</div>
 								{cookies.user ? (
