@@ -1,4 +1,3 @@
-import HText from "@/atoms/HText";
 import { DeckType, SelectedPage } from "@/atoms/types";
 import {
     HomeModernIcon,
@@ -7,27 +6,25 @@ import {
 } from "@heroicons/react/24/solid";
 import { motion } from "framer-motion";
 import Deck from "./Decks";
-import ActionButton from "@/atoms/ActionButton";
-import DecksPageGraphic from "@/assets/DecksPageGraphic.png"
 
 const decks: Array<DeckType> = [
     {
         icon: <HomeModernIcon className="h-6 w-5" />,
-        title: "State of the Art Facilities",
+        title: "Unlock Your Academic Potential:",
         description:
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaasdfssdfa"
+            "Dive into a new era of learning with Intellicram, your personal study companion. Our innovative study and flashcard web app empowers you to grasp complex concepts effortlessly. Say goodbye to tedious note-taking and hello to a smarter way to study. Explore our vast database of curated content or let Intellicram's AI create personalized flashcards and quizzes tailored to your unique learning style. Transform the way you study, and watch your knowledge soar."
     },
     {
         icon: <UserGroupIcon className="h-6 w-5" />,
-        title: "School sucks",
+        title: "The AI Advantage: Unleashing the Power of Intellect:",
         description:
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaasdfssdfa"
+            "Welcome to Intellicram, where artificial intelligence meets academic excellence. Experience the transformative power of AI-driven learning as it adapts to your strengths and weaknesses. Intellicram doesn't just provide information; it understands how you learn best. Harness the incredible potential of machine learning to supercharge your study sessions. Let Intellicram be your guide in navigating the intricate world of knowledge, proving that the future of learning is intelligent."
     },
     {
         icon: <AcademicCapIcon className="h-6 w-5" />,
-        title: "Mydegree is worthless",
+        title: "Beyond Memorization: Nurturing True Understanding:",
         description:
-            "aaaaaaaaaaaaaaaaaaaaaaaaaaaaasdfssdfa"
+            "Intellicram goes beyond traditional flashcards; it fosters a deep understanding of your study material. Elevate your learning journey with our third section, where we emphasize comprehension over rote memorization. Intellicram doesn't just help you memorize facts; it guides you to truly understand the underlying concepts. Engage with immersive quizzes that challenge your critical thinking and take your knowledge to new heights. Join us in shaping a future where learning is not just about memorizing but about mastering."
     },
 ];
 
@@ -42,39 +39,22 @@ type Props = {
     setSelectedPage: (value: SelectedPage) => void;
 }
 
-const Decks = ({ setSelectedPage }: Props) => {
+const AboutUs = ({ setSelectedPage }: Props) => {
     return <section
-        id="decks"
-        className="mx-auto min-h-full w-5/6 py-20"
+        id="aboutus"
+        className="mx-auto min-h-full w-5/6 mb-20"
     >
         <motion.div
             onViewportEnter={() => setSelectedPage(SelectedPage.Decks)}
         >
-            {/* HEADER  */}
-            <motion.div
-                className="md:my-5 md:w-3/5"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 1 }}
-                variants={{
-                    hidden: { opacity: 0, x: -100 },
-                    visible: { opacity: 1, x: 0 }
-                }}
-            >
-                <HText>Your Flashcards</HText>
-                <p className="my-5 text-sm">
-                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    aaaaaaaaaaadaaiaaacaaaakaaaaaaaaaaaaaaaaa
-                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-                </p>
-            </motion.div>
-
+            <div className='w-full flex items-end justify-center p-12' style={{background: 'radial-gradient(circle, rgba(145,229,246,1) 50%, rgba(255,255,255,1) 100%)'}}>
+                <div className="mx-auto" >
+                    <h2 className="text-3xl font-bold ">About IntelliCram</h2>
+                </div>
+            </div>
             {/* DECKS  */}
             <motion.div
-                className="mt-5 items-center justify-between gap-8 md:flex"
+                className=" mt-5 items-center justify-between gap-8 md:flex"
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.5 }}
@@ -90,75 +70,8 @@ const Decks = ({ setSelectedPage }: Props) => {
                     />
                 ))}
             </motion.div>
-
-            {/* GRAPHICS AND DESCRIP  */}
-            <div className="mt-16 items-center justify-between gap-20 md:mt-28 md:flex">
-                {/* GRAPHIC  */}
-                <img
-                    className='mx-auto'
-                    alt='decks-page-graphic'
-                    src={DecksPageGraphic}
-                />
-
-                {/* DESCRIP  */}
-                <div>
-                    {/* TITLE  */}
-                    <div className="relative">
-                        <div className="before:absolute before:-top-20 before:-left-20 before:z-[1] before:content-abstractwaves">
-                            <motion.div
-                                initial="hidden"
-                                whileInView="visible"
-                                viewport={{ once: true, amount: 0.5 }}
-                                transition={{ duration: 1 }}
-                                variants={{
-                                    hidden: { opacity: 0, x: 100 },
-                                    visible: { opacity: 1, x: 0 }
-                                }}
-                            >
-                                <HText>
-                                    Look at all them {' '}
-                                    <span className="text-primary-500">DECKS</span>
-                                </HText>
-                            </motion.div>
-                        </div>
-                    </div>
-                    {/* DESCRIPT  */}
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.5 }}
-                        transition={{ delay: 0.5, duration: 1 }}
-                        variants={{
-                            hidden: { opacity: 0, x: 100 },
-                            visible: { opacity: 1, x: 0 }
-                        }}
-                    >
-                        <p className="my-5">
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                        </p>
-                        <p className="mb-5">
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-                        </p>
-                    </motion.div>
-                    {/* BUTTON  */}
-                    <div className="relative mt-16">
-                        {/* SPARKLES NOT WORKING  */}
-                        <div className="before:absolute before:-bottom-40 before:right-40 before:z-[-1] before:content-sparkles">
-                            <ActionButton setSelectedPage={setSelectedPage}>
-                                Sign Up
-                            </ActionButton>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </motion.div>
     </section >;
 };
 
-export default Decks
+export default AboutUs;

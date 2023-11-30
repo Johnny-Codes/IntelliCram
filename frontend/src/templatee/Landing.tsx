@@ -1,6 +1,6 @@
 import LandingNavbar from "@/organisms/landing-navbar";
 import Home from "@/pages/home";
-import Decks from "@/pages/decks";
+import AboutUs from "@/pages/decks";
 import OurReviews from "@/pages/reviews";
 import Footer from "@/pages/footer";
 import { useState, useEffect } from "react";
@@ -33,9 +33,8 @@ function Landing() {
         setSelectedPage={setSelectedPage}
       />
       <Home setSelectedPage={setSelectedPage} />
-      <Decks setSelectedPage={setSelectedPage} />
-      <OurReviews setSelectedPage={setSelectedPage} />
-      <Footer setSelectedPage={setSelectedPage} />
+      <AboutUs setSelectedPage={setSelectedPage} />
+      <Footer />
     </div>
   )
 }

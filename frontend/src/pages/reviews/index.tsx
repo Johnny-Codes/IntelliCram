@@ -1,5 +1,4 @@
 import { SelectedPage, ReviewType} from "@/atoms/types";
-import React from "react";
 import DesmosLogo from '@/assets/DesmosLogo.png'
 import {motion} from "framer-motion"
 import HText from "@/atoms/HText";
