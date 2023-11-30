@@ -5,6 +5,8 @@ import FormInput from '@/atoms/FormInput';
 import { useSelector, useDispatch } from 'react-redux';
 import { setAccessToken, setUser } from '@/slices/account/accountSlice';
 import { useCookies } from 'react-cookie';
+import LandingNavbar from '@/organisms/landing-navbar';
+import Footer from '@/pages/footer';
 
 type formData = {
 	username: string;
@@ -42,7 +44,9 @@ function LoginForm() {
 	}
 
 	return (
-		<form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+		<>
+        <LandingNavbar />
+		<form className="max-w-md mx-auto mt-4 h-full" onSubmit={handleSubmit}>
 			<div className="mb-5">
 				<FormInput
 					value={formData.username}
@@ -79,6 +83,8 @@ function LoginForm() {
 				Login
 			</button>
 		</form>
+		<Footer />
+        </>
 	);
 }
 

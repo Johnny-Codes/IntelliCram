@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSignupUserMutation } from '@/queries/account';
 import FormInput from '@/atoms/FormInput';
 import {useCookies} from 'react-cookie';
+import LandingNavbar from '@/organisms/landing-navbar';
+import Footer from '@/pages/footer';
 
 type formData = {
 	username: string;
@@ -37,7 +39,9 @@ function SignupForm() {
 	}
 
 	return (
-		<form className="max-w-md mx-auto" onSubmit={handleSubmit}>
+		<>
+		<LandingNavbar />
+		<form className="max-w-md mx-auto mt-4 h-full" onSubmit={handleSubmit}>
 			<div className="mb-5">
 				<FormInput
 					value={formData.username}
@@ -116,6 +120,8 @@ function SignupForm() {
 				Sign Up
 			</button>
 		</form>
+		<Footer />
+		</>
 	);
 }
 

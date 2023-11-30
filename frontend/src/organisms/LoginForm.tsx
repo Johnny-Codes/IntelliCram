@@ -1,7 +1,8 @@
 import { useState } from "react";
 import SubmitButton from "@/molecules/SubmitButton";
 import FormInput from "@/atoms/FormInput";
-
+import LandingNavbar from '@/organisms/landing-navbar';
+import Footer from '@/pages/footer';
 
 type formData = {
     username: string;
@@ -26,8 +27,9 @@ export default function LoginForm() {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} className="flex flex-col">
+        <>
+        {/* <LandingNavbar /> */}
+            <form onSubmit={handleSubmit} className="flex flex-col mt-4 h-full">
                 <FormInput
                     required
                     type="text"
@@ -48,7 +50,10 @@ export default function LoginForm() {
                 />
                 <SubmitButton />
             </form>
-        </div>
+            {/* <Footer /> */}
+        </>
     )
-
 }
+
+
+export default LoginForm;
