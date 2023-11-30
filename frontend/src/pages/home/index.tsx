@@ -1,13 +1,9 @@
 import { SelectedPage } from '@/atoms/types'
-import useMediaQuery from '@/hooks/useMediaQuery';
-import ActionButton from '@/atoms/ActionButton';
 import HomepageText from "@/assets/HomePageText.png"
-import AnchorLink from 'react-anchor-link-smooth-scroll';
-import HomepageGraphic from "@/assets/HomepageGraphic.png"
-import DesmosLogo from '@/assets/DesmosLogo.png'
-import Apos from '@/assets/AoPS_Main_Logo_(1).png'
-import xyz from "@/assets/xyz.png"
 import { motion } from "framer-motion";
+import DecksPageGraphic from "@/assets/DecksPageGraphic.png"
+import Button from '@/atoms/Button';
+import { Link } from 'react-router-dom';
 
 
 type Props = {
@@ -15,18 +11,14 @@ type Props = {
 };
 
 const Home = ({ setSelectedPage }: Props) => {
-    const isAboveMediumScreens = useMediaQuery("(min-width:1060px)");
-
-
-
     return <section
         id="home"
-        className='gap-16 bg-gray-20 py-10 md:h-full md:pb-0'
+        className='gap-16 bg-gray-20 py-10 h-full md:pb-0'
     >
         {/* IMAGE AND MAIN HEADER */}
         <motion.div
-        className='md:flex mx-auto w-5/6 items-center justify-center md:h-5/6'
-        onViewportEnter = {()=> setSelectedPage(SelectedPage.Home)}
+            className='md:flex mx-auto w-5/6 items-center justify-center md:h-5/6'
+            onViewportEnter={() => setSelectedPage(SelectedPage.Home)}
         >
             {/* MAIN HEADER */}
             <div className='z-10 mt-32 md:basis-3/5'>
@@ -43,10 +35,10 @@ const Home = ({ setSelectedPage }: Props) => {
                     }}
                 >
                     <div className='relative flex basis-3/5 justify-center'>
-                            <img src={HomepageText} alt="home-page-text" />
+                        <img src={HomepageText} alt="home-page-text" />
                     </div>
                     <p className='mt-8 text-sm'>
-                        Unrivaled flash cards. Improve your learning using the latest in ai tools and architecture
+                        Welcome to Intellicram, where learning becomes an exhilarating journey and intelligence meets innovation. Unlock your academic potential with our cutting-edge study and flashcard web app that redefines the way you absorb knowledge. Seamlessly blend personalized study materials curated by AI with our extensive content database. Experience the power of artificial intelligence, tailored to your unique learning style, as Intellicram transforms mundane study sessions into dynamic, engaging experiences. Beyond rote memorization, Intellicram fosters true understanding through immersive quizzes, guiding you towards mastery of your subjects. Elevate your learning experience and join us in shaping a future where intelligence and education converge seamlessly.
                     </p>
                 </motion.div>
 
@@ -61,35 +53,27 @@ const Home = ({ setSelectedPage }: Props) => {
                         hidden: { opacity: 0, x: -100 },
                         visible: { opacity: 1, x: 0 }
                     }}>
-                    <ActionButton setSelectedPage={setSelectedPage}>
-                        Sign Up
-                    </ActionButton>
-                    <AnchorLink className="text-sm font-bold text-primary-500 underline hover:text-secondary-500"
-                        onClick={() => setSelectedPage(SelectedPage.ContactUs)}
-                        href={`#${SelectedPage.ContactUs}`}
-                    >
-                        <p>Learn More</p>
-                    </AnchorLink>
+                    <Link
+                        to="signup/new"
+
+                    ><Button text="Sign UP" classes="bg-secondary-500 hover:bg-primary-500 hover:text-white" /></Link>
+
+                    {/* Sign Up
+                    </Submit> */}
+
                 </motion.div>
             </div>
             {/* IMAGE */}
             <div className='flex basis-3/5 justify-center md:z-10
                             md:ml-40 md:mt-16 md:justify-items-end'>
-                <img alt="home-pageGraphic" src={HomepageGraphic}></img>
+                <img
+                    className='mx-auto'
+                    alt='decks-page-graphic'
+                    src={DecksPageGraphic}
+                />
             </div>
         </motion.div>
-        {/* SPONSORS  */}
-        {isAboveMediumScreens && (
-            <div className='h-[150px] w-full bg-primary-100 py-10'>
-                <div className="mx-auto w-5/6">
-                    <div className='flex w-10/12 items-center justify-between gap-8'>
-                        <img alt="Apos" src={Apos} className="h-[100px]" />
-                        <img alt="DesmosLogo" src={DesmosLogo} className="h-[100px]" />
-                        <img alt="Xyz" src={xyz} className="h-[100px]" />
-                    </div>
-                </div>
-            </div>
-        )}
+
     </section>;
 };
 
