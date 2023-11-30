@@ -187,7 +187,7 @@ const ScheduleComponent = () => {
         <h1>{schedule.topic}</h1>
         </div>
         {schedule.schedule.map((week, weekIndex) => (
-          <div key={weekIndex} className="mb-8">
+          <div key={weekIndex} className="">
             <h2 className="text-2xl font-bold p-8 bg-slate-400 text-center border-b-2 border-gray-500 pb-2">
               {`Week ${weekIndex + 1}`}
             </h2>
