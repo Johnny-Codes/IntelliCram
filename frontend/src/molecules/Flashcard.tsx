@@ -56,7 +56,6 @@ const Flashcard: React.FC<FlashcardProps> = ({ question, answer }) => {
 				</div>
 			</div>
 		</div>
-		<h3>HELLO</h3>
 		</>
 	);
 };

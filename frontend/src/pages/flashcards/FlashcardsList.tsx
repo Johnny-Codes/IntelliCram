@@ -95,10 +95,10 @@ const FlashcardsList = () => {
 		  <div className="flex justify-center mb-8">
 			<div style={{ width: '30vw', height: '18vw' }} className="group [perspective:1000px]">
 			  <div className="relative h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-				<div key={flashcards[currentCardIndex].id} className="bg-slate-200 absolute inset-0 flex items-center justify-center text-center">
+				<div key={flashcards[currentCardIndex].id} className="bg-slate-200 p-4 absolute inset-0 flex items-center justify-center text-center">
 				  {flashcards[currentCardIndex].question}
 				</div>
-				<div className="absolute inset-0 h-full w-full rounded-xl bg-blue-200 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+				<div className="absolute text-black inset-0 h-full w-full rounded-xl bg-blue-200 p-4 text-center [transform:rotateY(180deg)] [backface-visibility:hidden]">
 				  <div className="flex min-h-full flex-col items-center justify-center">
 					{flashcards[currentCardIndex].answer}
 				  </div>
