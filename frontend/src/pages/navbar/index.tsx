@@ -14,14 +14,15 @@ import {
 	showFlashcardsForm,
 	showQuizzesList,
 	showQuizDetail,
-	showPdfForm
+	showPdfForm,
+	showTextQuizChat
 } from '@/slices/SpaSlice';
 
 const Navbar = () => {
 	const flexBetween = 'flex items-center justify-between';
-	const [isMenuToggled, setIsMenuToggled] = useState<boolean>(false);
+	const [ isMenuToggled, setIsMenuToggled ] = useState<boolean>(false);
 	const isAboveMediumScreens = useMediaQuery('(min-width: 1060px)');
-	const [cookies, setCookie, removeCookie] = useCookies(['access_token', 'user']);
+	const [ cookies, setCookie, removeCookie ] = useCookies([ 'access_token', 'user' ]);
 	const dispatch = useDispatch();
 
 	const handleClassesChange = () => {
@@ -33,6 +34,7 @@ const Navbar = () => {
 		dispatch(showFlashcardsForm(false));
 		dispatch(showQuizDetail(false));
 		dispatch(showQuizzesList(false));
+		dispatch(showTextQuizChat(false));
 	};
 
 	const handleDecksChange = () => {
@@ -44,6 +46,7 @@ const Navbar = () => {
 		dispatch(showFlashcardsForm(false));
 		dispatch(showQuizzesList(false));
 		dispatch(showQuizDetail(false));
+		dispatch(showTextQuizChat(false));
 	};
 
 	const handleQuizzesChange = () => {
@@ -54,6 +57,7 @@ const Navbar = () => {
 		dispatch(showFlashcardsList(false));
 		dispatch(showQuizzesList(true));
 		dispatch(showQuizDetail(false));
+		dispatch(showTextQuizChat(false));
 	};
 
 	const handlePdfChange = () => {
@@ -64,6 +68,8 @@ const Navbar = () => {
 		dispatch(showFlashcardsList(false));
 		dispatch(showPdfForm(true));
 		dispatch(showQuizDetail(false));
+		dispatch(showQuizzesList(false));
+		dispatch(showTextQuizChat(false));
 	};
 
 	return (
@@ -89,18 +95,21 @@ const Navbar = () => {
 									</p>
 									<p
 										onClick={handleDecksChange}
-										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
+										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
+									>
 										Decks
 									</p>
 									<p
 										onClick={handleQuizzesChange}
-										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
+										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
+									>
 										Quizzes
 									</p>
 									<p
 										onClick={handlePdfChange}
-										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
-											PDF Upload
+										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
+									>
+										PDF Upload
 									</p>
 								</div>
 								{cookies.user ? (
@@ -148,22 +157,22 @@ const Navbar = () => {
 
 			{/* MOBILE MENU MODAL */}
 			{!isAboveMediumScreens &&
-				isMenuToggled && (
-					<div className="fixed right-0 bottom-0 h-full w-[300px] bg-primary-100 drop-shadow-xl">
-						<div className="flex justify-end p-12">
-							<button onClick={() => setIsMenuToggled(!isMenuToggled)}>
-								<XMarkIcon className="h-6 w-6 text-gray-400" />
-							</button>
-						</div>
-						{/* MENU ITEMS */}
-						<div className="ml-[33%] flex flex-col gap-10 text-2xl">
-							<Link to="Home" className="" />
-							<Link to="Home" className="" />
-							<Link to="Home" className="" />
-							<Link to="Home" className="" />
-						</div>
+			isMenuToggled && (
+				<div className="fixed right-0 bottom-0 h-full w-[300px] bg-primary-100 drop-shadow-xl">
+					<div className="flex justify-end p-12">
+						<button onClick={() => setIsMenuToggled(!isMenuToggled)}>
+							<XMarkIcon className="h-6 w-6 text-gray-400" />
+						</button>
 					</div>
-				)}
+					{/* MENU ITEMS */}
+					<div className="ml-[33%] flex flex-col gap-10 text-2xl">
+						<Link to="Home" className="" />
+						<Link to="Home" className="" />
+						<Link to="Home" className="" />
+						<Link to="Home" className="" />
+					</div>
+				</div>
+			)}
 		</nav>
 	);
 };
