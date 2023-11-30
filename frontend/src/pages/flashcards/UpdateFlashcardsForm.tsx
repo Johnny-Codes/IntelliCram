@@ -1,45 +1,50 @@
 import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useCreateFlashcardMutation } from '@/queries/flashcards';
+import { useUpdateFlashcardMutation } from '@/queries/flashcards';
 import FormInput from '@/atoms/FormInput';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import {
 	showFlashcardsList,
 	showClassesList,
-	showFlashcardsForm
 } from '@/slices/SpaSlice';
 
 type formData = {
 	question: string;
 	answer: string;
+	wrong_count: int;
 };
 
-const FlashcardsForm = () => {
-	const [ createFlashcard, createFlashcardResponse ] = useCreateFlashcardMutation();
-	const [ formData, setFormData ] = useState<formData>({});
+const UpdateFlashCardsForm = (props) => {
+	console.log("props", props)
+	const deckId = useSelector((state) => state.decks.deck_id)
+	const [updateFlashcard, updateFlashcardResponse] = useUpdateFlashcardMutation();
+	const [formData, setFormData] = useState<formData>({
+		question: props.props.question,
+		answer: props.props.answer,
+	});
 	const dispatch = useDispatch();
 	const classId = useSelector((state) => state.classes.class_id);
-	const deckId = useSelector((state) => state.decks.deck_id);
-
+	console.log("props with formdata", formData)
 	useEffect(
 		() => {
-			if (createFlashcardResponse.isSuccess) {
+			if (updateFlashcardResponse.isSuccess) {
 				dispatch(showClassesList(false));
 			}
 		},
-		[ createFlashcardResponse.isSuccess ]
+		[updateFlashcardResponse.isSuccess]
 	);
 
 	const handleFormChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
+		console.log("formdata", formData)
 	};
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		await createFlashcard({ formData: formData, class_id: classId, deck_id: deckId });
+		console.log("calss id", classId, formData, formData.card_id)
+		await updateFlashcard({ class_id: classId, formData: formData, card_id: formData.card_id });
 		dispatch(showFlashcardsList(true));
-		dispatch(showFlashcardsForm(false));
 	}
 
 	return (
@@ -47,7 +52,7 @@ const FlashcardsForm = () => {
 			<div className="mb-5">
 				<FormInput
 					value={formData.question}
-					placeholder="Question"
+					placeholder={formData.question}
 					onChange={handleFormChange}
 					type="text"
 					name="question"
@@ -61,7 +66,7 @@ const FlashcardsForm = () => {
 			<div className="mb-5">
 				<FormInput
 					value={formData.answer}
-					placeholder="Answer"
+					placeholder={formData.answer}
 					onChange={handleFormChange}
 					type="text"
 					name="answer"
@@ -76,10 +81,10 @@ const FlashcardsForm = () => {
 				type="submit"
 				className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 			>
-				Create
+				Update
 			</button>
 		</form>
 	);
 };
 
-export default FlashcardsForm;
+export default UpdateFlashCardsForm;
