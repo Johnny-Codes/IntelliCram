@@ -37,46 +37,50 @@ const QuizDetail = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div className="max-w-md mx-auto p-4 bg-blue-100 rounded-md shadow-md">
-                <h1 className="text-3xl font-bold mb-4">Quiz</h1>
-                {quiz.map((question) => (
-                    <div key={question.id} className="mb-4">
-                        <p className="text-lg font-semibold mb-2">{question.question}</p>
-                        <div className="ml-4">
-                            {question.answers.map((answer) => (
-                                <div key={answer.id}>
-                                    <input
-                                        type="radio"
-                                        name={`question_${question.id}`}
-                                        value={answer.id}
-                                        id={`answer_${answer.id}`}
-                                        className="mr-2"
-                                        checked={selectedAnswers[question.id] === answer.id}
-                                        onChange={() => handleAnswerChange(question.id, answer.id)}
-                                        disabled={showCorrectAnswers}
-                                    />
-                                    <label
-                                        htmlFor={`answer_${answer.id}`}
-                                        className={`text-base ${
-                                            showCorrectAnswers && answer.answer === question.correct_answer
-                                                ? 'text-green-500 font-bold'
-                                                : showCorrectAnswers && selectedAnswers[question.id] === answer.id
-                                                    ? 'text-red-500 font-bold'
-                                                    : ''
-                                            }`}
-                                    >
-                                        {answer.answer}
-                                    </label>
-                                </div>
-                            ))}
-                        </div>
+        <form className="flex items-center justify-center" onSubmit={handleSubmit}>
+          <div className="mx-auto p-4 bg-blue-100 rounded-md shadow-md">
+            <h1 className="text-3xl font-bold mb-4">Quiz</h1>
+            {quiz.map((question) => (
+              <div key={question.id} className="mb-4 p-2 border-b-2 border-gray-300">
+                <div className="mb-2">
+                  <p className="text-lg font-semibold">{question.question}</p>
+                </div>
+                <div className="ml-4">
+                  {question.answers.map((answer) => (
+                    <div key={answer.id} className="mb-2">
+                      <input
+                        type="radio"
+                        name={`question_${question.id}`}
+                        value={answer.id}
+                        id={`answer_${answer.id}`}
+                        className="mr-2"
+                        checked={selectedAnswers[question.id] === answer.id}
+                        onChange={() => handleAnswerChange(question.id, answer.id)}
+                        disabled={showCorrectAnswers}
+                      />
+                      <label
+                        htmlFor={`answer_${answer.id}`}
+                        className={`text-base ${
+                          showCorrectAnswers
+                            ? answer.answer === question.correct_answer
+                              ? 'text-green-500 font-bold'
+                              : selectedAnswers[question.id] === answer.id
+                              ? 'text-red-500 font-bold'
+                              : ''
+                            : ''
+                        }`}
+                      >
+                        {answer.answer}
+                      </label>
                     </div>
-                ))}
-                <QuizSubmitButton />
-            </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+            <QuizSubmitButton />
+          </div>
         </form>
-    );
-};
+      );
+    };
 
 export default QuizDetail;

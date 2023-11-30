@@ -26,7 +26,7 @@ const QuizzesList = () => {
                     </tbody>
                 </table>
             </div>
-            <div className="flex-1 p-4">
+            <div className="w-2/3 p-4">
                 {quizId && <QuizDetail />}
             </div>
         </div>
