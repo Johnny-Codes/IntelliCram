@@ -12,6 +12,7 @@ import QuizDetail from '@/pages/quizzes/QuizDetail';
 import QuizzesList from '@/pages/quizzes/QuizzesList';
 import PdfForm from '@/pages/flashcards/PdfForm';
 import TextQuizChat from '@/pages/quizzes/TextQuizChat';
+import Footer from '@/pages/footer';
 
 function UserTemplate() {
     const showClassList = useSelector((state) => state.spaslice.showClassesList)
@@ -41,7 +42,7 @@ function UserTemplate() {
             {showQuizzesList && <QuizzesList /> }
             {showPdfForm && <PdfForm /> }
             {showTextQuizChat && <TextQuizChat /> }
-
+            <Footer />
         </>
     )
 }
