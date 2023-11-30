@@ -17,20 +17,21 @@ function LoginForm() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [cookies, setCookie, removeCookie] = useCookies(['user']);
-	const [ login, loginResponse ] = useLoginUserMutation();
-	const [ formData, setFormData ] = useState<formData>({});
+	const [login, loginResponse] = useLoginUserMutation();
+	const [formData, setFormData] = useState<formData>({});
 	const accessToken = useSelector((state) => state.account.accessToken);
 	if (cookies.user && !formData.username) {
 		setFormData({ username: cookies.user, password: '' });
 	}
 	useEffect(() => {
-	if (loginResponse.isSuccess) {
-		dispatch(setAccessToken(loginResponse.data.access_token));
-		dispatch(setUser(formData.username));
-		setCookie('access_token', loginResponse.data.access_token, { path: '/' });
-		setCookie('user', formData.username, { path: '/' });
-		navigate("/dashboard")
-	}}, [loginResponse, dispatch, navigate, accessToken, formData.username]);
+		if (loginResponse.isSuccess) {
+			dispatch(setAccessToken(loginResponse.data.access_token));
+			dispatch(setUser(formData.username));
+			setCookie('access_token', loginResponse.data.access_token, { path: '/' });
+			setCookie('user', formData.username, { path: '/' });
+			navigate("/dashboard")
+		}
+	}, [loginResponse, dispatch, navigate, accessToken, formData.username]);
 
 	const handleFormChange = (e) => {
 		const { name, value } = e.target;
@@ -45,24 +46,29 @@ function LoginForm() {
 
 	return (
 		<>
-        <LandingNavbar />
-		<form className="max-w-md mx-auto mt-4 h-full" onSubmit={handleSubmit}>
-			<div className="mb-5">
-				<FormInput
+		  <LandingNavbar />
+		  <div className="min-h-screen bg-white flex flex-col items-center">
+			<div className="bg-white p-8 rounded-md shadow-md w-full sm:w-96">
+			  <form className="flex flex-col" onSubmit={handleSubmit}>
+				<div className="mb-5">
+				  <label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
+					Username
+				  </label>
+				  <FormInput
 					value={formData.username}
 					placeholder="Username"
 					onChange={handleFormChange}
 					type="text"
 					name="username"
 					id="username"
-					className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-				/>
-				<label htmlFor="username" className="block text-gray-700 text-sm font-bold mb-2">
-					Username
-				</label>
-			</div>
-			<div className="mb-5">
-				<FormInput
+					className="input-style"
+				  />
+				</div>
+				<div className="mb-5">
+				  <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
+					Password
+				  </label>
+				  <FormInput
 					value={formData.password}
 					placeholder="Password"
 					onChange={handleFormChange}
@@ -70,22 +76,22 @@ function LoginForm() {
 					type="password"
 					name="password"
 					id="password"
-					className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-				/>
-				<label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
-					Password
-				</label>
+					className="input-style"
+				  />
+				</div>
+				<button
+				  type="submit"
+				  className="button-style w-full mt-4 bg-blue-700 hover:bg-blue-800 text-white px-4 py-2 rounded-md transition-all duration-300 focus:outline-none focus:ring focus:border-blue-500"
+				>
+				  Login
+				</button>
+			  </form>
 			</div>
-			<button
-				type="submit"
-				className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-			>
-				Login
-			</button>
-		</form>
-		<Footer />
-        </>
-	);
+		  </div>
+		  <Footer />
+		</>
+	  );
+
 }
 
 export default LoginForm;

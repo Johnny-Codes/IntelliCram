@@ -20,16 +20,16 @@ const QuizzesList = () => {
     return (
         <div className="flex">
             <div className="w-1/3 p-4">
-                <table className="min-w-full divide-y divide-gray-200">
+                <table className="min-w-full divide-y divide-gray-200 rounded-md shadow-md">
                     <tbody className="bg-white divide-y divide-gray-200">
                         {quizzes && <QuizTopDown />}
                     </tbody>
                 </table>
-            </div>
+            </div >
             <div className="w-2/3 p-4">
                 {quizId && <QuizDetail />}
             </div>
-        </div>
+        </div >
     );
 }
 

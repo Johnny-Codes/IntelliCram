@@ -57,14 +57,14 @@ const LandingNavbar = ({ isTopOfPage, selectedPage, setSelectedPage }: Props) =>
 								) : (
 									<div className={`${flexBetween} gap-8`}>
 										<Link
-											to="login/new"
+											to="/login/new"
 											className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
 										>
 											Login
 										</Link>
 
 										<Link
-											to="signup/new"
+											to="/signup/new"
 											className="rounded-md bg-secondary-500 px-10 hover:bg-primary-500 hover:text-white py-2"
 										>
 											Signup

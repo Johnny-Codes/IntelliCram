@@ -8,89 +8,89 @@ import { useCreateFlashcardsFromFileMutation } from '@/queries/flashcards';
 
 
 const UserFileList = () => {
-    const [selectedClass, setSelectedClass] = useState(null);
-    const [selectedDeck, setSelectedDeck] = useState(null);
-    const [selectedUserFile, setSelectedUserFile] = useState(null);
+  const [selectedClass, setSelectedClass] = useState(null);
+  const [selectedDeck, setSelectedDeck] = useState(null);
+  const [selectedUserFile, setSelectedUserFile] = useState(null);
 
-    const { data: userClasses, isLoading: classesLoading } = useGetUsersClassesQuery();
-    const { data: classDecks, isLoading: decksLoading } = useGetClassDecksQuery(selectedClass);
-    const { data: userFiles, isLoading: filesLoading } = useGetAllUsersFilesQuery();
+  const { data: userClasses, isLoading: classesLoading } = useGetUsersClassesQuery();
+  const { data: classDecks, isLoading: decksLoading } = useGetClassDecksQuery(selectedClass);
+  const { data: userFiles, isLoading: filesLoading } = useGetAllUsersFilesQuery();
 
-    const [createQuizFromFile, createQuizFromFileResponse] = useCreateFlashcardsFromFileMutation();
+  const [createQuizFromFile, createQuizFromFileResponse] = useCreateFlashcardsFromFileMutation();
 
-    useEffect(() => {
-        if (createQuizFromFileResponse.isSuccess) {
-            console.log('createQuizFromFileResponse', createQuizFromFileResponse);
-        }
-    })
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const formData = {
-            deck_id: selectedDeck,
-            file_id: selectedUserFile
-        };
-        createQuizFromFile(formData);
-        
+  useEffect(() => {
+    if (createQuizFromFileResponse.isSuccess) {
+      console.log('createQuizFromFileResponse', createQuizFromFileResponse);
     }
+  })
 
-    return (
-        <div className="mx-auto max-w-2xl bg-gray-100 p-4 shadow-md rounded-md">
-          <form className="flex flex-col space-y-4">
-            <select
-              className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-              onChange={(e) => setSelectedClass(e.target.value)}
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const formData = {
+      deck_id: selectedDeck,
+      file_id: selectedUserFile
+    };
+    createQuizFromFile(formData);
+
+  }
+
+  return (
+    <div className="mx-auto max-w-2xl bg-gray-100 p-4 shadow-md rounded-md">
+      <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
+        <select
+          className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+          onChange={(e) => setSelectedClass(e.target.value)}
+        >
+          <option value={null}>Select a class</option>
+          {userClasses &&
+            userClasses.map((userClass) => (
+              <option key={userClass.id} value={userClass.id}>
+                {userClass.name}
+              </option>
+            ))}
+        </select>
+
+        <select
+          className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+          onChange={(e) => setSelectedDeck(e.target.value)}
+        >
+          <option value={null}>Select a deck</option>
+          {classDecks &&
+            classDecks.map((classDeck) => (
+              <option key={classDeck.id} value={classDeck.id}>
+                {classDeck.name}
+              </option>
+            ))}
+        </select>
+
+        {userFiles &&
+          userFiles.map((userFile) => (
+            <div
+              key={userFile.id}
+              className="flex items-center cursor-pointer hover:bg-blue-100 p-2 rounded-md transition duration-300"
             >
-              <option value={null}>Select a class</option>
-              {userClasses &&
-                userClasses.map((userClass) => (
-                  <option key={userClass.id} value={userClass.id}>
-                    {userClass.name}
-                  </option>
-                ))}
-            </select>
-      
-            <select
-              className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
-              onChange={(e) => setSelectedDeck(e.target.value)}
-            >
-              <option value={null}>Select a deck</option>
-              {classDecks &&
-                classDecks.map((classDeck) => (
-                  <option key={classDeck.id} value={classDeck.id}>
-                    {classDeck.name}
-                  </option>
-                ))}
-            </select>
-      
-            {userFiles &&
-              userFiles.map((userFile) => (
-                <div
-                  key={userFile.id}
-                  className="flex items-center cursor-pointer hover:bg-blue-100 p-2 rounded-md transition duration-300"
-                >
-                  <input
-                    type="radio"
-                    name="userFile"
-                    value={userFile.id}
-                    className="mr-2 cursor-pointer focus:outline-none focus:ring focus:border-blue-500"
-                    onChange={() => setSelectedUserFile(userFile.id)}
-                  />
-                  <span className="text-blue-700">{userFile.name}</span>
-                </div>
-              ))}
-      
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-all duration-300 focus:outline-none focus:ring focus:border-blue-300"
-            >
-              Submit
-            </button>
-          </form>
-        </div>
-      );
-      
+              <input
+                type="radio"
+                name="userFile"
+                value={userFile.id}
+                className="mr-2 cursor-pointer focus:outline-none focus:ring focus:border-blue-500"
+                onChange={() => setSelectedUserFile(userFile.id)}
+              />
+              <span className="text-blue-700">{userFile.name}</span>
+            </div>
+          ))}
+
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-all duration-300 focus:outline-none focus:ring focus:border-blue-300"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  );
+
 }
 
 export default UserFileList;

@@ -3,19 +3,20 @@ import { useGetUsersClassesQuery } from '@/queries/classes';
 import CreateClassButton from '@/molecules/CreateClassButton';
 import { useDispatch } from 'react-redux';
 import { setClass } from '@/slices/account/ClassesSlice';
-import { showDecksList, showClassesList, showClassesForm, showDecksForm } from '@/slices/SpaSlice';
+import { showDecksList, showClassesList, showClassesForm, showDecksForm, showQuizForm } from '@/slices/SpaSlice';
 import Class from '@/molecules/Class';
 import DeckList from '@/pages/decks/DeckList';
 
 const ClassesList = () => {
 	const { data: classes, isLoading } = useGetUsersClassesQuery();
 	const dispatch = useDispatch();
-	const [ selectedClass, setSelectedClass ] = useState(null);
+	const [selectedClass, setSelectedClass] = useState(null);
 
 	const changeClassStateId = (e, id) => {
 		e.preventDefault();
 		dispatch(setClass(id));
 		dispatch(showDecksForm(false));
+		dispatch(showQuizForm(false))
 		setSelectedClass(id);
 	};
 
@@ -28,10 +29,13 @@ const ClassesList = () => {
 	}
 
 	return (
-		<div className="flex bg-gray-min-h-screen">
+		<div className="flex bg-gray">
 			{/* Sidebar */}
-			<div className="w-1/4 bg-primary-500 text-white p-4 overflow-y-auto">
+			<div className="w-1/4 bg-secondary-400 text-white p-4 overflow-y-auto">
 				<h1 className="text-3xl font-bold mb-4">Classes</h1>
+
+
+
 				{classes.map((classItem) => (
 					<div
 						key={classItem.id}
@@ -41,9 +45,10 @@ const ClassesList = () => {
 						<h2 className="text-lg font-semibold">{classItem.name}</h2>
 					</div>
 				))}
-				<CreateClassButton style={{ position: 'absolute', bottom: '4', right: '4' }} />
-			</div>
 
+
+			</div>
+			<CreateClassButton />
 			{/* Main Content */}
 			<div className="flex-1 bg-gray min-h-screen">
 				<div className="bg-primary-500 text-white py-4">

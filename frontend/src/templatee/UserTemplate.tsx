@@ -31,19 +31,19 @@ function UserTemplate() {
     return (
         <>
             <Navbar />
-            {showClassList && <ClassesList />}
-            {showClassesForm && <ClassesForm />}
-            {showDeckList && <DeckList />}
-            {showDeckForm && <DeckForm />}
-            {showFlashcardsList && <FlashcardsList /> }
-            {showFlashcardsForm && <FlashcardsForm /> }
-            {showQuizForm && <QuizForm /> }
-            {showQuizDetail && <QuizDetail /> }
-            {showQuizzesList && <QuizzesList /> }
-            {showPdfForm && <PdfForm /> }
-            {showTextQuizChat && <TextQuizChat /> }
+            <div className='min-h-screen'>
+                {showClassList && <ClassesList />}
+                {showClassesForm && <ClassesForm />}
+                {showDeckList && <DeckList />}
+                {showFlashcardsList && <FlashcardsList />}
+                {showFlashcardsForm && <FlashcardsForm />}
+                {showQuizForm && <QuizForm />}
+                {showQuizDetail && <QuizDetail />}
+                {showQuizzesList && <QuizzesList />}
+                {showPdfForm && <PdfForm />}
+                {showTextQuizChat && <TextQuizChat />}
+            </div>
             <Footer />
-            
         </>
     )
 }

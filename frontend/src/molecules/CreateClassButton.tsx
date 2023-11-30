@@ -14,7 +14,7 @@ export default function CreateClassButton() {
 		<div className="group relative">
 			<button
 				onClick={handleSubmit}
-				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-800 flex items-center justify-center w-12 h-12 absolute bottom-4 right-4"
+				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline-blue active:bg-blue-800 flex items-center justify-center w-12 h-12 absolute top-4 right-10"
 			>
 				<svg
 					viewBox="0 0 24 24"

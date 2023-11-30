@@ -1,3 +1,4 @@
+import React from 'react';
 import { useGetAllUserQuizzesQuery } from '@/queries/quizzes';
 import { useDispatch } from 'react-redux';
 import { showQuizDetail, showQuizzesList } from '@/slices/SpaSlice';
@@ -16,22 +17,26 @@ const QuizTopDown = () => {
 		return <p>Your Quizzes is Loading</p>;
 	}
 
-	if (!quizzes) {
-		return <p>No quizzes found</p>;
-	}
+	// if (!quizzes || quizzes.length === 0) {
+	//     return <p>No quizzes found</p>;
+	// }
 
-	if (quizzes)
-		return (
-			<div className="max-w-md mx-auto p-4 bg-blue-100 rounded-md shadow-md">
-				<h1 className="text-3xl font-bold mb-4">Quizzes</h1>
-				{quizzes &&
-					quizzes.map((quiz) => (
-						<div key={quiz.id} className="mb-4">
-							<p onClick={(e) => handleQuizState(e, quiz.id)}>{quiz.name}</p>
-						</div>
-					))}
-			</div>
-		);
+	return (
+		<>
+			<tr className="max-w-md mx-auto p-4 bg-blue-100 rounded-md shadow-md">
+				<td colSpan="2">
+					<h1 className="text-3xl text-center font-bold mb-4 p-2 border border-b-2 border-white">Quizzes</h1>
+				</td>
+			</tr>
+			{quizzes.map((quiz) => (
+				<tr key={quiz.id} className="max-w-md mx-auto bg-blue-100 rounded-md shadow-md">
+					<td className="px-4 py-1">
+						<p onClick={(e) => handleQuizState(e, quiz.id)}>{quiz.name}</p>
+					</td>
+				</tr>
+			))}
+		</>
+	);
 };
 
 export default QuizTopDown;

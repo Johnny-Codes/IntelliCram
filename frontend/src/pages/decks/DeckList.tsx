@@ -59,13 +59,13 @@ const DeckList = () => {
           decks.map((deckItem) => (
             <div key={deckItem.id} className="m-4">
               <Deck deckName={deckItem.name} deckId={deckItem.id} onClick={(e) => changeDeckStateId(e, deckItem.id)} />
-              <div className="mt-4">
+              {/* <div className="mt-4">
                 <QuizforDeck deck_id={deckItem.id} />
-              </div>
+              </div> */}
             </div>
           ))}
       </div>
-     
+
           {deckFormShow && <DeckForm setDeckFormShow={setDeckFormShow} />}
         <div className="flex justify-center mt-4">
           <button
@@ -76,7 +76,7 @@ const DeckList = () => {
             Add Deck
           </button>
         </div>
-      
+
     </>
   );
 };
