@@ -9,6 +9,7 @@ import ClassesList from './pages/classes/ClassesList';
 import ClassesForm from './pages/classes/ClassesForm';
 import UserTemplate from '@/templatee/UserTemplate';
 import UserFileList from '@/molecules/UserFileList';
+import ScheduleComponent from '@/atoms/ScheduleComponent';
 
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
 					<Route path="new" element={<ClassesForm />} /> */}
 				{/* <Route path=":id" element={<FlashcardDetail />} /> */}
 				{/* </Route> */}
-				<Route path="testing" element={<UserFileList />} />
+				<Route path="testing" element={<ScheduleComponent />} />
 			</Routes>
 		</BrowserRouter >
 	);
