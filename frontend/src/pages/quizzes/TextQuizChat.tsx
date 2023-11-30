@@ -40,18 +40,18 @@ const TextQuizChat = () => {
 			setChatMessages(newChatMessages);
 			setUserInput('');
 		} catch (error) {
-			console.error('Error sending message:', error);
+			const errorMessage = 'An unexpected error occured, please try again';
+			const newChatMessages = [ ...chatMessages, { content: errorMessage, role: 'system' } ];
+			setChatMessages(newChatMessages);
 		}
 	};
 
 	const handleShowNextQuestion = () => {
 		if (flashcards && flashcards.length > 0) {
-			if (cardIndex === flashcards.length - 1) {
-				setCardIndex(0);
-			} else {
-				setCardIndex(cardIndex + 1);
-			}
-			const nextQuestion = flashcards[cardIndex].question;
+			let nextIndex = (cardIndex + 1) % flashcards.length; // Use modulo to wrap around
+			setCardIndex(nextIndex);
+
+			const nextQuestion = flashcards[nextIndex].question;
 			const newChatMessages = [ ...chatMessages, { content: nextQuestion, role: 'system' } ];
 			setChatMessages(newChatMessages);
 		}
@@ -66,21 +66,19 @@ const TextQuizChat = () => {
 	);
 
 	// Show the first flashcard as a chat message when the page is rendered
-	useEffect(
-		() => {
-			if (flashcards && flashcards.length > 0) {
-				const initialMessage = flashcards[0].question;
-				setChatMessages([ { content: initialMessage, role: 'system' } ]);
-			}
-		},
-		[ flashcards ]
-	);
+	useEffect(() => {}, [ flashcards ]);
 
 	return (
 		<div className="flex flex-col h-screen p-4">
 			<div className="flex-1 overflow-y-auto">
 				{chatMessages.map((message, index) => (
-					<TextQuizItem key={index} text={message.content} role={message.role} />
+					<TextQuizItem
+						key={index}
+						text={message.content}
+						role={message.role}
+						// Add a conditional class to align user messages to the right
+						className={message.role === 'user' ? 'text-right' : ''}
+					/>
 				))}
 				{/* Dummy div for scrolling to bottom */}
 				<div ref={inputRef} />
