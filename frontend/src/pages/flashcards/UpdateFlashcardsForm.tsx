@@ -11,20 +11,20 @@ import {
 type formData = {
 	question: string;
 	answer: string;
-	wrong_count: int;
 };
 
 const UpdateFlashCardsForm = (props) => {
-	console.log("props", props)
-	const deckId = useSelector((state) => state.decks.deck_id)
 	const [updateFlashcard, updateFlashcardResponse] = useUpdateFlashcardMutation();
+	const classId = useSelector((state) => state.classes.class_id);
+	const deckId = useSelector((state) => state.decks.deck_id);
 	const [formData, setFormData] = useState<formData>({
 		question: props.props.question,
 		answer: props.props.answer,
+		wrong_count: 0,
 	});
 	const dispatch = useDispatch();
-	const classId = useSelector((state) => state.classes.class_id);
-	console.log("props with formdata", formData)
+	console.log("props", props.props.card_id)
+
 	useEffect(
 		() => {
 			if (updateFlashcardResponse.isSuccess) {
@@ -42,8 +42,8 @@ const UpdateFlashCardsForm = (props) => {
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		console.log("calss id", classId, formData, formData.card_id)
-		await updateFlashcard({ class_id: classId, formData: formData, card_id: formData.card_id });
+		console.log("pprrrrrrrrops", props)
+		await updateFlashcard({ class_id: classId, formData: formData, card_id: props.props.card_id, deck_id: deckId });
 		dispatch(showFlashcardsList(true));
 	}
 
@@ -52,7 +52,7 @@ const UpdateFlashCardsForm = (props) => {
 			<div className="mb-5">
 				<FormInput
 					value={formData.question}
-					placeholder={formData.question}
+					placeholder={props.question}
 					onChange={handleFormChange}
 					type="text"
 					name="question"
@@ -66,7 +66,7 @@ const UpdateFlashCardsForm = (props) => {
 			<div className="mb-5">
 				<FormInput
 					value={formData.answer}
-					placeholder={formData.answer}
+					placeholder={props.answer}
 					onChange={handleFormChange}
 					type="text"
 					name="answer"

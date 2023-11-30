@@ -15,16 +15,10 @@ const FlashcardsList = () => {
 	const [showUpdateFlashcardsForm, setShowUpdateFlashcardsForm] = useState(false)
 	const [ formData, setFormData ] = useState<formData>({});
 
-	const handleUpdateFlashcard = (e, id, question, answer) => {
-		e.preventDefault();
-		dispatch(setFlashcard(id));
-	};
 
 	const handleUpdateFlashcardForm = (e, flashcard) => {
 		setShowUpdateFlashcardsForm(true);
-		console.log("flashcard in", flashcard)
 		setFormData({ ...formData, card_id: flashcard.id, question: flashcard.question, answer: flashcard.answer});
-		console.log("formdata in", formData)
 	}
 
 	const handleCreateFlashcard = () => {
