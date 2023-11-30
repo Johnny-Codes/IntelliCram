@@ -51,7 +51,7 @@
 //                 </h2>
 //               </div>
 //             </div>
-            
+
 //             {selectedClass === classItem.id && <DeckList />}
 //           </div>
 //         ))}
@@ -119,9 +119,9 @@ const ClassesList = () => {
 
         <div className="container mx-auto my-8 grid grid-cols-1 gap-6">
           {classes.map((classItem) => (
-            <>
+            <div key={classItem.id}>
               {selectedClass === classItem.id && <DeckList />}
-            </>
+            </div>
           ))}
         </div>
       </div>

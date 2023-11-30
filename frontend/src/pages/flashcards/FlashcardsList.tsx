@@ -6,6 +6,14 @@ import UpdateFlashCardsForm from './UpdateFlashcardsForm';
 import {
 	showFlashcardsList,
 	showQuizForm,
+	showDecksList,
+	showClassesList,
+	showClassesForm,
+	showDecksForm,
+	showPdfForm,
+	showQuizDetail,
+	showQuizzesList,
+	showTextQuizChat
 } from '@/slices/SpaSlice';
 
 const FlashcardsList = () => {
@@ -29,6 +37,20 @@ const FlashcardsList = () => {
 		dispatch(showFlashcardsList(false));
 		dispatch(showQuizForm(true));
 	};
+
+	const handleTextQuizChange = () => {
+		dispatch(showClassesList(false));
+		dispatch(showClassesForm(false));
+		dispatch(showDecksList(false));
+		dispatch(showDecksForm(false));
+		dispatch(showFlashcardsList(false));
+		dispatch(showPdfForm(false));
+		dispatch(showQuizDetail(false));
+		dispatch(showQuizzesList(false));
+		dispatch(showTextQuizChat(true));
+		dispatch(showQuizForm(false));
+	};
+
 	const { data: flashcards, isLoading } = useGetDeckFlashcardsQuery({ class_id: classId, deck_id: deckId });
 
 	const [flipped, setFlipped] = useState(false);
@@ -56,7 +78,7 @@ const FlashcardsList = () => {
 	};
 
 	if (!classId || !deckId) {
-		return <h1>No Deck Selected</h1>;
+		return (<h1>No Deck Selected</h1>);
 	}
 
 	if (isLoading) {
