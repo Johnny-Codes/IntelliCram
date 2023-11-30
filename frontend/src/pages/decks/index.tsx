@@ -42,12 +42,12 @@ type Props = {
 const AboutUs = ({ setSelectedPage }: Props) => {
     return <section
         id="aboutus"
-        className="mx-auto min-h-full w-5/6 mb-20"
+        className="mx-auto w-5/6 mb-20"
     >
         <motion.div
             onViewportEnter={() => setSelectedPage(SelectedPage.Decks)}
         >
-            <div className='w-full flex items-end justify-center p-12' style={{background: 'radial-gradient(circle, rgba(145,229,246,1) 50%, rgba(255,255,255,1) 100%)'}}>
+            <div className='w-full flex items-end justify-center p-12' style={{ background: 'radial-gradient(circle, rgba(145,229,246,1) 50%, rgba(255,255,255,1) 100%)' }}>
                 <div className="mx-auto" >
                     <h2 className="text-3xl font-bold ">About IntelliCram</h2>
                 </div>
