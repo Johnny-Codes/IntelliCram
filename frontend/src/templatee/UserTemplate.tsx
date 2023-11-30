@@ -43,6 +43,7 @@ function UserTemplate() {
             {showPdfForm && <PdfForm /> }
             {showTextQuizChat && <TextQuizChat /> }
             <Footer />
+            
         </>
     )
 }
