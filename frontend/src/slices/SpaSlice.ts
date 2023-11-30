@@ -4,7 +4,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const spaSlice = createSlice({
 	name: 'spaslice',
 	initialState: {
-		showClassesList: false,
+		showClassesList: true,
 		showClassesForm: false,
 		showDecksList: false,
 		showDecksForm: false,
@@ -15,7 +15,7 @@ export const spaSlice = createSlice({
 		showQuizDetail: false,
 		showQuizzesList: false,
 		showPdfForm: false,
-		showTextQuiz: true
+		showTextQuizChat: false
 	},
 	reducers: {
 		showClassesList: (state, action) => {

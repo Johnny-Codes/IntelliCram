@@ -3,11 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useCreateFlashcardMutation } from '@/queries/flashcards';
 import FormInput from '@/atoms/FormInput';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-import {
-	showFlashcardsList,
-	showClassesList,
-	showFlashcardsForm
-} from '@/slices/SpaSlice';
+import { showFlashcardsList, showClassesList, showFlashcardsForm } from '@/slices/SpaSlice';
 
 type formData = {
 	question: string;
@@ -43,42 +39,49 @@ const FlashcardsForm = () => {
 	}
 
 	return (
-		<form className="max-w-md mx-auto" onSubmit={handleSubmit}>
-			<div className="mb-5">
-				<FormInput
-					value={formData.question}
-					placeholder="Question"
-					onChange={handleFormChange}
-					type="text"
-					name="question"
-					id="question"
-					className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-				/>
-				<label htmlFor="question" className="block text-gray-700 text-sm font-bold mb-2">
-					Question
-				</label>
+		<div className="min-h-screen bg-white flex flex-col items-center">
+			<div className="bg-white p-8 rounded-md shadow-md w-full sm:w-96 mt-8">
+				<h2 className="text-2xl font-semibold text-gray-800 mb-6">Add Flashcard</h2>
+				<form className="space-y-5">
+					<div>
+						<label htmlFor="question" className="block text-sm font-bold text-gray-700 mb-1">
+							Question
+						</label>
+						<FormInput
+							value={formData.question}
+							placeholder="Enter your question"
+							onChange={handleFormChange}
+							type="text"
+							name="question"
+							id="question"
+							className="w-full"
+						/>
+					</div>
+					<div>
+						<label htmlFor="answer" className="block text-sm font-bold text-gray-700 mb-1">
+							Answer
+						</label>
+						<FormInput
+							value={formData.answer}
+							placeholder="Enter your answer"
+							onChange={handleFormChange}
+							type="text"
+							name="answer"
+							id="answer"
+							className="w-full"
+						/>
+					</div>
+					<div className="flex justify-center">
+						<button
+							onClick={handleSubmit}
+							className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+						>
+							Create
+						</button>
+					</div>
+				</form>
 			</div>
-			<div className="mb-5">
-				<FormInput
-					value={formData.answer}
-					placeholder="Answer"
-					onChange={handleFormChange}
-					type="text"
-					name="answer"
-					id="answer"
-					className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
-				/>
-				<label htmlFor="answer" className="block text-gray-700 text-sm font-bold mb-2">
-					Answer
-				</label>
-			</div>
-			<button
-				type="submit"
-				className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-			>
-				Create
-			</button>
-		</form>
+		</div>
 	);
 };
 

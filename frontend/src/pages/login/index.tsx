@@ -27,7 +27,7 @@ function LoginForm() {
 		dispatch(setUser(formData.username));
 		setCookie('access_token', loginResponse.data.access_token, { path: '/' });
 		setCookie('user', formData.username, { path: '/' });
-		navigate("/testing")
+		navigate("/dashboard")
 	}}, [loginResponse, dispatch, navigate, accessToken, formData.username]);
 
 	const handleFormChange = (e) => {

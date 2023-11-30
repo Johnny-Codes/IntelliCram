@@ -1,12 +1,20 @@
 import React from 'react';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
 import { useDeleteOneDeckMutation } from '@/queries/decks';
+import { useDispatch } from 'react-redux';
+import { showDecksForm } from '@/slices/SpaSlice';
 
 const DeleteDeckModal = ({ isOpen, onClose }) => {
     const [deleteDeck, isSuccess] = useDeleteOneDeckMutation()
 	const classId = useSelector((state) => state.classes.class_id);
 	const deckId = useSelector((state) => state.decks.deck_id);
+  const dispatch = useDispatch();
 
+  const handleDeckDelete = ()=>{
+    dispatch(showDecksForm(false))
+    deleteDeck({class_id:classId, deck_id: deckId});
+    onClose();
+  }
 
   return (
     <>
@@ -19,10 +27,7 @@ const DeleteDeckModal = ({ isOpen, onClose }) => {
             <div className="flex justify-end">
               <button
                 className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
-                onClick={() => {
-                  deleteDeck({class_id:classId, deck_id: deckId});
-                  onClose();
-                }}
+                onClick={handleDeckDelete}
               >
                 Delete
               </button>

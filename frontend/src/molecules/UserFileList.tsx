@@ -36,31 +36,61 @@ const UserFileList = () => {
     }
 
     return (
-        <div className="mx-auto max-w-2xl bg-gray-100 p-4">
-            <form className="flex flex-col space-y-4" onSubmit={handleSubmit}>
-                <select onChange={(e) => setSelectedClass(e.target.value)}>
-                    <option value={null}>Select a class</option>
-                    {userClasses && userClasses.map((userClass) => (
-                        <option key={userClass.id} value={userClass.id}>{userClass.name}</option>
-                    ))}
-                </select>
-                <select onChange={(e) => setSelectedDeck(e.target.value)}>
-                    <option value={null}>Select a deck</option>
-                    {classDecks && classDecks.map((classDeck) => (
-                        <option key={classDeck.id} value={classDeck.id}>{classDeck.name}</option>
-                    ))}
-                </select>
-            {userFiles && userFiles.map((userFile) => (
-                <div key={userFile.id} className="flex items-center">
-                    <input type="radio" name="userFile" value={userFile.id} className="mr-2" onChange={() => setSelectedUserFile(userFile.id)} />
-                    <span>{userFile.name}</span>
+        <div className="mx-auto max-w-2xl bg-gray-100 p-4 shadow-md rounded-md">
+          <form className="flex flex-col space-y-4">
+            <select
+              className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+              onChange={(e) => setSelectedClass(e.target.value)}
+            >
+              <option value={null}>Select a class</option>
+              {userClasses &&
+                userClasses.map((userClass) => (
+                  <option key={userClass.id} value={userClass.id}>
+                    {userClass.name}
+                  </option>
+                ))}
+            </select>
+      
+            <select
+              className="px-4 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-500"
+              onChange={(e) => setSelectedDeck(e.target.value)}
+            >
+              <option value={null}>Select a deck</option>
+              {classDecks &&
+                classDecks.map((classDeck) => (
+                  <option key={classDeck.id} value={classDeck.id}>
+                    {classDeck.name}
+                  </option>
+                ))}
+            </select>
+      
+            {userFiles &&
+              userFiles.map((userFile) => (
+                <div
+                  key={userFile.id}
+                  className="flex items-center cursor-pointer hover:bg-blue-100 p-2 rounded-md transition duration-300"
+                >
+                  <input
+                    type="radio"
+                    name="userFile"
+                    value={userFile.id}
+                    className="mr-2 cursor-pointer focus:outline-none focus:ring focus:border-blue-500"
+                    onChange={() => setSelectedUserFile(userFile.id)}
+                  />
+                  <span className="text-blue-700">{userFile.name}</span>
                 </div>
-                
-            ))}
-            <SubmitButton text="Submit" />
-            </form>
+              ))}
+      
+            <button
+              type="submit"
+              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md transition-all duration-300 focus:outline-none focus:ring focus:border-blue-300"
+            >
+              Submit
+            </button>
+          </form>
         </div>
-    )
+      );
+      
 }
 
 export default UserFileList;

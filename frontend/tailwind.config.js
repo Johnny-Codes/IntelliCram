@@ -4,16 +4,17 @@ export default {
     theme: {
         extend: {
           colors: {
-            "gray-20": "#FFF",
-            "gray-50": "#EFE6E6",
-            "gray-100": "#DFCCCC",
-            "gray-500": "#000",
-            "primary-100": "#91E5F6",
-            "primary-300": "#84D2F6",
-            "primary-500": "#59A5D8",
-            "secondary-400": "#133C55",
-            "secondary-500": "#84D2F6",
+            "gray-20": "#FFFFFF",
+            "gray-50": "#F4F4F4",
+            "gray-100": "#CCCCCC",
+            "gray-500": "#000000",
+            "primary-100": "#B3E0F2",
+            "primary-300": "#4FA5D2",
+            "primary-500": "#0066CC",
+            "secondary-400": "#004080",
+            "secondary-500": "#4FA5D2",
           },
+          
           backgroundImage: (theme) => ({
             "gradient-yellowred": "linear-gradient(90deg, #91E5F6 0%, #133C55 100%)",
             "mobile-home": "url('./assets/HomePageGraphic.png')"

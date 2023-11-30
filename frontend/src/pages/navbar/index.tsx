@@ -12,10 +12,12 @@ import {
 	showDecksList,
 	showFlashcardsList,
 	showFlashcardsForm,
+	showUpdateFlashcardsForm,
+	showQuizForm,
 	showQuizzesList,
 	showQuizDetail,
 	showPdfForm,
-	showTextQuizChat
+	showTextQuizChat,
 } from '@/slices/SpaSlice';
 
 const Navbar = () => {
@@ -35,6 +37,9 @@ const Navbar = () => {
 		dispatch(showQuizDetail(false));
 		dispatch(showQuizzesList(false));
 		dispatch(showTextQuizChat(false));
+		dispatch(showPdfForm(false));
+		dispatch(showTextQuizChat(false));
+		dispatch(showUpdateFlashcardsForm(false));
 	};
 
 	const handleDecksChange = () => {
@@ -47,17 +52,24 @@ const Navbar = () => {
 		dispatch(showQuizzesList(false));
 		dispatch(showQuizDetail(false));
 		dispatch(showTextQuizChat(false));
-	};
+		dispatch(showPdfForm(false));
 
+	};
+	
 	const handleQuizzesChange = () => {
 		dispatch(showClassesList(false));
 		dispatch(showClassesForm(false));
 		dispatch(showDecksList(false));
 		dispatch(showDecksForm(false));
+		dispatch(showTextQuizChat(false));
 		dispatch(showFlashcardsList(false));
+		dispatch(showFlashcardsForm(false));
 		dispatch(showQuizzesList(true));
 		dispatch(showQuizDetail(false));
 		dispatch(showTextQuizChat(false));
+		dispatch(showPdfForm(false));
+
+
 	};
 
 	const handlePdfChange = () => {
@@ -70,6 +82,7 @@ const Navbar = () => {
 		dispatch(showQuizDetail(false));
 		dispatch(showQuizzesList(false));
 		dispatch(showTextQuizChat(false));
+
 	};
 
 	return (
@@ -84,9 +97,6 @@ const Navbar = () => {
 						{isAboveMediumScreens ? (
 							<div className={`${flexBetween} w-full`}>
 								<div className={`${flexBetween} gap-8 text-sm`}>
-									<p className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer">
-										Home
-									</p>
 									<p
 										onClick={handleClassesChange}
 										className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
@@ -166,10 +176,30 @@ const Navbar = () => {
 					</div>
 					{/* MENU ITEMS */}
 					<div className="ml-[33%] flex flex-col gap-10 text-2xl">
-						<Link to="Home" className="" />
-						<Link to="Home" className="" />
-						<Link to="Home" className="" />
-						<Link to="Home" className="" />
+						<p
+							onClick={handleClassesChange}
+							className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
+						>
+							Classes
+						</p>
+						<p
+							onClick={handleDecksChange}
+							className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
+						>
+							Decks
+						</p>
+						<p
+							onClick={handleQuizzesChange}
+							className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
+						>
+							Quizzes
+						</p>
+						<p
+							onClick={handlePdfChange}
+							className="transition duration-500 hover:text-primary-300 active:text-primary-500 cursor-pointer"
+						>
+							PDF Upload
+						</p>
 					</div>
 				</div>
 			)}
