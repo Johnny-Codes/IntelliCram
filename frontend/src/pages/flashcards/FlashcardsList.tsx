@@ -14,7 +14,6 @@ const FlashcardsList = () => {
 
 
 	const handleUpdateFlashcardForm = (flashcard) => {
-		console.log("this is the flashcard in form", flashcard);
 		setShowUpdateFlashcardsForm(false);
 
 		setTimeout(() => {
@@ -197,7 +196,8 @@ const FlashcardsList = () => {
 
 									{/* Content and form */}
 									<UpdateFlashCardsForm
-										props={formData}
+										formData={formData}
+										setIsModalOpen={setIsModalOpen}
 										onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
 									/>
 

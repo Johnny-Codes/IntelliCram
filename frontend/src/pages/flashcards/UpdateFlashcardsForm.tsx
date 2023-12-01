@@ -18,12 +18,12 @@ const UpdateFlashCardsForm = (props) => {
 	const classId = useSelector((state) => state.classes.class_id);
 	const deckId = useSelector((state) => state.decks.deck_id);
 	const [formData, setFormData] = useState<formData>({
-		question: props.props.question,
-		answer: props.props.answer,
+		question: props.formData.question,
+		answer: props.formData.answer,
 		wrong_count: 0,
 	});
 	const dispatch = useDispatch();
-	console.log("props", props.props.card_id)
+	console.log("props", props.formData.card_id)
 
 	useEffect(
 		() => {
@@ -37,13 +37,12 @@ const UpdateFlashCardsForm = (props) => {
 	const handleFormChange = (e) => {
 		const { name, value } = e.target;
 		setFormData({ ...formData, [name]: value });
-		console.log("formdata", formData)
 	};
 
 	async function handleSubmit(e) {
 		e.preventDefault();
-		console.log("pprrrrrrrrops", props)
-		await updateFlashcard({ class_id: classId, formData: formData, card_id: props.props.card_id, deck_id: deckId });
+		await updateFlashcard({ class_id: classId, formData: formData, card_id: props.formData.card_id, deck_id: deckId });
+		props.setIsModalOpen(false);
 		dispatch(showFlashcardsList(true));
 	}
 
