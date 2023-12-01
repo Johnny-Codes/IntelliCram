@@ -41,9 +41,16 @@ function UserTemplate() {
                 {showQuizDetail && <QuizDetail />}
                 {showQuizzesList && <QuizzesList />}
                 {showPdfForm && <PdfForm />}
-                {showTextQuizChat && <TextQuizChat />}
+                <div className="flex items-center justify-center">
+                <div className="w-2/3 p-8">
+                    {showTextQuizChat && <TextQuizChat />}
+                </div>
+                </div>
+
             </div>
-            <Footer />
+            <div>
+                <Footer />
+            </div>
         </>
     )
 }

@@ -10,6 +10,8 @@ const FlashcardsList = () => {
 	const dispatch = useDispatch();
 	const [showUpdateFlashcardsForm, setShowUpdateFlashcardsForm] = useState(false);
 	const [formData, setFormData] = useState({});
+	const [isModalOpen, setIsModalOpen] = useState(false);
+
 
 	const handleUpdateFlashcardForm = (flashcard) => {
 		console.log("this is the flashcard in form", flashcard);
@@ -21,9 +23,14 @@ const FlashcardsList = () => {
 				question: flashcard.question,
 				answer: flashcard.answer,
 			});
-			setShowUpdateFlashcardsForm(true);
+			setIsModalOpen(true);
 		}, 50);
 	};
+
+	const handleCloseModal = () => {
+		setIsModalOpen(false);
+	};
+
 
 	const handleCreateFlashcard = () => {
 		dispatch(showFlashcardsList(false));
@@ -154,11 +161,49 @@ const FlashcardsList = () => {
 							</tbody>
 						</table>
 					</div>
-					{showUpdateFlashcardsForm && (
-						<UpdateFlashCardsForm
-							props={formData}
-							onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
-						/>
+					{isModalOpen && (
+						<div className="fixed inset-0 overflow-y-auto">
+							<div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+								{/* Background overlay */}
+								<div className="fixed inset-0 transition-opacity" aria-hidden="true">
+									<div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+								</div>
+
+								{/* Modal panel */}
+								<span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+									&#8203;
+								</span>
+								<div className="inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6">
+									{/* Close button (x) */}
+									<button
+										onClick={handleCloseModal}
+										className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 focus:outline-none"
+									>
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+											className="h-6 w-6"
+										>
+											<path
+												strokeLinecap="round"
+												strokeLinejoin="round"
+												strokeWidth="2"
+												d="M6 18L18 6M6 6l12 12"
+											/>
+										</svg>
+									</button>
+
+									{/* Content and form */}
+									<UpdateFlashCardsForm
+										props={formData}
+										onChange={(e) => setFormData({ ...formData, [e.target.name]: e.target.value })}
+									/>
+
+								</div>
+							</div>
+						</div>
 					)}
 				</>
 			)}

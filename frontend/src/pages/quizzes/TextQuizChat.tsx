@@ -17,6 +17,12 @@ const TextQuizChat = () => {
 	});
 	const inputRef = useRef(null);
 
+	const handleEnterKeyPress = (event) => {
+		if (event.key === "Enter"){
+			handleSendMessage();
+		}
+	}
+
 	const handleUserInput = (event) => {
 		setUserInput(event.target.value);
 	};
@@ -25,29 +31,34 @@ const TextQuizChat = () => {
 		if (userInput.trim() === '') return;
 
 		try {
-			let formData = {
-				question: flashcards[cardIndex].question,
-				correct_answer: flashcards[cardIndex].answer,
-				user_answer: userInput
-			};
-			const response = await createTextQuiz(formData);
+		  const userMessage = { content: userInput, role: 'user' };
+		  setChatMessages((prevMessages) => [...prevMessages, userMessage]);
 
-			const jsonResponse = JSON.parse(response['data']);
-			const improvementMessage = jsonResponse['improvement'];
+		  const loadingMessage = { content: '...', role: 'system', animate: true };
+		  setChatMessages((prevMessages) => [...prevMessages, loadingMessage]);
 
-			const newChatMessages = [
-				...chatMessages,
-				{ content: userInput, role: 'user' },
-				{ content: improvementMessage, role: 'system' }
-			];
-			setChatMessages(newChatMessages);
-			setUserInput('');
+
+		  let formData = {
+			question: flashcards[cardIndex].question,
+			correct_answer: flashcards[cardIndex].answer,
+			user_answer: userInput,
+		  };
+		  const response = await createTextQuiz(formData);
+
+		  const jsonResponse = JSON.parse(response['data']);
+		  const improvementMessage = jsonResponse['improvement'];
+
+		  const systemMessage = { content: improvementMessage, role: 'system' };
+		  setChatMessages((prevMessages) => [...prevMessages.slice(0, -1), systemMessage]);
+		  setUserInput('');
 		} catch (error) {
-			const errorMessage = 'An unexpected error occurred, please try again';
-			const newChatMessages = [ ...chatMessages, { content: errorMessage, role: 'system' } ];
-			setChatMessages(newChatMessages);
+		  const errorMessage = 'An unexpected error occurred, please try again';
+		  const errorSystemMessage = { content: errorMessage, role: 'system', animate: false };
+		  setChatMessages((prevMessages) => [...prevMessages.slice(0, -1), errorSystemMessage]);
 		}
-	};
+	  };
+
+
 
 	const handleShowNextQuestion = () => {
 		if (flashcards && flashcards.length > 0) {
@@ -62,7 +73,7 @@ const TextQuizChat = () => {
 
 	useEffect(
 		() => {
-			inputRef.current.scrollIntoView({ behavior: 'smooth' });
+			// inputRef.current.scrollIntoView({ behavior: 'smooth' });
 		},
 		[ chatMessages ]
 	);
@@ -70,19 +81,18 @@ const TextQuizChat = () => {
 	useEffect(() => {}, [ flashcards ]);
 
 	return (
-		<div className="flex flex-col h-screen p-4">
+		<div className="border-4 h-screen p-4 overflow-y-auto">
+			<h1 className="text-3xl text-center font-bold mb-4 border-b-2 border-primary-500">Text Quiz</h1>
 			<div className="w-3/4 mx-auto">
-				<div className="flex-1 overflow-y-auto">
+				<div className="flex-1">
 					{chatMessages.map((message, index) => (
 						<TextQuizItem
 							key={index}
 							text={message.content}
 							role={message.role}
-							// Add a conditional class to align user messages to the right
 							className={message.role === 'user' ? 'text-right' : ''}
 						/>
 					))}
-					{/* Dummy div for scrolling to bottom */}
 					<div ref={inputRef} />
 				</div>
 				<div className="flex mt-4 p-4 bg-white">
@@ -92,6 +102,7 @@ const TextQuizChat = () => {
 						placeholder="Type your message..."
 						value={userInput}
 						onChange={handleUserInput}
+						onKeyDown={handleEnterKeyPress}
 					/>
 					<button className="bg-blue-500 text-white p-2 rounded mr-2" onClick={handleSendMessage}>
 						Send
