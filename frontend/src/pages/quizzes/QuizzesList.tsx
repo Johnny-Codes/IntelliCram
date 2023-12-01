@@ -19,8 +19,8 @@ const QuizzesList = () => {
 
     return (
         <div className="flex">
-            <div className="w-1/3 p-4">
-                <table className="min-w-full divide-y divide-gray-200 rounded-md shadow-md">
+            <div className="w-1/3 p-4 rounded-md h-full mt-4">
+                <table className="min-w-full divide-y divide-gray-200 rounded-md">
                     <tbody className="bg-white divide-y divide-gray-200">
                         {quizzes && <QuizTopDown />}
                     </tbody>

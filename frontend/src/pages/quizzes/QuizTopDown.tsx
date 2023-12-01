@@ -23,15 +23,15 @@ const QuizTopDown = () => {
 
 	return (
 		<>
-			<tr className="max-w-md mx-auto p-4 bg-blue-100 rounded-md shadow-md">
+			<tr className="max-w-md mx-auto p-4 bg-blue-100">
 				<td colSpan="2">
-					<h1 className="text-3xl text-center font-bold mb-4 p-2 border border-b-2 border-white">Quizzes</h1>
+					<h1 className="text-3xl text-center font-bold mb-4 p-2 border-b-3 border-white">Quizzes</h1>
 				</td>
 			</tr>
 			{quizzes.map((quiz) => (
-				<tr key={quiz.id} className="max-w-md mx-auto bg-blue-100 rounded-md shadow-md">
+				<tr key={quiz.id} className="max-w-md mx-auto bg-blue-100 hover:cursor-pointer">
 					<td className="px-4 py-1">
-						<p onClick={(e) => handleQuizState(e, quiz.id)}>{quiz.name}</p>
+						<p onClick={(e) => handleQuizState(e, quiz.id)}>{quiz.name.charAt(0).toUpperCase() + quiz.name.slice(1)}</p>
 					</td>
 				</tr>
 			))}
