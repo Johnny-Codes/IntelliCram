@@ -52,8 +52,8 @@ const ClassesList = () => {
 			{/* Main Content */}
 			<div className="flex-1 bg-gray min-h-screen">
 				<div className="bg-primary-500 text-white py-4">
-					<div className="flex container mx-auto">
-						<h1 className="text-3xl font-bold">Decks</h1>
+					<div className="flex container mx-auto justify-center">
+						<h1 className="text-3xl font-bold text-center">Decks</h1>
 					</div>
 				</div>
 
