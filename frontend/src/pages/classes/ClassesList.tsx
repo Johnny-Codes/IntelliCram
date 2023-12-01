@@ -39,7 +39,7 @@ const ClassesList = () => {
 				{classes.map((classItem) => (
 					<div
 						key={classItem.id}
-						className={`mt-4 cursor-pointer hover:bg-gray-100 hover:rounded hover:text-black ${selectedClass === classItem.id ? 'bg-gray-200 rounded text-black px-4' : ''}`}
+						className={`mt-4 cursor-pointer hover:bg-gray-100 hover:pl-2 hover:rounded hover:text-black ${selectedClass === classItem.id ? 'bg-gray-200 rounded text-black px-4' : ''}`}
 						onClick={(e) => changeClassStateId(e, classItem.id)}
 					>
 						<h2 className="text-lg font-semibold" style={{ display: 'flex', justifyContent: 'space-between' }}>
