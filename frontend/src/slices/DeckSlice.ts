@@ -5,10 +5,13 @@ export const decksSlice = createSlice({
   name: 'decks',
   initialState: {
     deck_id: null,
+    deck_name: '',
   },
   reducers: {
     setDeck: (state, action) => {
-      state.deck_id = action.payload;
+      const { id, name } = action.payload;
+      state.deck_id = id;
+      state.deck_name = name;
     },
     getDeck: (state) => {
       return state;

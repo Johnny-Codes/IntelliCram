@@ -7,10 +7,12 @@ import UpdateFlashCardsForm from './UpdateFlashcardsForm';
 const FlashcardsList = () => {
 	const classId = useSelector((state) => state.classes.class_id);
 	const deckId = useSelector((state) => state.decks.deck_id);
+	const deckName = useSelector((state) => state.decks.deck_name);
 	const dispatch = useDispatch();
 	const [showUpdateFlashcardsForm, setShowUpdateFlashcardsForm] = useState(false);
 	const [formData, setFormData] = useState({});
 	const [isModalOpen, setIsModalOpen] = useState(false);
+	console.log("deck name", deckName)
 
 
 	const handleUpdateFlashcardForm = (flashcard) => {
@@ -84,6 +86,7 @@ const FlashcardsList = () => {
 
 	return (
 		<div className="m-4">
+			<h1 className="text-3xl font-bold mb-4 text-center text-blue-500">{deckName}</h1>
 			{flashcards.length === 0 ? (
 				<div className="flex flex-col items-center space-y-4">
 					<div className="w-64 h-36 bg-gray-200 rounded-lg shadow-md flex items-center justify-center">
