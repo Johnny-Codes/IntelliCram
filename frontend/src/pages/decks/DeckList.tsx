@@ -23,11 +23,11 @@ const DeckList = () => {
     setShowAddDeck(false)
   };
 
-  const changeDeckStateId = (e, id) => {
+  const changeDeckStateId = (e, id, name) => {
     e.preventDefault();
     dispatch(showFlashcardsForm(false));
     dispatch(setClass(classId));
-    dispatch(setDeck(id));
+    dispatch(setDeck({id, name}));
     dispatch(showDecksList(false));
     dispatch(showClassesList(false));
     dispatch(showFlashcardsList(true));
@@ -58,7 +58,7 @@ const DeckList = () => {
         {decks &&
           decks.map((deckItem) => (
             <div key={deckItem.id} className="m-4">
-              <Deck deckName={deckItem.name} deckId={deckItem.id} onClick={(e) => changeDeckStateId(e, deckItem.id)} />
+              <Deck deckName={deckItem.name} deckId={deckItem.id} onClick={(e) => changeDeckStateId(e, deckItem.id, deckItem.name)} />
               {/* <div className="mt-4">
                 <QuizforDeck deck_id={deckItem.id} />
               </div> */}

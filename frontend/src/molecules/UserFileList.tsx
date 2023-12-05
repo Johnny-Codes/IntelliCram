@@ -1,16 +1,20 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useGetAllUsersFilesQuery } from "@/queries/pdfs";
 import { useState, useEffect } from "react";
 import { useGetUsersClassesQuery } from "@/queries/classes";
 import { useGetClassDecksQuery } from "@/queries/decks";
 import SubmitButton from "@/molecules/SubmitButton";
 import { useCreateFlashcardsFromFileMutation } from '@/queries/flashcards';
+import { showFlashcardsList, showPdfForm } from '@/slices/SpaSlice';
+
 
 
 const UserFileList = () => {
   const [selectedClass, setSelectedClass] = useState(null);
   const [selectedDeck, setSelectedDeck] = useState(null);
   const [selectedUserFile, setSelectedUserFile] = useState(null);
+  const dispatch = useDispatch();
+
 
   const { data: userClasses, isLoading: classesLoading } = useGetUsersClassesQuery();
   const { data: classDecks, isLoading: decksLoading } = useGetClassDecksQuery(selectedClass);
@@ -32,7 +36,9 @@ const UserFileList = () => {
       file_id: selectedUserFile
     };
     createQuizFromFile(formData);
-
+    setSelectedDeck(formData.deck_id);
+    dispatch(showFlashcardsList(true));
+    dispatch(showPdfForm(false));
   }
 
   return (

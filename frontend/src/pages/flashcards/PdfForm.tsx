@@ -16,9 +16,12 @@ const PdfForm = () => {
   const dispatch = useDispatch();
   const [file, setFile] = useState<File>(null);
 
+
+
   useEffect(() => {
     if (createPdfResponse.isSuccess) {
-      dispatch(showFlashcardsList(true));
+      // dispatch(showFlashcardsList(true));
+      dispatch({ type: 'RESET_PDF_FORM' });
     }
   }, [createPdfResponse.isSuccess, dispatch]);
 
@@ -31,9 +34,13 @@ const PdfForm = () => {
     e.preventDefault();
     const body = new FormData();
     body.append('file', file);
-    dispatch(showFlashcardsList(true));
+    // dispatch(showFlashcardsList(true));
     await createPdf(body);
+    setFile(undefined);
   }
+
+
+
 
   return (
     <div className="grid grid-cols-2 gap-4 p-8">
