@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI
 from routers import (
     user_routers,
@@ -14,11 +15,10 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    # change for deployment - use env variables
     allow_origins=[
-        "http://localhost:3000",
-        "http://localhost:8000",
-    ],  # Add your frontend URL here
+        os.getenv("VITE_API_URL"),
+        os.getenv("FASTAPI_API_URL"),
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
