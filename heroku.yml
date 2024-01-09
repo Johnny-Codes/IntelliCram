@@ -1,10 +1,6 @@
 build:
   docker:
-    web: ./backend/Dockerfile.production
-    frontend: ./frontend
-
-run:
-  frontend: npm run start
+    backend: ./backend/Dockerfile.production
 
 environments:
   production:
