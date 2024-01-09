@@ -23,7 +23,6 @@ const UpdateFlashCardsForm = (props) => {
 		wrong_count: 0,
 	});
 	const dispatch = useDispatch();
-	console.log("props", props.formData.card_id)
 
 	useEffect(
 		() => {

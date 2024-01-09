@@ -27,7 +27,6 @@ const PdfForm = () => {
 
   const handleFormChange = (e) => {
     setFile(e.target.files[0]);
-    console.log('file', file);
   };
 
   async function handleSubmit(e) {
