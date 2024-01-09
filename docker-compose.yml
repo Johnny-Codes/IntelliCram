@@ -7,9 +7,9 @@ volumes:
 services:
   backend-fastapi:
     environment:
-      DATABASE_URL: postgresql://${PG_USER}:${PG_PASSWORD}@db/intellicram
-      WAIT_HOSTS: db:5432
-      PORT: 8000
+      DATABASE_URL: ${DATABASE_URL}
+      WAIT_HOSTS: ${WAIT_HOSTS}
+      PORT: ${PORT}
       OPENAI_API_KEY: ${OPENAI_API_KEY}
       SECRET_KEY:  ${SECRET_KEY}
       ALGORITHM:  ${ALGORITHM}
@@ -46,5 +46,3 @@ services:
       - ./frontend:/app
     ports:
       - "3000:3000"
-    # depends_on:
-    #   - backend-fastapi
