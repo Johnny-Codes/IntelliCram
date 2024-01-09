@@ -14,6 +14,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
+    # change for deployment - use env variables
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:8000",

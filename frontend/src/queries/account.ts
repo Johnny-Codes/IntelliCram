@@ -4,7 +4,7 @@ export const accountApi = createApi({
     
     reducerPath: 'accountApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:8000",
+        baseUrl: import.meta.env.VITE_API_URL,
         prepareHeaders: (headers) => {
           const accessToken = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/, "$1");
         
@@ -12,7 +12,6 @@ export const accountApi = createApi({
           if (accessToken) {
             const newHeaders = new Headers(headers);
             newHeaders.set('authorization', `Bearer ${accessToken}`);
-        
             // Convert Headers object to plain object for logging
             const headersObject = {};
             newHeaders.forEach((value, key) => {

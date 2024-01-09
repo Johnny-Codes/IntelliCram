@@ -4,7 +4,7 @@ export const classesApi = createApi({
 
     reducerPath: 'classesApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:8000",
+        baseUrl: import.meta.env.VITE_API_URL,
         prepareHeaders: (headers) => {
           const accessToken = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
