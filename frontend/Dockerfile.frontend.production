@@ -1,0 +1,21 @@
+# Use a smaller base image for production
+FROM node:lts-alpine
+
+# Set the working directory
+WORKDIR /app
+
+# Copy only necessary files for installing dependencies
+COPY package.json .
+COPY package-lock.json .
+
+# Install dependencies
+RUN npm install --production
+
+# Copy the application code
+COPY . .
+
+# Expose the port your app will run on
+EXPOSE 3000
+
+# Start the application
+CMD ["npm", "start"]
