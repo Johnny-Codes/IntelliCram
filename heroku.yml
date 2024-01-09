@@ -1,0 +1,21 @@
+build:
+  docker:
+    web: ./backend/Dockerfile.production
+    frontend: ./frontend
+
+run:
+  frontend: npm run start
+
+environments:
+  production:
+    PG_USER: ${PG_USER}
+    PG_PASSWORD: ${PG_PASSWORD}
+    PG_DB_NAME: ${PG_DB_NAME}
+    SECRET_KEY: ${SECRET_KEY}
+    ALGORITHM: ${ALGORITHM}
+    ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES}
+    VITE_API_URL: ${VITE_API_URL}
+    FASTAPI_API_URL: ${FASTAPI_API_URL}
+    PORT: ${PORTS}
+    WAIT_HOSTS: ${WAIT_HOSTS}
+    DATABASE_URL: ${DATABASE_URL}
