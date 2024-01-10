@@ -5,7 +5,7 @@
 
 build:
   docker:
-    web: Dockerfile
+    web: ./backend/Dockerfile
     # worker: worker/Dockerfile.production
     # frontend: ./frontend/Dockerfile.frontend.production
 
