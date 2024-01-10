@@ -5,12 +5,12 @@
 
 build:
   docker:
-    backend: ./backend/Dockerfile.production
+    web: Dockerfile
     # worker: worker/Dockerfile.production
     # frontend: ./frontend/Dockerfile.frontend.production
 
-run:
-  backend: uvicorn main:app --host 0.0.0.0 --port 8000
+# run:
+#   backend: uvicorn main:app --host 0.0.0.0 --port 8000
 
 environments:
   production:
