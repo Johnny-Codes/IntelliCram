@@ -4,11 +4,11 @@
 #       as: DATABASE
 
 build:
-  docker:
-    web: ./backend/Dockerfile
-    # worker: worker/Dockerfile.production
-    # frontend: ./frontend/Dockerfile.frontend.production
-
+    docker:
+        web: ./backend/Dockerfile.backend
+        frontend: ./frontend/Dockerfile.frontend
+        # worker: worker/Dockerfile.production
+        # frontend: ./frontend/Dockerfile.frontend.production
 # run:
 #   backend: uvicorn main:app --host 0.0.0.0 --port 8000
 
