@@ -199,6 +199,3 @@ class CardRepo:
         except Exception as e:
             print(e)
             return {"message": "Could not create card"}
-        
-
-

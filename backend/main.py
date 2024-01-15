@@ -1,4 +1,5 @@
 import os
+# import uvicorn
 from fastapi import FastAPI
 from routers import (
     user_routers,
@@ -30,3 +31,6 @@ app.include_router(deck_routers.router, tags=["deck"])
 app.include_router(card_routers.router, tags=["card"])
 app.include_router(quiz_routers.router, tags=["quiz"])
 app.include_router(upload_file_routers.router, tags=["upload_files"])
+
+# if __name__ == "__main__":
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
