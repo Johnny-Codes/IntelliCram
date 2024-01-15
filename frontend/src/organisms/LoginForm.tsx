@@ -1,8 +1,6 @@
 import { useState } from "react";
 import SubmitButton from "@/molecules/SubmitButton";
 import FormInput from "@/atoms/FormInput";
-import LandingNavbar from '@/organisms/landing-navbar';
-import Footer from '@/pages/footer';
 
 type formData = {
     username: string;
@@ -19,11 +17,6 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // HandleFormSubmit({
-        //   formData: formData,
-        //   url: "http://localhost:8090/api/customers/",
-        // });
-        // setFormData({});
     };
 
     return (

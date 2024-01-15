@@ -10,6 +10,7 @@ export const accountApi = createApi({
         
           // If we have an access token cookie, let's assume that we should be passing it.
           if (accessToken) {
+            console.log('vite api url', import.meta.env.VITE_API_URL)
             const newHeaders = new Headers(headers);
             newHeaders.set('authorization', `Bearer ${accessToken}`);
             // Convert Headers object to plain object for logging
@@ -39,7 +40,7 @@ export const accountApi = createApi({
                 url: "/users/login",
                 method: "POST",
                 body: loginData,
-              };
+              };``
             },
             providesTags: ["user"],
             invalidatesTags: ["token"],

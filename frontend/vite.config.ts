@@ -10,13 +10,17 @@ export default defineConfig({
   },
   server: {
     hmr: {
-      host: 'localhost'
+      // host: 'localhost'
+      host: 'https://intellicram-1d23e81f0b1c.herokuapp.com/'
     },
-    watch: {
-      usePolling: true,
-    },
-    host: true, // needed for the Docker Container port mapping to work
-    strictPort: true,
-    port: 3000, // you can replace this port with any port
+  //   watch: {
+  //     usePolling: true,
+  //   },
+  //   host: true, // needed for the Docker Container port mapping to work
+  //   strictPort: true,
+  //   port: 3000, // you can replace this port with any port
+  },
+  build: {
+    minify: true,
   }
 });
