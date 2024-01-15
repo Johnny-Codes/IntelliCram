@@ -1,0 +1,24 @@
+FROM python:3.10-slim
+
+# Set the working directory
+WORKDIR /app
+
+# Copy requirements and application files
+COPY ./requirements.txt requirements.txt
+COPY ./main.py main.py
+# COPY start.sh start.sh
+# RUN chmod +x /start.sh
+
+# Copy directories
+COPY ./migrations migrations
+COPY ./openai_stuff openai_stuff
+COPY ./models models
+COPY ./repos repos
+COPY ./routers routers
+
+# Install dependencies
+RUN python -m pip install --upgrade pip \
+    && python -m pip install -r requirements.txt
+
+# Specify the CMD to run your application
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT

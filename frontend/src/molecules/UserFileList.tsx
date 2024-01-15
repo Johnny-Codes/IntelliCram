@@ -22,11 +22,11 @@ const UserFileList = () => {
 
   const [createQuizFromFile, createQuizFromFileResponse] = useCreateFlashcardsFromFileMutation();
 
-  useEffect(() => {
-    if (createQuizFromFileResponse.isSuccess) {
-      console.log('createQuizFromFileResponse', createQuizFromFileResponse);
-    }
-  })
+  // useEffect(() => {
+  //   if (createQuizFromFileResponse.isSuccess) {
+  //     console.log('yay');
+  //   }
+  // })
 
   const handleSubmit = (e) => {
     e.preventDefault();

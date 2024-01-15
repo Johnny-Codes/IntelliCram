@@ -12,7 +12,6 @@ const FlashcardsList = () => {
 	const [showUpdateFlashcardsForm, setShowUpdateFlashcardsForm] = useState(false);
 	const [formData, setFormData] = useState({});
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	console.log("deck name", deckName)
 
 
 	const handleUpdateFlashcardForm = (flashcard) => {
