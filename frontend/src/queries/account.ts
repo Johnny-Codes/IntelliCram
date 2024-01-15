@@ -5,6 +5,7 @@ export const accountApi = createApi({
     reducerPath: 'accountApi',
     baseQuery: fetchBaseQuery({
         baseUrl: import.meta.env.VITE_API_URL,
+        // baseUrl: 'https://intellicram-1d23e81f0b1c.herokuapp.com/',
         prepareHeaders: (headers) => {
           const accessToken = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/, "$1");
         

@@ -3,7 +3,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const decksApi = createApi({
     reducerPath: 'decksApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: import.meta.env.VITE_API_URL,
+      baseUrl: import.meta.env.VITE_API_URL,
+      // baseUrl: 'https://intellicram-1d23e81f0b1c.herokuapp.com/',
         prepareHeaders: (headers) => {
           const accessToken = document.cookie.replace(/(?:(?:^|.*;\s*)access_token\s*=\s*([^;]*).*$)|^.*$/, "$1");
 
