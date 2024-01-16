@@ -20,8 +20,7 @@ app.add_middleware(
     allow_origins=[
         os.getenv("VITE_API_URL"),
         os.getenv("FASTAPI_API_URL"),
-        "https://65a5993c5bb881320947b317--splendid-pudding-7a4757.netlify.app/",
-        "*",
+        "https://main--intellicram.netlify.app/",
     ],
     allow_credentials=True,
     allow_methods=["*"],
