@@ -35,14 +35,14 @@ services:
     volumes:
       - intellicram-data:/var/lib/postgresql/data
 
-  frontend-vite:
-    image: node:lts-alpine
-    working_dir: /app
-    command: sh -c "npm install && npm run dev"
-    environment:
-      VITE_API_URL: ${VITE_API_URL}
+  # frontend-vite:
+  #   image: node:lts-alpine
+  #   working_dir: /app
+  #   command: sh -c "npm install && npm run dev"
+  #   environment:
+  #     VITE_API_URL: ${VITE_API_URL}
 
-    volumes:
-      - ./frontend:/app
-    ports:
-      - "3000:3000"
+  #   volumes:
+  #     - ./frontend:/app
+  #   ports:
+  #     - "3000:3000"
