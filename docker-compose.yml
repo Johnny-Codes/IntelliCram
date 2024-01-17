@@ -34,3 +34,14 @@ services:
       - "15432:5432"
     volumes:
       - intellicram-data:/var/lib/postgresql/data
+
+  frontend-vite:
+    build:
+      context: ../IntelliCram-FE/frontend/ # make this relative to where you have your frontend folder
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../IntelliCram-FE/frontend/:/app # make this relative to where you have your frontend folder
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
