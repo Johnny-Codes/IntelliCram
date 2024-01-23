@@ -14,6 +14,17 @@ Unlock a new era of efficient learning with IntelliCram, where personalized stud
 
 ![Image of model outlines](./readme/models.png)
 
+## Heroku
+
+Have Docker Desktop open.
+
+```
+heroku login
+heroku container:login
+heroku container:push --recursive -a intellicram
+heroku container:release --recursive? -a intellicram
+```
+
 ## Team Members
 
 @johnny-codes
