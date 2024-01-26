@@ -36,12 +36,12 @@ services:
             - intellicram-data:/var/lib/postgresql/data
 
     frontend-vite:
-        build:
-            context: ../IntelliCram-FE/ # make this relative to where you have your frontend folder
-            dockerfile: Dockerfile
+        image: node:lts-alpine
+        working_dir: /app
+        command: sh -c "npm install && npm run dev"
         ports:
             - "3000:3000"
         volumes:
-            - ../IntelliCram-FE/:/app/src/src/main.tsx # make this relative to where you have your frontend folder
+            - ../IntelliCram-FE:/app # make this relative to where you have your frontend folder
         environment:
             VITE_API_URL: ${VITE_API_URL}
