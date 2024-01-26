@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from enum import Enum
+from typing import Optional
 
 
 class UserRole(str, Enum):
@@ -39,3 +40,7 @@ class TokenData(BaseModel):
 
 class TokenIn(BaseModel):
     access_token: str
+
+
+class UserProfileIn(BaseModel):
+    openai_api_key: str
