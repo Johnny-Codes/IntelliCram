@@ -25,6 +25,10 @@ heroku container:push --recursive -a intellicram
 heroku container:release --recursive? -a intellicram
 ```
 
+```
+python -m migrations up
+```
+
 ## Team Members
 
 @johnny-codes
